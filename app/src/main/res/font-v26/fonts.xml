@@ -5,8 +5,8 @@
 
     <font
         android:fontStyle="normal"
-        android:fontWeight="200"
-        android:font="@font/saira_black"
+        android:fontWeight="100"
+        android:font="@font/saira"
         />
 
 </font-family>
