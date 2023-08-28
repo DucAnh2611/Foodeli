@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "892895357885",
+    "firebase_url": "https://ducanhshop-ed24f-default-rtdb.firebaseio.com",
+    "project_id": "ducanhshop-ed24f",
+    "storage_bucket": "ducanhshop-ed24f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:892895357885:android:b84629aacb5959e10780d4",
+        "android_client_info": {
+          "package_name": "com.example.foodeli"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "892895357885-1gdnq65p6okg0a1n89p7f00oq26bidtk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAOKL3z0RbPISRpA_5B5Q3hqClrS1S26O4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "892895357885-1gdnq65p6okg0a1n89p7f00oq26bidtk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
