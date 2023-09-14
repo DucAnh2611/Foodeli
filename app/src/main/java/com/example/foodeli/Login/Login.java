@@ -11,9 +11,15 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 
 import com.example.foodeli.MySqlSetUp.Pool;
-import com.example.foodeli.MySqlSetUp.Schemas.User.Response.GetUserResponse;
+import com.example.foodeli.MySqlSetUp.ResponseApi;
 import com.example.foodeli.MySqlSetUp.Schemas.User.Body.LoginForm;
+import com.example.foodeli.MySqlSetUp.Schemas.User.Response.LoginRes;
+import com.example.foodeli.MySqlSetUp.Schemas.User.User;
 import com.example.foodeli.R;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.io.IOException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -67,18 +73,37 @@ public class Login extends Fragment {
                 loginForm.setPhone(form[0]);
                 loginForm.setEmail("");
             }
+
             loginForm.setPassword(form[1]);
 
-            Call<GetUserResponse> call = pool.getPool().login(loginForm);
+            Call<LoginRes> call = pool.getPool().login(loginForm);
 
-            call.enqueue(new Callback<GetUserResponse>() {
+            call.enqueue(new Callback<LoginRes>() {
                 @Override
-                public void onResponse(Call<GetUserResponse> call, Response<GetUserResponse> response) {
-                    Toast.makeText(LoginView.getContext(), String.valueOf(response.code()), Toast.LENGTH_LONG).show();
+                public void onResponse(Call<LoginRes> call, Response<LoginRes> response) {
+                    if (response.code() == 404) {
+                        Gson gson = new GsonBuilder().create();
+                        ResponseApi res;
+                        try {
+                            res = gson.fromJson(response.errorBody().string(), ResponseApi.class);
+                            // handle false;
+                            Toast.makeText(LoginView.getContext(), res.getMessage(), Toast.LENGTH_LONG).show();
+                        } catch (IOException e) {
+                            // handle failure at error parse
+                        }
+                    }
+                    else {
+                        Toast.makeText(
+                                LoginView.getContext(),
+                                String.valueOf(response.body().getUser().getEmail()),
+                                Toast.LENGTH_LONG).show();
+                        //handle true request
+                    }
                 }
 
+
                 @Override
-                public void onFailure(Call<GetUserResponse> call, Throwable t) {
+                public void onFailure(Call<LoginRes> call, Throwable t) {
                     Toast.makeText(LoginView.getContext(), "failed", Toast.LENGTH_LONG).show();
                 }
             });

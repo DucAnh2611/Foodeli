@@ -56,11 +56,9 @@ public class User {
     }
 
     public void setAvatar(String avatar) { this.avatar = avatar; };
-
     public String getEmail() {
         return this.email;
     }
-
     public String getMobile() {
         return this.phone;
     }

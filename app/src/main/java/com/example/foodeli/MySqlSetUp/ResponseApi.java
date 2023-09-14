@@ -2,7 +2,7 @@ package com.example.foodeli.MySqlSetUp;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Response {
+public class ResponseApi {
 
     @SerializedName("success")
     private boolean success = false;

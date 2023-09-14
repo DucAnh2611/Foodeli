@@ -6,6 +6,7 @@ import com.example.foodeli.MySqlSetUp.Schemas.User.Body.CreateAccount;
 import com.example.foodeli.MySqlSetUp.Schemas.User.Response.CreateUserResponse;
 import com.example.foodeli.MySqlSetUp.Schemas.User.Response.GetUserResponse;
 import com.example.foodeli.MySqlSetUp.Schemas.User.Body.LoginForm;
+import com.example.foodeli.MySqlSetUp.Schemas.User.Response.LoginRes;
 
 import java.util.ArrayList;
 
@@ -25,7 +26,7 @@ public interface RetrofitAPICallUserProfile {
     Call<CreateUserResponse> signup(@Body CreateAccount newAccount);
 
     @POST("user/profile/login")
-    Call<GetUserResponse> login(@Body LoginForm user);
+    Call<LoginRes> login(@Body LoginForm user);
 
     @PUT("user/profile/change")
     Call<CreateUserResponse> update(@Query("id") int id, @Body ArrayList<ChangeForm> changeForm);
