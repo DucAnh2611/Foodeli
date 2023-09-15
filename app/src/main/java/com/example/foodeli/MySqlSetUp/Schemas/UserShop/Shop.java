@@ -6,6 +6,8 @@ public class Shop {
 
     @SerializedName("ShopId")
     private int sid;
+    @SerializedName("ShopAvatar")
+    private String avatar;
     @SerializedName("name")
     private String name;
     @SerializedName("desc")

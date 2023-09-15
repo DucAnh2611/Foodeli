@@ -1,6 +1,5 @@
 package com.example.foodeli.MySqlSetUp.Schemas.Method;
 
-import com.example.foodeli.MySqlSetUp.Schemas.Method.Method;
 import com.google.gson.annotations.SerializedName;
 
 public class MethodWithTypeName extends Method {

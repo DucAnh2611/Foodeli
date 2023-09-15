@@ -1,6 +1,8 @@
 package com.example.foodeli.MySqlSetUp.Api;
 
+import com.example.foodeli.MySqlSetUp.Schemas.UserOrder.Body.CancelOrderBody;
 import com.example.foodeli.MySqlSetUp.Schemas.UserOrder.Body.PlaceOrderBody;
+import com.example.foodeli.MySqlSetUp.Schemas.UserOrder.Response.CancelRes;
 import com.example.foodeli.MySqlSetUp.Schemas.UserOrder.Response.PlaceOrderRes;
 
 import retrofit2.Call;
@@ -19,4 +21,9 @@ public interface RetrofitAPICallUserOrder {
     @GET(base + "track")
     Call<PlaceOrderRes> trackingOrder(@Query("oid") int oid, @Query("uid") int uid);
 
+    @GET(base + "track-state")
+    Call<PlaceOrderRes> listOrderInState(@Query("uid") int uid, @Query("type") String type);
+
+    @POST(base + "cancel")
+    Call<CancelRes> cancelOrder(@Body CancelOrderBody body);
 }

@@ -29,6 +29,13 @@ public class CreateProductRes extends ResponseApi {
 
         @SerializedName("CategoryName")
         private String name;
+
+        @SerializedName("CategoryImage")
+        private String image;
+
+        @SerializedName("CategoryParentId")
+        private String parentId;
+
     }
 
     public class Image {

@@ -14,7 +14,6 @@ import com.example.foodeli.MySqlSetUp.Pool;
 import com.example.foodeli.MySqlSetUp.ResponseApi;
 import com.example.foodeli.MySqlSetUp.Schemas.User.Body.LoginForm;
 import com.example.foodeli.MySqlSetUp.Schemas.User.Response.LoginRes;
-import com.example.foodeli.MySqlSetUp.Schemas.User.User;
 import com.example.foodeli.R;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

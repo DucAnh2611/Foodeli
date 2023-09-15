@@ -18,6 +18,10 @@ public class Product {
     private String shortDesc;
     @SerializedName("ProductLongDesc")
     private String longDesc;
+    @SerializedName("ProductTimeStart")
+    private String timeStart;
+    @SerializedName("ProductTimeFinish")
+    private String timeFinish;
     @SerializedName("ProductCreateAt")
     private String create;
     @SerializedName("ProductLastModified")

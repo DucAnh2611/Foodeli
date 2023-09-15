@@ -28,13 +28,15 @@ public class Order {
     private String modified;
     @SerializedName("OrderShipped")
     private int shipped;
+    @SerializedName("OrderTotal")
+    private float total;
+    @SerializedName("Payed")
+    private int payed;
     @SerializedName("Confirm")
     private int confirm;
     @SerializedName("OrderTax")
     private float tax;
     @SerializedName("OrderShippingFee")
     private float shipFee;
-    @SerializedName("OrderTotal")
-    private float total;
 
 }
