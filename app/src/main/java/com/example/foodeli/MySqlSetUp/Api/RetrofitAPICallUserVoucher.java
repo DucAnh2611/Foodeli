@@ -1,6 +1,8 @@
 package com.example.foodeli.MySqlSetUp.Api;
 
 import com.example.foodeli.MySqlSetUp.Schemas.UserVoucher.Body.SaveVoucherBody;
+import com.example.foodeli.MySqlSetUp.Schemas.UserVoucher.Body.CheckCanUseVoucher;
+import com.example.foodeli.MySqlSetUp.Schemas.UserVoucher.Response.CheckVoucherRes;
 import com.example.foodeli.MySqlSetUp.Schemas.UserVoucher.Response.FindVoucherRes;
 import com.example.foodeli.MySqlSetUp.Schemas.UserVoucher.Response.SaveVoucherRes;
 
@@ -19,5 +21,8 @@ public interface RetrofitAPICallUserVoucher {
 
     @POST(base + "save")
     Call<SaveVoucherRes> saveVoucher(@Body SaveVoucherBody body);
+
+    @POST(base + "check")
+    Call<CheckVoucherRes> checkCanUseVoucher(@Body CheckCanUseVoucher body);
 
 }

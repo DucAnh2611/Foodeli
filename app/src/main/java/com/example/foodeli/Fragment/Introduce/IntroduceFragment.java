@@ -1,21 +1,17 @@
-package com.example.foodeli.Introduce;
+package com.example.foodeli.Fragment.Introduce;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.foodeli.Login.Login;
+import com.example.foodeli.Fragment.Login.Login;
 import com.example.foodeli.R;
-
-import org.w3c.dom.Text;
 
 public class IntroduceFragment extends Fragment {
 

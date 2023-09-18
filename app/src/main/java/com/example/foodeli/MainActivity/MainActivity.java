@@ -5,7 +5,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.WindowCompat;
 
-import com.example.foodeli.Introduce.IntroduceFragment;
+import com.example.foodeli.Fragment.Introduce.IntroduceFragment;
 import com.example.foodeli.R;
 
 public class MainActivity extends AppCompatActivity {

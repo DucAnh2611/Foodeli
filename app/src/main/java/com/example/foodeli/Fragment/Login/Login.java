@@ -1,4 +1,4 @@
-package com.example.foodeli.Login;
+package com.example.foodeli.Fragment.Login;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
