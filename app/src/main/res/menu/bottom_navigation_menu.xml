@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/page_home"
+        android:enabled="true"
+        android:icon="@drawable/home_selector"
+        android:title="Home" />
+
+    <item
+        android:id="@+id/page_order"
+        android:enabled="true"
+        android:icon="@drawable/order_selector"
+        android:title="Order" />
+
+    <item
+        android:id="@+id/empty"
+        android:enabled="true"
+        android:title="" />
+
+    <item
+        android:id="@+id/page_shop"
+        android:enabled="true"
+        android:icon="@drawable/shop_selector"
+        android:title="Shop" />
+
+    <item
+        android:id="@+id/page_profile"
+        android:enabled="true"
+        android:icon="@drawable/profile_selector"
+        android:title="Profile" />
+</menu>

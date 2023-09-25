@@ -1,6 +1,195 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        >
+
+        <LinearLayout
+            android:layout_width="310dp"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            >
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/user_img_home"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:background="@color/green_100"
+                android:src="@drawable/profile_select"
+                android:scaleType="fitXY"
+                app:shapeAppearanceOverlay="@style/Circular"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="vertical"
+                android:layout_marginLeft="10dp"
+                >
+
+                <TextView
+                    android:id="@+id/user_name_home"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:text="User's name"
+                    android:textSize="15dp"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/poppins_bold"
+                    />
+
+                <TextView
+                    android:id="@+id/user_subname_home"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:text="User's email"
+                    android:textSize="12dp"
+                    android:textColor="@color/grey_100"
+                    />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="right|center_vertical"
+            >
+            <ImageButton
+                android:id="@+id/my_cart_btn"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/mycart"
+                android:scaleType="fitStart"
+                app:tint="@color/green_100"
+                android:contentDescription="my cart" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Categories"
+                android:fontFamily="@font/poppins_bold"
+                android:textColor="@color/black"
+                android:textSize="25sp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:gravity="center_vertical"
+                />
+
+            <TextView
+                android:id="@+id/home_more_category"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:gravity="right|center_vertical"
+                android:textColor="@color/green_100"
+                android:textSize="14dp"
+                android:fontFamily="@font/poppins_medium"
+                android:text="See all"
+                />
+
+        </RelativeLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_category"
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:clipToPadding="false"
+            >
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:gravity="center_vertical"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Top products"
+                android:fontFamily="@font/poppins_bold"
+                android:textColor="@color/black"
+                android:textSize="25sp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:gravity="center_vertical"
+                />
+
+            <TextView
+                android:id="@+id/home_more_topproduct"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:gravity="right|center_vertical"
+                android:textColor="@color/green_100"
+                android:textSize="14dp"
+                android:fontFamily="@font/poppins_medium"
+                android:text="See all"
+                />
+
+        </RelativeLayout>
+
+        <GridView
+            android:id="@+id/product_gv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:numColumns="2"
+            android:paddingLeft="20dp"
+            android:paddingTop="20dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="100dp"
+            android:horizontalSpacing="10dp"
+            android:verticalSpacing="10dp"
+            android:scrollbars="none"
+            android:clipToPadding="false"
+            >
+
+        </GridView>
+
+    </LinearLayout>
+
+</LinearLayout>

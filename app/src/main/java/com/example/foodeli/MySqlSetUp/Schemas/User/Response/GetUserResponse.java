@@ -18,8 +18,10 @@ public class GetUserResponse extends ResponseApi {
         @SerializedName("user")
         private User info;
 
-        @SerializedName("address")
-        private List<Address> listAddress = new ArrayList<>();
+        public User getInfo() {
+            return info;
+        }
+
 
         //more
 

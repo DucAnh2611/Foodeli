@@ -31,4 +31,55 @@ public class Product {
     @SerializedName("Deleted")
     private int delete;
 
+    public String getName() {
+        return name;
+    }
+
+    public int getSid() {
+        return sid;
+    }
+
+    public float getPrice() {
+        return price;
+    }
+
+    public float getStock() {
+        return stock;
+    }
+
+    public int getDelete() {
+        return delete;
+    }
+
+    public int getPid() {
+        return pid;
+    }
+
+    public String getCreate() {
+        return create;
+    }
+
+    public String getLongDesc() {
+        return longDesc;
+    }
+
+    public String getModified() {
+        return modified;
+    }
+
+    public String getShortDesc() {
+        return shortDesc;
+    }
+
+    public String getTimeFinish() {
+        return timeFinish;
+    }
+
+    public String getTimeStart() {
+        return timeStart;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
 }

@@ -2,6 +2,7 @@ package com.example.foodeli.MySqlSetUp.Api;
 
 import com.example.foodeli.MySqlSetUp.Schemas.General.Response.CancelReasonRes;
 import com.example.foodeli.MySqlSetUp.Schemas.General.Response.CategoryRes;
+import com.example.foodeli.MySqlSetUp.Schemas.General.Response.GetTopProduct;
 import com.example.foodeli.MySqlSetUp.Schemas.General.Response.MethodSupportRes;
 import com.example.foodeli.MySqlSetUp.Schemas.General.Response.OrderStateRes;
 import com.example.foodeli.MySqlSetUp.Schemas.General.Response.ShopPermissionRes;
@@ -24,5 +25,6 @@ public interface RetrofitAPICallGeneral {
 
     @GET(base + "cancel-reason") Call<CancelReasonRes> getSystemCancelReason();
 
+    @GET(base + "top-product") Call<GetTopProduct> getTopProduct(@Query("page") int page);
 
 }

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/introduce_screen_one"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@drawable/fragment_background"
+    >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="400dp"
+            android:src="@drawable/cooking" />
+
+        <TextView
+            android:layout_marginTop="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Engaging Superb\n Shop Makers Around"
+            android:textAlignment="center"
+            android:fontFamily="@font/poppins_bold"
+            android:textSize="22sp"
+            android:textColor="@color/black"
+            />
+
+
+        <TextView
+            android:layout_marginTop="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="It's a platform for shop makers where they\n can show their cooking talent and earn revenu "
+            android:textAlignment="center"
+            android:fontFamily="@font/poppins_medium"
+            android:textSize="13sp"
+            android:textColor="@color/grey_100"
+            />
+
+</LinearLayout>

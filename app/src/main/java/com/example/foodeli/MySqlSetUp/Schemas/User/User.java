@@ -6,7 +6,7 @@ public class User {
 
     @SerializedName("UserID")
     private int id;
-    @SerializedName("UserFullname")
+    @SerializedName("UserFullName")
     private String name;
     @SerializedName("UserPassword")
     private String password;
@@ -24,7 +24,6 @@ public class User {
     private String modified;
 
     public User(
-            int id,
             String name,
             String phone,
             String email,
@@ -52,6 +51,37 @@ public class User {
     }
 
     public void setAvatar(String avatar) { this.avatar = avatar; };
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public String getRegisAt() {
+        return regisAt;
+    }
+
+    public String getModified() {
+        return modified;
+    }
     public String getEmail() {
         return this.email;
     }

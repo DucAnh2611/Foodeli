@@ -9,6 +9,7 @@
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
+        android:enableOnBackInvokedCallback="true"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -16,18 +17,48 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Foodeli"
         tools:targetApi="31">
-
+        <activity
+            android:name=".Activities.Cart.CartActivity"
+            android:windowSoftInputMode="adjustPan"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.SeeAll.SeeAllTopProducts.AllTopProduct"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.SeeAll.SeeAllCategory.AllCategory"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.Home.HomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.Auth.ForgotPassword.ChangePassword"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.Auth.ForgotPassword.ForgotPasswordTypeEmall"
+            android:exported="false" />
         <activity
             android:name=".MainActivity.MainActivity"
             android:exported="true"
             android:label="Foodeli"
-            android:theme="@style/Theme.Foodeli">
+            android:theme="@style/Theme.Foodeli"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".Activities.Introduce.IntroActivity"
+            android:exported="true"
+            android:label="Foodeli"
+            android:theme="@style/Theme.Foodeli" />
+        <activity
+            android:name=".Activities.Auth.Login.Login"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.Auth.Signup.SignUp"
+            android:exported="false" />
     </application>
 
 </manifest>
