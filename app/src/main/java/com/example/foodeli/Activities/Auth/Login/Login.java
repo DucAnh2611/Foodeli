@@ -14,6 +14,7 @@ import androidx.core.view.WindowCompat;
 
 import com.example.foodeli.Activities.Auth.ForgotPassword.ForgotPasswordTypeEmall;
 import com.example.foodeli.Activities.Auth.Signup.SignUp;
+import com.example.foodeli.Activities.Auth.ValidationField;
 import com.example.foodeli.Activities.Home.HomeActivity;
 import com.example.foodeli.MySqlSetUp.Pool;
 import com.example.foodeli.MySqlSetUp.ResponseApi;
@@ -72,60 +73,80 @@ public class Login extends AppCompatActivity {
                 String passData = password.getText().toString();
 
                 if(!fieldData.isEmpty() && !passData.isEmpty()) {
-                    LoginForm form = new LoginForm(
+
+                    ValidationField valid = new ValidationField(
                             fieldData,
                             fieldData,
                             passData
                     );
-                    Call<LoginRes> login = pool.getApiCallUserProfile().login(form);
 
-                    login.enqueue(new Callback<LoginRes>() {
-                        @Override
-                        public void onResponse(Call<LoginRes> call, Response<LoginRes> response) {
-                            if(response.isSuccessful()) {
-                                Intent homeIntent = new Intent(Login.this, HomeActivity.class);
+                    LoginForm form = null;
+                    if(valid.verifyBothEmailAndPhone()) {
+                        if(valid.verifyPhone()) {
+                            form = new LoginForm(
+                                    "",
+                                    fieldData,
+                                    passData
+                            );
+                        }
+                        else if(valid.verifyEmail()) {
+                            form = new LoginForm(
+                                    fieldData,
+                                    "",
+                                    passData
+                            );
+                        }
 
-                                SharedPreferences uPrefs = getSharedPreferences("UserInfo", MODE_PRIVATE);
-                                User userLogined = response.body().getUser();
+                        Call<LoginRes> login = pool.getApiCallUserProfile().login(form);
 
-                                SharedPreferences.Editor prefsEditor = uPrefs.edit();
-                                Gson gson = new Gson();
-                                String json = gson.toJson(userLogined);
-                                prefsEditor.putString("user", json);
-                                prefsEditor.apply();
+                        login.enqueue(new Callback<LoginRes>() {
+                            @Override
+                            public void onResponse(Call<LoginRes> call, Response<LoginRes> response) {
+                                if(response.isSuccessful()) {
+                                    Intent homeIntent = new Intent(Login.this, HomeActivity.class);
 
-                                startActivity(homeIntent);
-                                finish();
-                            }
-                            else {
-                                Gson gson = new GsonBuilder().create();
-                                ResponseApi res;
-                                try {
-                                    res = gson.fromJson(response.errorBody().string(), ResponseApi.class);
-                                    System.out.println(res.getMessage());
+                                    SharedPreferences uPrefs = getSharedPreferences("UserInfo", MODE_PRIVATE);
+                                    User userLogined = response.body().getUser();
 
-                                    Toast toast = Toast.makeText(getApplicationContext(), res.getMessage(), Toast.LENGTH_LONG);
-                                    toast.show();
+                                    SharedPreferences.Editor prefsEditor = uPrefs.edit();
+                                    Gson gson = new Gson();
+                                    String json = gson.toJson(userLogined);
+                                    prefsEditor.putString("user", json);
+                                    prefsEditor.apply();
 
-                                } catch (IOException e) {
-                                    System.out.println("parse err false");
+                                    startActivity(homeIntent);
+                                    finish();
+                                }
+                                else {
+                                    Gson gson = new GsonBuilder().create();
+                                    ResponseApi res;
+                                    try {
+                                        res = gson.fromJson(response.errorBody().string(), ResponseApi.class);
+                                        System.out.println(res.getMessage());
+
+                                        Toast toast = Toast.makeText(getApplicationContext(), res.getMessage(), Toast.LENGTH_LONG);
+                                        toast.show();
+
+                                    } catch (IOException e) {
+                                        System.out.println("parse err false");
+                                    }
                                 }
                             }
-                        }
 
-                        @Override
-                        public void onFailure(Call<LoginRes> call, Throwable t) {
-                            System.out.println("fail to fetch");
-                        }
-                    });
+                            @Override
+                            public void onFailure(Call<LoginRes> call, Throwable t) {
+                                System.out.println(t.getMessage().toString());
+                            }
+                        });
+                    }
 
 
                 }
                 else if(fieldData.isEmpty()){
-
+                    Toast.makeText(Login.this, "No email or phone provide", Toast.LENGTH_SHORT).show();
                 }
                 else if(passData.isEmpty()) {
-                    
+                    Toast.makeText(Login.this, "No password", Toast.LENGTH_SHORT).show();
                 }
             }
         });

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:maxHeight="300dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_margin="10dp"
+    android:gravity="start"
+    android:clickable="false"
+    android:focusable="false"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/productdetail_review_user_image"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:shapeAppearanceOverlay="@style/Circular"
+            android:background="@color/orange_400"
+            android:scaleType="fitXY"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginStart="15dp"
+            >
+
+            <TextView
+                android:id="@+id/productdetail_review_user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Username"
+                android:textColor="@color/green_100"
+                android:fontFamily="@font/poppins_bold"
+                android:textSize="14sp"
+                />
+
+            <LinearLayout
+                android:id="@+id/productdetail_user_rate_layout"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/productdetail_review_main_holder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="start"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:id="@+id/productdetail_review_user_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="Title"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppins_medium"
+            />
+
+        <TextView
+            android:id="@+id/productdetail_review_user_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxHeight="90dp"
+            android:layout_marginTop="5dp"
+            android:text="@string/lorem_long"
+            android:textSize="12sp"
+            android:textColor="@color/grey_100"
+            android:ellipsize="end"
+            />
+
+        <GridView
+            android:id="@+id/productdetail_review_user_gridview_image"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:numColumns="4"
+            android:columnWidth="50dp"
+            android:verticalSpacing="5dp"
+            android:horizontalSpacing="5dp"
+            />
+
+        </LinearLayout>
+
+</LinearLayout>

@@ -1,10 +1,6 @@
 package com.example.foodeli.Fragments.Home;
 
 
-import static android.content.Context.MODE_PRIVATE;
-
-import android.content.Context;
-import android.content.SharedPreferences;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -15,8 +11,6 @@ import com.example.foodeli.MySqlSetUp.ResponseApi;
 import com.example.foodeli.MySqlSetUp.Schemas.General.Body.Category;
 import com.example.foodeli.MySqlSetUp.Schemas.General.Response.CategoryRes;
 import com.example.foodeli.MySqlSetUp.Schemas.General.Response.GetTopProduct;
-import com.example.foodeli.MySqlSetUp.Schemas.User.Response.GetUserResponse;
-import com.example.foodeli.MySqlSetUp.Schemas.User.User;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -29,7 +23,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class HomeViewModel extends ViewModel {
-    private Pool pool = new Pool();
+    private Pool pool = null;
     private MutableLiveData<ArrayList<Category>> categories;
     private MutableLiveData<ArrayList<GetTopProduct.ProductWithAvg>> topProducts;
 
@@ -50,23 +44,24 @@ public class HomeViewModel extends ViewModel {
     }
 
     private void loadCategories() {
+        pool = new Pool();
         Call<CategoryRes> getCategories = pool.getApiCallGeneral().getSystemCategory(6);
 
         getCategories.enqueue(new Callback<CategoryRes>() {
             @Override
-            public void onResponse(Call<CategoryRes> call, Response<CategoryRes> response) {
-                if (response.code() != 200) {
+            public void onResponse(Call<CategoryRes> call, Response<CategoryRes> responseC) {
+                if (!responseC.isSuccessful()) {
                     Gson gson = new GsonBuilder().create();
                     ResponseApi res;
                     try {
-                        res = gson.fromJson(response.errorBody().string(), ResponseApi.class);
+                        res = gson.fromJson(responseC.errorBody().string(), ResponseApi.class);
                         System.out.println(res.getMessage());
                     } catch (IOException e) {
                         System.out.println("parse err false");
                     }
                 }
                 else {
-                    categories.setValue(response.body().getCategories());
+                    categories.setValue(responseC.body().getCategories());
                 }
             }
 
@@ -78,23 +73,25 @@ public class HomeViewModel extends ViewModel {
     }
 
     private void loadTopProduct() {
+
+        pool = new Pool();
         Call<GetTopProduct> getTopProduct = pool.getApiCallGeneral().getTopProduct(1);
 
         getTopProduct.enqueue(new Callback<GetTopProduct>() {
             @Override
-            public void onResponse(Call<GetTopProduct> call, Response<GetTopProduct> response) {
-                if (response.code() != 200) {
+            public void onResponse(Call<GetTopProduct> call, Response<GetTopProduct> responseP) {
+                if (!responseP.isSuccessful()) {
                     Gson gson = new GsonBuilder().create();
                     ResponseApi res;
                     try {
-                        res = gson.fromJson(response.errorBody().string(), ResponseApi.class);
+                        res = gson.fromJson(responseP.errorBody().string(), ResponseApi.class);
                         System.out.println(res.getMessage());
                     } catch (IOException e) {
                         System.out.println("parse err false");
                     }
                 }
                 else {
-                    topProducts.setValue(response.body().getList());
+                    topProducts.setValue(responseP.body().getList());
                 }
             }
 

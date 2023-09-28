@@ -20,4 +20,8 @@ public class MethodWithTypeName extends Method {
         super(id, uid, mid, number, expired, desc, delete);
         this.type = type;
     }
+
+    public String getType() {
+        return type;
+    }
 }

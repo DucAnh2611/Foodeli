@@ -10,10 +10,21 @@ public class CheckVoucherRes extends ResponseApi {
 
     public class Discount {
         @SerializedName("OrderTotal")
-        private float total;
+        private double total;
 
-        @SerializedName("OrderShipping")
-        private float shipping;
+        @SerializedName("OrderShippingFee")
+        private double shipping;
+
+        public double getShipping() {
+            return shipping;
+        }
+
+        public double getTotal() {
+            return total;
+        }
     }
 
+    public Discount getDiscount() {
+        return discount;
+    }
 }

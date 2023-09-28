@@ -7,6 +7,7 @@ import com.example.foodeli.MySqlSetUp.Schemas.ShopProduct.Body.UpdateProductImag
 import com.example.foodeli.MySqlSetUp.Schemas.ShopProduct.Response.CreateProductRes;
 import com.example.foodeli.MySqlSetUp.Schemas.ShopProduct.Response.DeleteInfoRes;
 import com.example.foodeli.MySqlSetUp.Schemas.ShopProduct.Response.FindProductRes;
+import com.example.foodeli.MySqlSetUp.Schemas.ShopProduct.Response.GetProductInfo;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -23,6 +24,9 @@ public interface RetrofitAPICallShopProduct {
     Call<FindProductRes> findProduct(
             @Query("key") String key, @Query("min") float min, @Query("max") float max, @Query("cid") int cid, @Query("page") int page
     );
+
+    @GET(base + "getInfo")
+    Call<GetProductInfo> getProductInfo(@Query("pid") int pid);
 
     @POST(base + "new")
     Call<CreateProductRes> newProduct(@Body CreateProductBody body);

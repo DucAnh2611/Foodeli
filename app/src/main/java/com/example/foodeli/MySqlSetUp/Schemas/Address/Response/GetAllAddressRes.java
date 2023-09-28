@@ -10,4 +10,7 @@ public class GetAllAddressRes {
     @SerializedName("address")
     private ArrayList<Address> list;
 
+    public ArrayList<Address> getList() {
+        return list;
+    }
 }

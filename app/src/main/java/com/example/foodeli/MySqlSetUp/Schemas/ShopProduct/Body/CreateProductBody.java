@@ -11,7 +11,7 @@ public class CreateProductBody extends ProductPostBody{
             int uid,
             int sid,
             float price,
-            float stock,
+            int stock,
             String name,
             String unit,
             String shortDesc,

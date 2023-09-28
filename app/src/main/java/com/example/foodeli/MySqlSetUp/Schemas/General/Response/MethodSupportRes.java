@@ -13,4 +13,5 @@ public class MethodSupportRes extends ResponseApi {
     public ArrayList<MethodSupport> getMethod() {
         return method;
     }
+
 }

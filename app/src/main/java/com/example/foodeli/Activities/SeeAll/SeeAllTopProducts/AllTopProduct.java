@@ -51,24 +51,6 @@ public class AllTopProduct extends AppCompatActivity {
 
         getMoreProduct(page);
 
-        allProGv.setOnScrollListener(new AbsListView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-
-            }
-
-            @Override
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                if(firstVisibleItem + visibleItemCount >= totalItemCount){
-                    if(canScroll) {
-                        page++;
-                        getMoreProduct(page);
-                    }
-
-                }
-            }
-        });
-
     }
 
     private void getMoreProduct(int page) {
@@ -80,6 +62,7 @@ public class AllTopProduct extends AppCompatActivity {
             @Override
             public void onResponse(Call<GetTopProduct> call, Response<GetTopProduct> response) {
                 if (response.code() != 200) {
+                    canScroll= false;
                     Gson gson = new GsonBuilder().create();
                     ResponseApi res;
                     try {

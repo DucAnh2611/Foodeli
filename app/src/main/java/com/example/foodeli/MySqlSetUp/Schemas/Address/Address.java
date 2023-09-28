@@ -11,7 +11,7 @@ public class Address {
     @SerializedName("address")
     private String address;
     @SerializedName("Deleted")
-    private int deleted = 0;
+    private int deleted;
 
     public Address(int aid, int uid, String address) {
         this.aid = aid;
@@ -19,4 +19,19 @@ public class Address {
         this.address = address;
     }
 
+    public int getUid() {
+        return uid;
+    }
+
+    public int getAid() {
+        return aid;
+    }
+
+    public int getDeleted() {
+        return deleted;
+    }
+
+    public String getAddress() {
+        return address;
+    }
 }

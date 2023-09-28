@@ -37,4 +37,31 @@ public class Method {
         this.delete = delete;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public int getUid() {
+        return uid;
+    }
+
+    public int getDelete() {
+        return delete;
+    }
+
+    public int getMid() {
+        return mid;
+    }
+
+    public String getExpired() {
+        return expired;
+    }
+
+    public String getNumber() {
+        return number;
+    }
 }

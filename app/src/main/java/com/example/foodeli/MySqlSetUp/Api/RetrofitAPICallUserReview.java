@@ -2,6 +2,7 @@ package com.example.foodeli.MySqlSetUp.Api;
 
 import com.example.foodeli.MySqlSetUp.Schemas.ProductReview.Body.CreateReviewBody;
 import com.example.foodeli.MySqlSetUp.Schemas.ProductReview.Response.CreateReviewRes;
+import com.example.foodeli.MySqlSetUp.Schemas.ProductReview.Response.GetProductReviewRes;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -17,6 +18,6 @@ public interface RetrofitAPICallUserReview {
     Call<CreateReviewRes> createReview(@Body CreateReviewBody body);
 
     @GET(base + "get")
-    Call<CreateReviewRes> getReviewOfProduct(@Query("pid") int pid, @Query("rate") int rate, @Query("page") int page);
+    Call<GetProductReviewRes> getReviewOfProduct(@Query("pid") int pid, @Query("rate") int rate, @Query("page") int page);
 
 }

@@ -18,14 +18,22 @@ public class GetCartRes extends ResponseApi {
         private String image;
 
         @SerializedName("quantity")
-        private float quantity;
+        private int quantity;
 
         public String getImage() {
             return image;
         }
 
-        public float getQuantity() {
+        public int getQuantity() {
             return quantity;
+        }
+
+        public void setImage(String image) {
+            this.image = image;
+        }
+
+        public void setQuantity(int quantity) {
+            this.quantity = quantity;
         }
     }
 

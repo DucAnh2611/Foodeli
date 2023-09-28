@@ -1,6 +1,7 @@
 package com.example.foodeli.Fragments.Home;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.example.foodeli.Activities.ProductDetail.ProductDetail;
 import com.example.foodeli.MySqlSetUp.Schemas.General.Response.GetTopProduct;
 import com.example.foodeli.R;
 import com.google.android.material.imageview.ShapeableImageView;
@@ -77,15 +79,26 @@ public class TopProductGridViewAdapter extends BaseAdapter {
         String estimate = item.getTimeStart() + "m-" + item.getTimeFinish() + "m";
         timeEstimate.setText(estimate);
 
-        byte[] decodedPString = Base64.decode(item.getPImage(), Base64.DEFAULT);
-        Bitmap decodedPByte = BitmapFactory.decodeByteArray(decodedPString, 0, decodedPString.length);
-        pimage.setImageBitmap(decodedPByte);
-
+        if(!item.getPImage().equals("")) {
+            byte[] decodedPString = Base64.decode(item.getPImage(), Base64.DEFAULT);
+            Bitmap decodedPByte = BitmapFactory.decodeByteArray(decodedPString, 0, decodedPString.length);
+            pimage.setImageBitmap(decodedPByte);
+        }
         if(!item.getSImage().equals("")) {
             byte[] decodedSString = Base64.decode(item.getSImage(), Base64.DEFAULT);
             Bitmap decodedSByte = BitmapFactory.decodeByteArray(decodedSString, 0, decodedSString.length);
             simage.setImageBitmap(decodedSByte);
         }
+
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent productDetailIntent = new Intent(context, ProductDetail.class);
+                productDetailIntent.putExtra("pid", item.getPid());
+                context.startActivity(productDetailIntent);
+
+            }
+        });
 
         return convertView;
     }

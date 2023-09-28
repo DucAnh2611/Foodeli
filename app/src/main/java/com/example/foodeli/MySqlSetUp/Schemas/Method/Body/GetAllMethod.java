@@ -11,4 +11,7 @@ public class GetAllMethod extends ResponseApi {
     @SerializedName("method")
     private ArrayList<MethodWithTypeName> list;
 
+    public ArrayList<MethodWithTypeName> getList() {
+        return list;
+    }
 }

@@ -103,15 +103,14 @@ public class HomeFragment extends Fragment {
 
         homeViewModel.getCategories().observe(getViewLifecycleOwner(), categories -> {
             CategoryRV.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false));
-
             CategoryRecyclerViewAdapter adapter = new CategoryRecyclerViewAdapter(categories, view.getContext());
             CategoryRV.setAdapter(adapter);
-        });
 
-        homeViewModel.getTopProducts().observe(getViewLifecycleOwner(), products -> {
+            homeViewModel.getTopProducts().observe(getViewLifecycleOwner(), products -> {
+                TopProductGridViewAdapter adapter2 = new TopProductGridViewAdapter(products, view.getContext());
+                topProducts.setAdapter(adapter2);
 
-            TopProductGridViewAdapter adapter = new TopProductGridViewAdapter(products, view.getContext());
-            topProducts.setAdapter(adapter);
+            });
         });
 
         TextView seeMoreCategory = view.findViewById(R.id.home_more_category);
@@ -135,7 +134,9 @@ public class HomeFragment extends Fragment {
         toMyCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(view.getContext(), CartActivity.class));
+                Intent cartIntent = new Intent(view.getContext(), CartActivity.class);
+                cartIntent.putExtra("uid", user.getId());
+                startActivity(cartIntent);
             }
         });
 

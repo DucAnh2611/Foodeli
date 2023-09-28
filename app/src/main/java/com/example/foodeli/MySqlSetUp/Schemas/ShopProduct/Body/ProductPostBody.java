@@ -1,15 +1,15 @@
 package com.example.foodeli.MySqlSetUp.Schemas.ShopProduct.Body;
 
 public class ProductPostBody {
-    private int uid, sid;
-    private float price, stock;
+    private int uid, sid, stock;;
+    private float price;
     private String name, unit, shortDesc, longDesc;
 
     public ProductPostBody(
             int uid,
             int sid,
             float price,
-            float stock,
+            int stock,
             String name,
             String unit,
             String shortDesc,

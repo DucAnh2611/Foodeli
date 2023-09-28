@@ -3,10 +3,12 @@ package com.example.foodeli.MySqlSetUp.Api;
 
 import com.example.foodeli.MySqlSetUp.Schemas.User.Body.ChangeForm;
 import com.example.foodeli.MySqlSetUp.Schemas.User.Body.CreateAccount;
+import com.example.foodeli.MySqlSetUp.Schemas.User.Body.SendOTPBody;
 import com.example.foodeli.MySqlSetUp.Schemas.User.Response.CreateUserResponse;
 import com.example.foodeli.MySqlSetUp.Schemas.User.Response.GetUserResponse;
 import com.example.foodeli.MySqlSetUp.Schemas.User.Body.LoginForm;
 import com.example.foodeli.MySqlSetUp.Schemas.User.Response.LoginRes;
+import com.example.foodeli.MySqlSetUp.Schemas.User.Response.SendOTPResponse;
 
 import java.util.ArrayList;
 
@@ -30,5 +32,11 @@ public interface RetrofitAPICallUserProfile {
 
     @PUT("user/profile/change")
     Call<CreateUserResponse> update(@Query("id") int id, @Body ArrayList<ChangeForm> changeForm);
+
+    @POST("user/profile/send-otp")
+    Call<SendOTPResponse> sendOTP(@Body SendOTPBody body);
+
+
+
 
 }
