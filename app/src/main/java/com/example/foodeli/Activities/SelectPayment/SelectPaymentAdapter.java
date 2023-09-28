@@ -2,6 +2,7 @@ package com.example.foodeli.Activities.SelectPayment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -154,11 +155,20 @@ public class SelectPaymentAdapter extends BaseAdapter {
             if (itemSelect == methodSupport.getMid()) {
                 if (methodSupport.getType().equals("Cash")) {
                     innerSelect.setVisibility(View.VISIBLE);
-                } else {
-                    isOpenIconSupport.setImageResource(R.drawable.down_arrow);
-                    subGridViewUserMethod.setVisibility(View.VISIBLE);
                 }
-                convertView.setBackgroundResource(R.drawable.custom_button_style_sec);
+                else {
+                    if(mapListMethod.get(methodSupport.getType()) != null) {
+                        adapter = new SelectPaymentUserMethodAdapter(mapListMethod.get(methodSupport.getType()), context);
+                        subGridViewUserMethod.setAdapter(adapter);
+                    }
+
+                    isOpenIconSupport.setImageResource(R.drawable.down_arrow);
+                    subGridViewUserMethod.setLayoutParams(new LinearLayout.LayoutParams(
+                            ViewGroup.LayoutParams.MATCH_PARENT,
+                            ViewGroup.LayoutParams.WRAP_CONTENT
+                    ));
+                }
+                paymentLayout.setBackgroundResource(R.drawable.custom_button_style_sec);
             } else {
                 if (methodSupport.getType().equals("Cash")) {
                     paymentLayout.removeView(isOpenIconSupport);
@@ -168,13 +178,13 @@ public class SelectPaymentAdapter extends BaseAdapter {
                     isOpenIconSupport.setImageResource(R.drawable.right_arrow);
                 }
 
-                subGridViewUserMethod.setVisibility(View.INVISIBLE);
-                convertView.setBackgroundResource(R.drawable.custom_input_style);
+                subGridViewUserMethod.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
+                paymentLayout.setBackgroundResource(R.drawable.custom_input_style);
             }
-            convertView.setOnClickListener(new View.OnClickListener() {
+            paymentLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(itemSelect ==  methodSupport.getMid() ) {
+                    if(itemSelect == methodSupport.getMid() ) {
                         itemSelect = 0;
                         itemType = "";
                     }

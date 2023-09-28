@@ -12,7 +12,7 @@ public class Method {
     private int mid;
     @SerializedName("UserMethodNumber")
     private String number;
-    @SerializedName("UserMethodExpiredAt")
+    @SerializedName("UserMethodExpireAt")
     private String expired;
     @SerializedName("UserMethodDesc")
     private String desc;
