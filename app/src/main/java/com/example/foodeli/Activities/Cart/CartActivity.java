@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -20,6 +21,9 @@ import com.example.foodeli.Activities.SelectVoucher.SelectVoucherActivity;
 import com.example.foodeli.MySqlSetUp.Pool;
 import com.example.foodeli.MySqlSetUp.ResponseApi;
 import com.example.foodeli.MySqlSetUp.Schemas.Cart.Response.GetCartRes;
+import com.example.foodeli.MySqlSetUp.Schemas.User.User;
+import com.example.foodeli.MySqlSetUp.Schemas.UserOrder.Body.PlaceOrderBody;
+import com.example.foodeli.MySqlSetUp.Schemas.UserOrder.Response.PlaceOrderRes;
 import com.example.foodeli.MySqlSetUp.Schemas.UserVoucher.Body.CheckCanUseVoucher;
 import com.example.foodeli.MySqlSetUp.Schemas.UserVoucher.Response.CheckVoucherRes;
 import com.example.foodeli.R;
@@ -33,6 +37,7 @@ import java.util.ArrayList;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.http.Body;
 
 public class CartActivity extends AppCompatActivity implements CartRecyclerViewAdapter.OnItemUpdate{
 
@@ -44,15 +49,14 @@ public class CartActivity extends AppCompatActivity implements CartRecyclerViewA
     public static double taxRate = 0.08;
     private int aid=0;
     private int vid=0;
-
-    private int ckid=0;
-
-    private String aname = "", vcode = "", cknum="", cktype="";
+    private int ckid=0, mid = 0, ckicon = R.drawable.wallet_non_select;
+    private String aname = "", vcode = "", cknum="";
     private TextView addressText, voucherText, paymentText;
     RelativeLayout addressSelect, voucherSelect, paymentSelect;
     private ImageView addressIcon, voucherIcon, paymentIcon;
     private TextView subtotal, shippingFee,  discount, tax, total;
     private CartRecyclerViewAdapter adapter;
+    private Button placeOrder;
     private TotalValue totalCal;
 
     @Override
@@ -71,7 +75,7 @@ public class CartActivity extends AppCompatActivity implements CartRecyclerViewA
         int uid = CartIntent.getIntExtra("uid", 0);
 
         RecyclerView recyclerView = findViewById(R.id.cart_all_gv);
-        Button placeOrder = findViewById(R.id.place_orer_btn);
+        placeOrder = findViewById(R.id.place_orer_btn);
 
         Call<GetCartRes> cartRes = pool.getApiCallUserCart().getCartUser(uid);
 
@@ -161,9 +165,51 @@ public class CartActivity extends AppCompatActivity implements CartRecyclerViewA
                 Intent paymentIntent = new Intent(CartActivity.this, SelectPaymentActivity.class);
                 paymentIntent.putExtra("uid", uid);
                 paymentIntent.putExtra("ckid", ckid);
+                paymentIntent.putExtra("mid", mid);
                 paymentIntent.putExtra("cknum", cknum);
-                paymentIntent.putExtra("cktype", cktype);
                 startActivityForResult(paymentIntent, PAYMENT_REQUEST_CODE);
+            }
+        });
+
+        placeOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Gson gson = new Gson();
+                SharedPreferences mPrefs = getSharedPreferences("UserInfo", MODE_PRIVATE);
+                String json = mPrefs.getString("user", "");
+                User user = gson.fromJson(json, User.class);
+
+                PlaceOrderBody body = new PlaceOrderBody(
+                        uid, aid, ckid, vid, user.getName(), user.getPhone(),
+                        user.getEmail(),  totalCal.getTotalVal(), cknum.equals("Cash") ? 0 : 1
+                );
+
+                Call<PlaceOrderRes> PlaceOrderRes = pool.getApiCallUserOrder().placeOrder(body);
+
+                PlaceOrderRes.enqueue(new Callback<com.example.foodeli.MySqlSetUp.Schemas.UserOrder.Response.PlaceOrderRes>() {
+                    @Override
+                    public void onResponse(Call<PlaceOrderRes> call, Response<PlaceOrderRes> response) {
+                        if (!response.isSuccessful()) {
+                            Gson gson = new GsonBuilder().create();
+                            ResponseApi res;
+                            try {
+                                res = gson.fromJson(response.errorBody().string(), ResponseApi.class);
+                                Toast.makeText(CartActivity.this, res.getMessage(), Toast.LENGTH_SHORT).show();
+                            } catch (IOException e) {
+                                System.out.println("parse err false");
+                            }
+                        }
+                        else {
+                            int oid = response.body().getOrderId();
+                            System.out.println(oid);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<PlaceOrderRes> call, Throwable t) {
+                        System.out.println(t.getMessage());
+                    }
+                });
             }
         });
 
@@ -187,6 +233,8 @@ public class CartActivity extends AppCompatActivity implements CartRecyclerViewA
         ckid = 0;
         cknum = "Payment";
         paymentText.setText(cknum);
+        paymentIcon.setImageResource(ckicon);
+        voucherSelect.setBackgroundResource(R.drawable.custom_input_style);
     }
 
     @Override
@@ -196,7 +244,7 @@ public class CartActivity extends AppCompatActivity implements CartRecyclerViewA
             if (requestCode == ADDRESS_REQUEST_CODE) {
                 int temp_aid = data.getIntExtra("aid", 0);
                 aid = temp_aid;
-                if(temp_aid !=0 && !list.isEmpty()) {
+                if(temp_aid !=0 && list != null) {
                     String temp_aname = data.getStringExtra("aName");
                     aname = temp_aname;
                     addressText.setText(temp_aname);
@@ -204,13 +252,14 @@ public class CartActivity extends AppCompatActivity implements CartRecyclerViewA
                     addressSelect.setBackgroundResource(R.drawable.custom_button_style_sec);
                 }
                 else {
+                    Toast.makeText(this, "Can not select address while cart is empty", Toast.LENGTH_SHORT).show();
                     defaultAdd();
                 }
             }
-            if (requestCode == VOUCHER_REQUEST_CODE) {
+            else if (requestCode == VOUCHER_REQUEST_CODE) {
                 int temp_vid = data.getIntExtra("vid", 0);
                 vid = temp_vid;
-                if(temp_vid !=0 && !list.isEmpty()) {
+                if(temp_vid !=0 && list != null) {
                     String temp_vcode = data.getStringExtra("vcode");
                     vcode = temp_vcode;
 
@@ -222,7 +271,28 @@ public class CartActivity extends AppCompatActivity implements CartRecyclerViewA
                     updateTotal.calculateFromList(list);
                 }
                 else {
+                    Toast.makeText(this, "Can not apply voucher while cart is empty", Toast.LENGTH_SHORT).show();
                     defaultVoucher();
+                }
+            }
+            else if (requestCode == PAYMENT_REQUEST_CODE) {
+                int temp_ckid = data.getIntExtra("ckid", 0);
+                ckid = temp_ckid;
+                if(temp_ckid !=0 && list != null) {
+
+                    String tempNum = data.getStringExtra("cknum");
+                    cknum = tempNum;
+
+                    ckicon = data.getIntExtra("ckicon", 0);
+                    mid = data.getIntExtra("mid", 0);
+
+                    paymentText.setText(cknum);
+                    paymentIcon.setImageResource(ckicon);
+                    paymentSelect.setBackgroundResource(R.drawable.custom_button_style_sec);
+                }
+                else {
+                    Toast.makeText(this, "Can not select payment while cart is empty", Toast.LENGTH_SHORT).show();
+                    defaultPayment();
                 }
             }
         }
@@ -267,6 +337,7 @@ public class CartActivity extends AppCompatActivity implements CartRecyclerViewA
         private double preShippingFee;
         private double discountSubtotal;
         private double discountShippingFee;
+        private double totalVal;
 
         DecimalFormat df = new DecimalFormat("#.##");
 
@@ -309,6 +380,7 @@ public class CartActivity extends AppCompatActivity implements CartRecyclerViewA
                         try {
                             res = gson.fromJson(response.errorBody().string(), ResponseApi.class);
                             Toast.makeText(CartActivity.this, res.getMessage(), Toast.LENGTH_SHORT).show();
+                            System.out.println(res.getMessage());
                         } catch (IOException e) {
                             System.out.println("parse err false");
                         }
@@ -331,6 +403,7 @@ public class CartActivity extends AppCompatActivity implements CartRecyclerViewA
 
                         double taxValue = (discountSubtotal + discountShippingFee) * taxRate;
                         String totalValue = df.format(discountSubtotal + discountShippingFee + taxValue);
+                        totalVal = Double.parseDouble(totalValue.replace(",", "."));
 
                         setValueToView(df.format(preSubtotal), df.format(preShippingFee), discountValue, df.format(taxValue), totalValue);
 
@@ -346,5 +419,9 @@ public class CartActivity extends AppCompatActivity implements CartRecyclerViewA
         }
 
         public TotalValue() {}
+
+        public double getTotalVal() {
+            return totalVal;
+        }
     }
 }

@@ -37,11 +37,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SelectPaymentAdapter extends BaseAdapter {
+public class SelectPaymentAdapter extends BaseAdapter implements SelectPaymentUserMethodAdapter.OnClickItem{
 
     private ArrayList<MethodSupport> listSupport;
     private HashMap<String, ArrayList<MethodWithTypeName>> mapListMethod = new HashMap<>();
-    private int itemSelect = -1, uid;
+    private int itemSelect = -1, uid, ckSelect = -1;
     private boolean load=false;
     private String itemNumber = "", itemType = "";
     private Pool pool;
@@ -55,13 +55,12 @@ public class SelectPaymentAdapter extends BaseAdapter {
     private HashMap<String, Integer> mapIconSupportList;
     private SelectPaymentUserMethodAdapter adapter;
 
-    public SelectPaymentAdapter(ArrayList<MethodSupport> listSupport, int uid, int itemSelect,
-                                String itemNumber, String itemType,
-                                HashMap<String, Integer> mapIconSupportList, Context context) {
+    public SelectPaymentAdapter(ArrayList<MethodSupport> listSupport, int uid, int itemSelect, int ckSelect,
+                                String itemNumber, HashMap<String, Integer> mapIconSupportList, Context context) {
         this.listSupport = listSupport;
         this.itemSelect = itemSelect;
         this.itemNumber = itemNumber;
-        this.itemType = itemType;
+        this.ckSelect = ckSelect;
         this.uid = uid;
         this.mapIconSupportList = mapIconSupportList;
         this.context = context;
@@ -148,7 +147,7 @@ public class SelectPaymentAdapter extends BaseAdapter {
             load =true;
             CallAPIUserHave();
         }
-        else {
+        else if(mapListMethod != null && !mapListMethod.isEmpty() ){
             iconSupport.setImageResource(mapIconSupportList.get(methodSupport.getType()));
             typeSupport.setText(methodSupport.getType());
 
@@ -158,7 +157,8 @@ public class SelectPaymentAdapter extends BaseAdapter {
                 }
                 else {
                     if(mapListMethod.get(methodSupport.getType()) != null) {
-                        adapter = new SelectPaymentUserMethodAdapter(mapListMethod.get(methodSupport.getType()), context);
+                        adapter = new SelectPaymentUserMethodAdapter(mapListMethod.get(methodSupport.getType()), ckSelect, context);
+                        adapter.itemClick(this);
                         subGridViewUserMethod.setAdapter(adapter);
                     }
 
@@ -169,11 +169,13 @@ public class SelectPaymentAdapter extends BaseAdapter {
                     ));
                 }
                 paymentLayout.setBackgroundResource(R.drawable.custom_button_style_sec);
-            } else {
+            }
+            else {
                 if (methodSupport.getType().equals("Cash")) {
                     paymentLayout.removeView(isOpenIconSupport);
                     innerSelect.setVisibility(View.INVISIBLE);
-                } else {
+                }
+                else {
                     paymentLayout.removeView(supportSelectLayout);
                     isOpenIconSupport.setImageResource(R.drawable.right_arrow);
                 }
@@ -187,10 +189,15 @@ public class SelectPaymentAdapter extends BaseAdapter {
                     if(itemSelect == methodSupport.getMid() ) {
                         itemSelect = 0;
                         itemType = "";
+                        itemNumber = "";
                     }
                     else {
                         itemSelect = methodSupport.getMid();
                         itemType = methodSupport.getType();
+                        if(methodSupport.getType().equals("Cash")) {
+                            itemNumber = "Cash";
+                            ckSelect = mapListMethod.get("Cash").get(0).getId();
+                        }
                     }
                     notifyDataSetChanged();
                 }
@@ -200,4 +207,27 @@ public class SelectPaymentAdapter extends BaseAdapter {
         return convertView;
     }
 
+    public int getItemSelect() {
+        return itemSelect;
+    }
+
+    public String getItemType() {
+        return itemType;
+    }
+
+    public String getItemNumber() {
+        return itemNumber;
+    }
+
+    public int getCkSelect() {
+        return ckSelect;
+    }
+
+    @Override
+    public void onClickItem() {
+        itemNumber = adapter.getTempMethodNumber();
+        ckSelect = adapter.getTempMethodId();
+    }
 }
+
+

@@ -2,8 +2,9 @@ package com.example.foodeli.MySqlSetUp.Schemas.UserOrder.Body;
 
 public class PlaceOrderBody {
 
-    private int uid, addid, ckid, vid;
+    private int uid, addid, ckid, vid, payed;
     private String uname, phone, email;
+    private double total;
 
     public PlaceOrderBody(
             int uid,
@@ -12,7 +13,9 @@ public class PlaceOrderBody {
             int vid,
             String uname,
             String phone,
-            String email
+            String email,
+            double total,
+            int payed
     ) {
         this.uid = uid;
         this.addid = addid;
@@ -21,6 +24,8 @@ public class PlaceOrderBody {
         this.uname = uname;
         this.phone = phone;
         this.email = email;
+        this.total = total;
+        this.payed = payed;
     }
 
 }

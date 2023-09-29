@@ -29,7 +29,7 @@ import retrofit2.Response;
 public class SelectPaymentActivity extends AppCompatActivity {
     private Pool pool;
     private Intent cartIntent;
-    private int ckid, uid;
+    private int ckid, uid, mid;
     private String cknum, cktype;
     private GridView gridViewMethodSupport;
     private Button addMethodSupport, confirmMethod;
@@ -45,14 +45,14 @@ public class SelectPaymentActivity extends AppCompatActivity {
         cartIntent = getIntent();
         ckid = cartIntent.getIntExtra("ckid", 0);
         cknum = cartIntent.getStringExtra("cknum");
-        cktype = cartIntent.getStringExtra("cknum");
+        mid = cartIntent.getIntExtra("mid", 0);
         uid = cartIntent.getIntExtra("uid", 0);
 
         ImageButton backBtn = findViewById(R.id.back_btn);
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                backBtnClick(ckid, cknum, cktype);
+                backBtnClick(ckid, cknum, mid, convertTypeToIcon(""));
             }
         });
 
@@ -83,8 +83,7 @@ public class SelectPaymentActivity extends AppCompatActivity {
                         mapIconSupportList.put(method.getType(), convertTypeToIcon(method.getType()));
                     }
 
-                    adapter = new SelectPaymentAdapter(methods, uid, ckid, cknum,
-                            cktype, mapIconSupportList, SelectPaymentActivity.this);
+                    adapter = new SelectPaymentAdapter(methods, uid, mid ,ckid, cknum, mapIconSupportList, SelectPaymentActivity.this);
                     gridViewMethodSupport.setAdapter(adapter);
 
                 }
@@ -96,12 +95,24 @@ public class SelectPaymentActivity extends AppCompatActivity {
             }
         });
 
+        confirmMethod.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ckid = adapter.getCkSelect();
+                cktype = adapter.getItemType();
+                mid = adapter.getItemSelect();
+                cknum = adapter.getItemNumber();
+                backBtnClick(ckid, cknum, mid, convertTypeToIcon(cktype));
+            }
+        });
+
     }
 
-    private void backBtnClick(int ckid, String cknum, String cktype) {
+    private void backBtnClick(int ckid, String cknum, int mid, int ckIcon) {
         cartIntent.putExtra("cknum", cknum);
         cartIntent.putExtra("ckid", ckid);
-        cartIntent.putExtra("cktype", cktype);
+        cartIntent.putExtra("mid", mid);
+        cartIntent.putExtra("ckicon", ckIcon);
         setResult(RESULT_OK, cartIntent);
         finish();
     }
@@ -119,7 +130,7 @@ public class SelectPaymentActivity extends AppCompatActivity {
             case "foodelipay":
                 return R.drawable.logo;
             default:
-                return 0;
+                return R.drawable.wallet_non_select;
         }
     }
 }

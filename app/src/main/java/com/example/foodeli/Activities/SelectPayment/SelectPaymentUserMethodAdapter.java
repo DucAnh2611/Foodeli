@@ -25,9 +25,10 @@ public class SelectPaymentUserMethodAdapter extends BaseAdapter {
     private TextView number, expireDate;
     private RelativeLayout selectLayout;
     private View selectInner;
-
-    public SelectPaymentUserMethodAdapter(ArrayList<MethodWithTypeName> list, Context context) {
+    private OnClickItem onClickItem;
+    public SelectPaymentUserMethodAdapter(ArrayList<MethodWithTypeName> list, int ckSelect, Context context) {
         this.context = context;
+        this.tempMethodId = ckSelect;
         this.list = list;
     };
 
@@ -93,10 +94,26 @@ public class SelectPaymentUserMethodAdapter extends BaseAdapter {
                     tempMethodId = method.getId();
                     tempMethodNumber = method.getNumber();
                 }
+                onClickItem.onClickItem();
                 notifyDataSetChanged();
             }
         });
 
         return convertView;
     }
+
+    public String getTempMethodNumber() {
+        return tempMethodNumber;
+    }
+
+    public int getTempMethodId() {
+        return tempMethodId;
+    }
+
+    public interface OnClickItem {
+        void onClickItem();
+    }
+
+    public void itemClick(OnClickItem onClickItem) {this.onClickItem = onClickItem;}
+
 }
