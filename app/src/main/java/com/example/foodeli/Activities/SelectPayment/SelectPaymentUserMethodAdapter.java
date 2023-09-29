@@ -76,11 +76,9 @@ public class SelectPaymentUserMethodAdapter extends BaseAdapter {
 
         if(tempMethodId == method.getId()) {
             selectInner.setVisibility(View.VISIBLE);
-            convertView.setBackgroundResource(R.drawable.bg_items_subgridview_suppot_method_sec);
         }
         else {
             selectInner.setVisibility(View.INVISIBLE);
-            convertView.setBackgroundResource(R.drawable.bg_items_subgridview_support_method);
         }
 
         convertView.setOnClickListener(new View.OnClickListener() {

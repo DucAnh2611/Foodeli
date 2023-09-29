@@ -52,7 +52,7 @@ public class SelectPaymentActivity extends AppCompatActivity {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                backBtnClick(ckid, cknum, mid, convertTypeToIcon(""));
+                backBtnClick(ckid, cknum, mid, convertTypeToIcon(cktype));
             }
         });
 

@@ -154,8 +154,17 @@ public class SelectPaymentAdapter extends BaseAdapter implements SelectPaymentUs
             if (itemSelect == methodSupport.getMid()) {
                 if (methodSupport.getType().equals("Cash")) {
                     innerSelect.setVisibility(View.VISIBLE);
+
+                    if(paymentLayout.findViewById(R.id.method_support_is_select) != null) {
+                        paymentLayout.removeView(isOpenIconSupport);
+                    }
+
                 }
                 else {
+                    if(paymentLayout.findViewById(R.id.method_support_layout) != null) {
+                        paymentLayout.removeView(supportSelectLayout);
+                    }
+
                     if(mapListMethod.get(methodSupport.getType()) != null) {
                         adapter = new SelectPaymentUserMethodAdapter(mapListMethod.get(methodSupport.getType()), ckSelect, context);
                         adapter.itemClick(this);

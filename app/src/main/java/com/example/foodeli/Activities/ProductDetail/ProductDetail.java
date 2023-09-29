@@ -1,14 +1,12 @@
 package com.example.foodeli.Activities.ProductDetail;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.foodeli.Activities.Home.HomeViewModel;
 import com.example.foodeli.MySqlSetUp.Pool;
 import com.example.foodeli.MySqlSetUp.ResponseApi;
 import com.example.foodeli.MySqlSetUp.Schemas.Cart.Body.AddToCartBody;
@@ -28,7 +27,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
-import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,11 +43,14 @@ public class ProductDetail extends AppCompatActivity {
     private List<View> dotViews = new ArrayList<>();
     private int quantity = 1;
     private int pid;
+    private HomeViewModel homeViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_detail);
+
+        homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
 
         ImageButton backBtn = findViewById(R.id.back_btn);
         LinearLayout rateHolder = findViewById(R.id.productdetail_rate_holder);
@@ -231,6 +232,7 @@ public class ProductDetail extends AppCompatActivity {
                     }
                 }
                 else {
+                    homeViewModel.updateListProductInCart(uid);
                     Toast.makeText(ProductDetail.this, response.body().isAdded() ? "Successfully" : "Failed on adding this item to cart", Toast.LENGTH_SHORT).show();
                 }
             }

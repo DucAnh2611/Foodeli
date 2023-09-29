@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.foodeli.Activities.Home.HomeViewModel;
 import com.example.foodeli.R;
 
 /**
@@ -25,6 +26,8 @@ public class OrderActive extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private HomeViewModel homeViewModel;
 
     public OrderActive() {
         // Required empty public constructor
@@ -60,7 +63,8 @@ public class OrderActive extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View view =  inflater.inflate(R.layout.fragment_order_active, container, false);
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_order_active, container, false);
+        return view;
     }
 }

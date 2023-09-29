@@ -5,15 +5,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.icu.text.SymbolTable;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.preference.PreferenceManager;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,9 +22,10 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.foodeli.Activities.Cart.CartActivity;
+import com.example.foodeli.Activities.Home.HomeViewModel;
 import com.example.foodeli.Activities.SeeAll.SeeAllCategory.AllCategory;
 import com.example.foodeli.Activities.SeeAll.SeeAllTopProducts.AllTopProduct;
-import com.example.foodeli.MySqlSetUp.Schemas.General.Response.GetTopProduct;
+import com.example.foodeli.MySqlSetUp.Schemas.Cart.Response.GetCartRes;
 import com.example.foodeli.MySqlSetUp.Schemas.User.User;
 import com.example.foodeli.R;
 import com.google.android.material.imageview.ShapeableImageView;
@@ -74,8 +74,21 @@ public class HomeFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        homeViewModel = new ViewModelProvider(requireActivity()).get(HomeViewModel.class);
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        // Inflate the layout for this fragment
+
 
         Gson gson = new Gson();
         SharedPreferences mPrefs = getContext().getSharedPreferences("UserInfo", Context.MODE_PRIVATE);
@@ -96,8 +109,6 @@ public class HomeFragment extends Fragment {
             UserImage.setImageBitmap(decodedPByte);
         }
 
-        homeViewModel = new ViewModelProvider(requireActivity()).get(HomeViewModel.class);
-
         RecyclerView CategoryRV = view.findViewById(R.id.rv_category);
         GridView topProducts = view.findViewById(R.id.product_gv);
 
@@ -113,6 +124,13 @@ public class HomeFragment extends Fragment {
             });
         });
 
+        homeViewModel.getListProductInCart(user.getId()).observe(getViewLifecycleOwner(), new Observer<ArrayList<GetCartRes.ProductWithImage>>() {
+            @Override
+            public void onChanged(ArrayList<GetCartRes.ProductWithImage> productWithImages) {
+                System.out.println("ok");
+            }
+        });
+
         TextView seeMoreCategory = view.findViewById(R.id.home_more_category);
         TextView seeMoreProduct = view.findViewById(R.id.home_more_topproduct);
         ImageButton toMyCart = view .findViewById(R.id.my_cart_btn);
@@ -120,41 +138,26 @@ public class HomeFragment extends Fragment {
         seeMoreCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(view.getContext(), AllCategory.class));
+                startActivity(new Intent(getActivity(), AllCategory.class));
             }
         });
 
         seeMoreProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(view.getContext(), AllTopProduct.class));
+                startActivity(new Intent(getActivity(), AllTopProduct.class));
             }
         });
 
         toMyCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent cartIntent = new Intent(view.getContext(), CartActivity.class);
+                Intent cartIntent = new Intent(getActivity(), CartActivity.class);
                 cartIntent.putExtra("uid", user.getId());
                 startActivity(cartIntent);
             }
         });
 
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        return view;
     }
 }

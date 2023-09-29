@@ -1,6 +1,8 @@
 package com.example.foodeli.Activities.Cart;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,6 +20,7 @@ import android.widget.Toast;
 import com.example.foodeli.Activities.SelectAddress.SelectAddressActivity;
 import com.example.foodeli.Activities.SelectPayment.SelectPaymentActivity;
 import com.example.foodeli.Activities.SelectVoucher.SelectVoucherActivity;
+import com.example.foodeli.Activities.Home.HomeViewModel;
 import com.example.foodeli.MySqlSetUp.Pool;
 import com.example.foodeli.MySqlSetUp.ResponseApi;
 import com.example.foodeli.MySqlSetUp.Schemas.Cart.Response.GetCartRes;
@@ -37,13 +40,13 @@ import java.util.ArrayList;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.http.Body;
 
 public class CartActivity extends AppCompatActivity implements CartRecyclerViewAdapter.OnItemUpdate{
 
     private static final int ADDRESS_REQUEST_CODE =1;
     private static final int VOUCHER_REQUEST_CODE =2;
     private static final int PAYMENT_REQUEST_CODE =3;
+    private HomeViewModel homeViewModel;
     private ArrayList<GetCartRes.ProductWithImage> list;
     private Pool pool = new Pool();
     public static double taxRate = 0.08;
@@ -64,6 +67,8 @@ public class CartActivity extends AppCompatActivity implements CartRecyclerViewA
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
 
+        homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+
         ImageButton backBtn = findViewById(R.id.back_btn);
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,46 +82,26 @@ public class CartActivity extends AppCompatActivity implements CartRecyclerViewA
         RecyclerView recyclerView = findViewById(R.id.cart_all_gv);
         placeOrder = findViewById(R.id.place_orer_btn);
 
-        Call<GetCartRes> cartRes = pool.getApiCallUserCart().getCartUser(uid);
-
-        cartRes.enqueue(new Callback<GetCartRes>() {
+        homeViewModel.getListProductInCart(uid).observe(this, new Observer<ArrayList<GetCartRes.ProductWithImage>>() {
             @Override
-            public void onResponse(Call<GetCartRes> call, Response<GetCartRes> response) {
-                if (response.code() != 200) {
-                    Gson gson = new GsonBuilder().create();
-                    ResponseApi res;
-                    try {
-                        res = gson.fromJson(response.errorBody().string(), ResponseApi.class);
-                        System.out.println(res.getMessage());
-                    } catch (IOException e) {
-                        System.out.println("parse err false");
-                    }
+            public void onChanged(ArrayList<GetCartRes.ProductWithImage> productWithImages) {
+                if(!productWithImages.isEmpty()) {
+                    list = new ArrayList<>();
+                    list.addAll(productWithImages);
+
+                    recyclerView.setLayoutManager(new LinearLayoutManager(CartActivity.this,
+                            LinearLayoutManager.VERTICAL, false));
+                    adapter = new CartRecyclerViewAdapter(list,CartActivity.this, uid);
+                    adapter.setOnItemUpdateListener(CartActivity.this);
+                    recyclerView.setAdapter(adapter);
+
+                    totalCal = new TotalValue();
+                    totalCal.calculateFromList(list);
+
                 }
                 else {
-                    ArrayList<GetCartRes.ProductWithImage> res = response.body().getProducts();
-                    if(!res.isEmpty()) {
-                        list = new ArrayList<>();
-                        list.addAll(res);
-
-                        recyclerView.setLayoutManager(new LinearLayoutManager(CartActivity.this, LinearLayoutManager.VERTICAL, false));
-                        adapter = new CartRecyclerViewAdapter(list,CartActivity.this, uid);
-                        adapter.setOnItemUpdateListener(CartActivity.this);
-                        recyclerView.setAdapter(adapter);
-
-                        totalCal = new TotalValue();
-                        totalCal.calculateFromList(list);
-
-                    }
-                    else {
-                        placeOrder.setActivated(false);
-                    }
-
+                    placeOrder.setActivated(false);
                 }
-            }
-
-            @Override
-            public void onFailure(Call<GetCartRes> call, Throwable t) {
-                System.out.println("false");
             }
         });
 
