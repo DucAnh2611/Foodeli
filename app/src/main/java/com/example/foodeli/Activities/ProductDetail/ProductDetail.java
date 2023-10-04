@@ -232,7 +232,6 @@ public class ProductDetail extends AppCompatActivity {
                     }
                 }
                 else {
-                    homeViewModel.updateListProductInCart(uid);
                     Toast.makeText(ProductDetail.this, response.body().isAdded() ? "Successfully" : "Failed on adding this item to cart", Toast.LENGTH_SHORT).show();
                 }
             }

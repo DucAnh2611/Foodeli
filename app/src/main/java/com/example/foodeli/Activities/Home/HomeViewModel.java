@@ -9,15 +9,20 @@ import com.example.foodeli.MySqlSetUp.ResponseApi;
 import com.example.foodeli.MySqlSetUp.Schemas.Address.Address;
 import com.example.foodeli.MySqlSetUp.Schemas.Address.Response.GetAllAddressRes;
 import com.example.foodeli.MySqlSetUp.Schemas.Cart.Response.GetCartRes;
+import com.example.foodeli.MySqlSetUp.Schemas.General.Body.CancelReason;
 import com.example.foodeli.MySqlSetUp.Schemas.General.Body.Category;
 import com.example.foodeli.MySqlSetUp.Schemas.General.Body.MethodSupport;
+import com.example.foodeli.MySqlSetUp.Schemas.General.Body.OrderState;
+import com.example.foodeli.MySqlSetUp.Schemas.General.Response.CancelReasonRes;
 import com.example.foodeli.MySqlSetUp.Schemas.General.Response.CategoryRes;
 import com.example.foodeli.MySqlSetUp.Schemas.General.Response.GetTopProduct;
 import com.example.foodeli.MySqlSetUp.Schemas.General.Response.MethodSupportRes;
+import com.example.foodeli.MySqlSetUp.Schemas.General.Response.OrderStateRes;
 import com.example.foodeli.MySqlSetUp.Schemas.Method.Body.GetAllMethod;
 import com.example.foodeli.MySqlSetUp.Schemas.Method.Method;
 import com.example.foodeli.MySqlSetUp.Schemas.Method.MethodWithTypeName;
 import com.example.foodeli.MySqlSetUp.Schemas.UserOrder.OrderWithState;
+import com.example.foodeli.MySqlSetUp.Schemas.UserOrder.Response.CancelRes;
 import com.example.foodeli.MySqlSetUp.Schemas.UserOrder.Response.OrderTrackRes;
 import com.example.foodeli.MySqlSetUp.Schemas.UserOrder.Response.TrackOrderInStateRes;
 import com.example.foodeli.MySqlSetUp.Schemas.UserVoucher.Response.GetAllVoucherRes;
@@ -47,6 +52,8 @@ public class HomeViewModel extends ViewModel {
     private MutableLiveData<HashMap<String, ArrayList<MethodWithTypeName>>> listUserPaymentMethod;
     private MutableLiveData<ArrayList<Category>> categories;
     private MutableLiveData<ArrayList<GetTopProduct.ProductWithAvg>> topProducts;
+    private MutableLiveData<ArrayList<OrderState>> listOrderState;
+    private MutableLiveData<ArrayList<CancelReason>> listReason;
 
     public MutableLiveData<ArrayList<Address>> getListUserAddress(int uid) {
         if (this.listUserAddress == null) {
@@ -113,19 +120,19 @@ public class HomeViewModel extends ViewModel {
     }
 
     public MutableLiveData<ArrayList<OrderWithState>> getListOrderCompleted(int uid) {
-        if(this.listOrderActive == null) {
-            this.listOrderActive = new MutableLiveData<ArrayList<OrderWithState>>();
+        if(this.listOrderCompleted == null) {
+            this.listOrderCompleted = new MutableLiveData<ArrayList<OrderWithState>>();
             loadOrderState(uid, "completed");
         }
-        return listOrderActive;
+        return listOrderCompleted;
     }
 
     public MutableLiveData<ArrayList<OrderWithState>> getListOrderCancelled(int uid) {
-        if(this.listOrderActive == null) {
-            this.listOrderActive = new MutableLiveData<ArrayList<OrderWithState>>();
+        if(this.listOrderCancelled == null) {
+            this.listOrderCancelled = new MutableLiveData<ArrayList<OrderWithState>>();
             loadOrderState(uid, "cancelled");
         }
-        return listOrderActive;
+        return listOrderCancelled;
     }
 
     public LiveData<ArrayList<Category>> getCategories() {
@@ -144,12 +151,20 @@ public class HomeViewModel extends ViewModel {
         return this.topProducts;
     }
 
-    public void updateListProductInCart(int uid) {
-        if(this.listProductInCart == null) {
-            this.listProductInCart = new MutableLiveData<ArrayList<GetCartRes.ProductWithImage>>();
-
+    public LiveData<ArrayList<OrderState>> getOrderState() {
+        if(this.listOrderState == null) {
+            this.listOrderState = new MutableLiveData<ArrayList<OrderState>>();
+            loadSystemOrderState();
         }
-        loadCart(uid);
+        return this.listOrderState;
+    }
+
+    public LiveData<ArrayList<CancelReason>> getListReason() {
+        if(this.listReason == null) {
+            this.listReason = new MutableLiveData<ArrayList<CancelReason>>();
+            loadReasonSystem();
+        }
+        return this.listReason;
     }
 
     private void loadCategories() {
@@ -466,4 +481,63 @@ public class HomeViewModel extends ViewModel {
             }
         });
     }
+
+    private void loadSystemOrderState() {
+        pool = new Pool();
+
+        Call<OrderStateRes> getOrderState = pool.getApiCallGeneral().getSystemState();
+        getOrderState.enqueue(new Callback<OrderStateRes>() {
+            @Override
+            public void onResponse(Call<OrderStateRes> call, Response<OrderStateRes> response) {
+                if (!response.isSuccessful()) {
+                    Gson gson = new GsonBuilder().create();
+                    ResponseApi res;
+                    try {
+                        res = gson.fromJson(response.errorBody().string(), ResponseApi.class);
+                        System.out.println(res.getMessage());
+                    } catch (IOException e) {
+                        System.out.println("parse err false");
+                    }
+                }
+                else {
+                    listOrderState.setValue(response.body().getState());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<OrderStateRes> call, Throwable t) {
+                System.out.println("fail to fetch API");
+            }
+        });
+    }
+
+    private void loadReasonSystem() {
+        pool = new Pool();
+
+        Call<CancelReasonRes> getReasonSystem = pool.getApiCallGeneral().getSystemCancelReason();
+        getReasonSystem.enqueue(new Callback<CancelReasonRes>() {
+            @Override
+            public void onResponse(Call<CancelReasonRes> call, Response<CancelReasonRes> response) {
+                if (!response.isSuccessful()) {
+                    Gson gson = new GsonBuilder().create();
+                    ResponseApi res;
+                    try {
+                        res = gson.fromJson(response.errorBody().string(), ResponseApi.class);
+                        System.out.println(res.getMessage());
+                    } catch (IOException e) {
+                        System.out.println("parse err false");
+                    }
+                }
+                else {
+                    listReason.setValue(response.body().getReasons());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CancelReasonRes> call, Throwable t) {
+                System.out.println("fail to fetch API");
+            }
+        });
+    }
+
 }

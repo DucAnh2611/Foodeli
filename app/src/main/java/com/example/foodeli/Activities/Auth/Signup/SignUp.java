@@ -1,15 +1,18 @@
 package com.example.foodeli.Activities.Auth.Signup;
 
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.foodeli.Activities.Auth.PasswordShow;
 import com.example.foodeli.Activities.Auth.ValidationField;
 import com.example.foodeli.MySqlSetUp.Pool;
 import com.example.foodeli.MySqlSetUp.ResponseApi;
@@ -28,6 +31,10 @@ import retrofit2.Response;
 public class SignUp extends AppCompatActivity {
 
     Pool pool = new Pool();
+    private boolean show = false;
+    private EditText email, fullname, phone, password;
+    private ImageButton showPassword;
+    PasswordShow passwordShow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,16 +46,23 @@ public class SignUp extends AppCompatActivity {
         Spinner year = findViewById(R.id.year_form);
         Button signup_btn = findViewById(R.id.signup_btn);
 
+
+        email = findViewById(R.id.email_form);
+        fullname = findViewById(R.id.fullname_form);
+        phone = findViewById(R.id.phone_form);
+        password = findViewById(R.id.password);
+
+        showPassword = findViewById(R.id.signup_icon_password);
+
+        passwordShow = new PasswordShow(password, showPassword, this);
+        passwordShow.setUp();
+
         DatePickerCustom datePickerCustom = new DatePickerCustom(day, month, year, this);
         datePickerCustom.setup();
 
         signup_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText email = findViewById(R.id.email_form);
-                EditText fullname = findViewById(R.id.fullname_form);
-                EditText phone = findViewById(R.id.phone_form);
-                EditText password = findViewById(R.id.password);
 
                 String emailData = email.getText().toString();
                 String fullnameData = fullname.getText().toString();

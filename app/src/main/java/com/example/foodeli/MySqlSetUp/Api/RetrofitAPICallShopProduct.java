@@ -22,7 +22,8 @@ public interface RetrofitAPICallShopProduct {
 
     @GET(base + "search")
     Call<FindProductRes> findProduct(
-            @Query("key") String key, @Query("min") float min, @Query("max") float max, @Query("cid") int cid, @Query("page") int page
+            @Query("key") String key, @Query("min") float min, @Query("max") float max,
+            @Query("cid") int cid, @Query("page") int page
     );
 
     @GET(base + "getInfo")

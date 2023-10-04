@@ -7,4 +7,12 @@ public class CancelReason {
     @SerializedName("ReasonId") private int rcId;
 
     @SerializedName("ReasonName") private String rcName;
+
+    public int getRcId() {
+        return rcId;
+    }
+
+    public String getRcName() {
+        return rcName;
+    }
 }

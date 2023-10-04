@@ -389,7 +389,6 @@
         </LinearLayout>
     </ScrollView>
 
-
     <Button
         android:id="@+id/place_orer_btn"
         android:layout_width="match_parent"

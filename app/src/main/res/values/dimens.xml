@@ -5,10 +5,10 @@
     <dimen name="nav_header_vertical_spacing">8dp</dimen>
     <dimen name="nav_header_height">176dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
-    <dimen name="dot_indicator_height">12dp</dimen>
+    <dimen name="dot_indicator_height">5dp</dimen>
     <dimen name="dot_indicator_margin">3dp</dimen>
     <dimen name="dot_indicator_selected_width">30dp</dimen>
-    <dimen name="dot_indicator_unselected_width">10dp</dimen>
+    <dimen name="dot_indicator_unselected_width">5dp</dimen>
     <dimen name="item_in_cart_height">120dp</dimen>
 
 </resources>

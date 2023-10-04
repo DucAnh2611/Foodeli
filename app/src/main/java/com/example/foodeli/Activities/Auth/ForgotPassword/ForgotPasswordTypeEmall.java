@@ -51,7 +51,7 @@ public class ForgotPasswordTypeEmall extends AppCompatActivity {
                 String emailData = email.getText().toString();
 
                 if(emailData.isEmpty()) {
-                    Toast.makeText(ForgotPasswordTypeEmall.this, "no email provide", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ForgotPasswordTypeEmall.this, "No email provide", Toast.LENGTH_SHORT).show();
                 }
                 else {
                     ValidationField validationField = new ValidationField(emailData);

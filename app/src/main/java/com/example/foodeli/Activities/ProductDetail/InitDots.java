@@ -29,7 +29,9 @@ public class InitDots {
             View dotView = new View(context);
             dotView.setBackgroundResource(R.drawable.dot_bg);
 
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(20, 20);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                    context.getResources().getDimensionPixelSize(R.dimen.dot_indicator_height),
+                    context.getResources().getDimensionPixelSize(R.dimen.dot_indicator_unselected_width));
             int margin = context.getResources().getDimensionPixelSize(R.dimen.dot_indicator_margin);
             params.setMargins(margin, 0, margin, 0);
             dotView.setLayoutParams(params);

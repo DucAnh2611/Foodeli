@@ -1,14 +1,25 @@
 package com.example.foodeli.Fragments.Order;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridView;
 
+import com.example.foodeli.Activities.Home.HomeViewModel;
+import com.example.foodeli.MySqlSetUp.Schemas.User.User;
+import com.example.foodeli.MySqlSetUp.Schemas.UserOrder.OrderWithState;
 import com.example.foodeli.R;
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +36,9 @@ public class OrderCompleted extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private HomeViewModel homeViewModel;
+    private GridView orderCompletedGV;
+    private OrderCompletedGVAdapter adapter;
 
     public OrderCompleted() {
         // Required empty public constructor
@@ -61,7 +75,24 @@ public class OrderCompleted extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_order_completed, container, false);
 
-        return inflater.inflate(R.layout.fragment_order_completed, container, false);
+        Gson gson = new Gson();
+        SharedPreferences mPrefs = getContext().getSharedPreferences("UserInfo", Context.MODE_PRIVATE);
+        String json = mPrefs.getString("user", "");
+        User user = gson.fromJson(json, User.class);
+
+        // Inflate the layout for this fragment
+        homeViewModel = new ViewModelProvider(getActivity()).get(HomeViewModel.class);
+        orderCompletedGV = view.findViewById(R.id.ordercompleted_gridview);
+
+        homeViewModel.getListOrderCompleted(user.getId()).observe(getViewLifecycleOwner(), new Observer<ArrayList<OrderWithState>>() {
+            @Override
+            public void onChanged(ArrayList<OrderWithState> orderWithStates) {
+                adapter = new OrderCompletedGVAdapter(orderWithStates, view.getContext());
+                orderCompletedGV.setAdapter(adapter);
+            }
+        });
+        return view;
     }
 }

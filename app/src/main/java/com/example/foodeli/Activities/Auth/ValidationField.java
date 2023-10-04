@@ -10,7 +10,6 @@ public class ValidationField {
 
     private String email;
     private String phone;
-    private String bothEmailAndPhone;
     private String password;
     private String fullname;
     private static final String EMAIL_REGEX = "^\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}\\b$";
@@ -43,16 +42,16 @@ public class ValidationField {
     public boolean verifyEmail() {
         Pattern pattern = Pattern.compile(EMAIL_REGEX, Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(this.email);
-        return matcher.matches() && !this.email.isEmpty();
+        return matcher.matches();
     }
     public boolean verifyPhone() {
         Pattern pattern = Pattern.compile(PHONE_REGEX, Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(this.phone);
-        return matcher.matches() && !this.phone.isEmpty();
+        return matcher.matches();
     }
 
     public boolean verifyBothEmailAndPhone() {
-        return verifyEmail() || verifyEmail();
+        return verifyEmail() || verifyPhone();
     }
     public boolean verifyFullname() {
         return !this.fullname.isEmpty();
@@ -60,7 +59,7 @@ public class ValidationField {
     public boolean verifyPassword() {
         Pattern pattern = Pattern.compile(PASSWORD_REGEX, Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(this.password);
-        return matcher.matches() && !this.password.isEmpty();
+        return matcher.matches();
     }
 
 

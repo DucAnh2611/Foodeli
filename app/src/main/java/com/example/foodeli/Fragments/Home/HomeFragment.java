@@ -89,7 +89,6 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         // Inflate the layout for this fragment
 
-
         Gson gson = new Gson();
         SharedPreferences mPrefs = getContext().getSharedPreferences("UserInfo", Context.MODE_PRIVATE);
         String json = mPrefs.getString("user", "");
@@ -122,13 +121,6 @@ public class HomeFragment extends Fragment {
                 topProducts.setAdapter(adapter2);
 
             });
-        });
-
-        homeViewModel.getListProductInCart(user.getId()).observe(getViewLifecycleOwner(), new Observer<ArrayList<GetCartRes.ProductWithImage>>() {
-            @Override
-            public void onChanged(ArrayList<GetCartRes.ProductWithImage> productWithImages) {
-                System.out.println("ok");
-            }
         });
 
         TextView seeMoreCategory = view.findViewById(R.id.home_more_category);

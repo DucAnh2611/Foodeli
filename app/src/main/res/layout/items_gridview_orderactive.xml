@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="15dp"
+    android:background="@drawable/bg_items_subgridview_support_method"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/custom_button_style_sec"
+            >
+            
+            <ImageView
+                android:id="@+id/order_active_icon"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/order_select"
+                android:scaleType="fitCenter"
+                android:scaleY="0.7"
+                android:scaleX="0.7"
+                app:tint="@color/green_100" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:layout_marginStart="10dp"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:id="@+id/order_active_id_and_status"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:text="ID: Status"
+                android:textColor="@color/black"
+                android:fontFamily="@font/poppins_bold"
+                android:textSize="16dp"
+                android:gravity="center_vertical"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:orientation="horizontal"
+                    android:gravity="start"
+                    >
+
+                    <TextView
+                        android:id="@+id/order_active_item_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:text="0 item"
+                        android:textColor="@color/black"
+                        />
+
+                    <ImageView
+                        android:layout_marginStart="5dp"
+                        android:layout_width="10dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/seperate"
+                        android:scaleType="fitXY"
+                        app:tint="@color/green_100"
+                        />
+
+                    <TextView
+                        android:id="@+id/order_active_payed"
+                        android:layout_marginStart="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:text="Payed"
+                        android:textColor="@color/black"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    >
+                    <TextView
+                        android:id="@+id/order_active_modify"
+                        android:layout_width="0sp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:textSize="11sp"
+                        android:gravity="center_vertical"
+                        android:text="Finish at: "
+                        android:fontFamily="@font/poppins_medium_italic"
+                        android:textColor="@color/grey_100"
+                        />
+
+                    <ImageView
+                        android:layout_width="10dp"
+                        android:layout_height="19dp"
+                        android:src="@drawable/dollar"
+                        app:tint="@color/green_100"
+                        android:scaleType="centerCrop"
+                        android:scaleX="1.2"
+                        android:scaleY="1.2"
+                        android:layout_gravity="start"/>
+
+                    <TextView
+                        android:id="@+id/order_active_total"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="0.0"
+                        android:gravity="center_vertical"
+                        android:textSize="15sp"
+                        android:textColor="@color/green_100"
+                        android:fontFamily="@font/poppins_medium"
+                        />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/order_active_button_layout"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:orientation="horizontal"
+        android:gravity="end|center_vertical"
+        android:layout_marginTop="10dp"
+        >
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/order_active_comfirm"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/custom_input_style_stroke_green100"
+            android:text="Confirm"
+            android:textSize="12sp"
+            android:fontFamily="@font/poppins_medium"
+            android:textColor="@color/green_100"
+            android:textAllCaps="false"
+            android:padding="2dp"
+            android:stateListAnimator="@null"
+            />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/order_active_cancel"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/custom_input_style_stroke_green100"
+            android:layout_marginStart="10dp"
+            android:text="Cancel"
+            android:textSize="12sp"
+            android:fontFamily="@font/poppins_medium"
+            android:textColor="@color/green_100"
+            android:textAllCaps="false"
+            android:padding="2dp"
+            android:stateListAnimator="@null"
+            />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/order_active_track"
+            android:layout_marginStart="10dp"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/custom_button_style"
+            android:text="Track Order"
+            android:textSize="12sp"
+            android:fontFamily="@font/poppins_medium"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            android:padding="3dp"
+            android:stateListAnimator="@null"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>

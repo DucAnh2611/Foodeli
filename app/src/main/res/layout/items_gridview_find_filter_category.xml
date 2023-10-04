@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="30dp">
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/find_filter_gridview_btn"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/custom_button_style_radius_min"
+        android:text="Test"
+        android:textSize="11sp"
+        android:textAllCaps="false"
+        android:textColor="@color/grey_100"
+        android:stateListAnimator="@null"/>
+
+</RelativeLayout>

@@ -8,9 +8,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.foodeli.Activities.Auth.Login.Login;
+import com.example.foodeli.Activities.Auth.PasswordShow;
 import com.example.foodeli.Activities.Auth.ValidationField;
 import com.example.foodeli.Activities.Home.HomeActivity;
 import com.example.foodeli.MySqlSetUp.Pool;
@@ -34,6 +36,10 @@ import retrofit2.Response;
 public class ChangePassword extends AppCompatActivity {
 
     Pool pool = new Pool();
+    private EditText pass, cfPass;
+    private String passData, cfPassData;
+    private ImageButton iconPass, iconCfPass;
+    private PasswordShow passwordShow, cfPasswordShow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +53,20 @@ public class ChangePassword extends AppCompatActivity {
         FloatingActionButton back_btn = findViewById(R.id.previous_btn);
         Button confirm = findViewById(R.id.btn_change_pw);
 
+        pass = findViewById(R.id.pass_form);
+        cfPass = findViewById(R.id.cf_pass_form);
+        iconPass = findViewById(R.id.changepass_icon_password);
+        iconCfPass = findViewById(R.id.changepass_icon_cf_password);
+
+        passData = pass.getText().toString();
+        cfPassData = cfPass.getText().toString();
+
+        passwordShow = new PasswordShow(pass, iconPass, this);
+        passwordShow.setUp();
+
+        cfPasswordShow = new PasswordShow(cfPass, iconCfPass, this);
+        cfPasswordShow.setUp();
+
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,11 +77,6 @@ public class ChangePassword extends AppCompatActivity {
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText pass = findViewById(R.id.pass_form);
-                EditText cfPass = findViewById(R.id.cf_pass_form);
-
-                String passData = pass.getText().toString();
-                String cfPassData = cfPass.getText().toString();
 
                 if(!passData.isEmpty() && !cfPassData.isEmpty()) {
                     if(!passData.equals(cfPassData)) {

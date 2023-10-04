@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.foodeli.Activities.OrderStatus.OrderStatusActivity;
 import com.example.foodeli.Activities.SelectAddress.SelectAddressActivity;
 import com.example.foodeli.Activities.SelectPayment.SelectPaymentActivity;
 import com.example.foodeli.Activities.SelectVoucher.SelectVoucherActivity;
@@ -49,7 +50,7 @@ public class CartActivity extends AppCompatActivity implements CartRecyclerViewA
     private HomeViewModel homeViewModel;
     private ArrayList<GetCartRes.ProductWithImage> list;
     private Pool pool = new Pool();
-    public static double taxRate = 0.08;
+    public double discountVal, shippingVal, taxVal, totalVal;
     private int aid=0;
     private int vid=0;
     private int ckid=0, mid = 0, ckicon = R.drawable.wallet_non_select;
@@ -165,8 +166,9 @@ public class CartActivity extends AppCompatActivity implements CartRecyclerViewA
                 User user = gson.fromJson(json, User.class);
 
                 PlaceOrderBody body = new PlaceOrderBody(
-                        uid, aid, ckid, vid, user.getName(), user.getPhone(),
-                        user.getEmail(),  totalCal.getTotalVal(), cknum.equals("Cash") ? 0 : 1
+                        uid, ckid, vid,cknum.equals("Cash") ? 0 : 1,
+                        user.getName(),user.getPhone(), user.getEmail(),
+                        aname, totalVal, discountVal, shippingVal, taxVal
                 );
 
                 Call<PlaceOrderRes> PlaceOrderRes = pool.getApiCallUserOrder().placeOrder(body);
@@ -186,7 +188,11 @@ public class CartActivity extends AppCompatActivity implements CartRecyclerViewA
                         }
                         else {
                             int oid = response.body().getOrderId();
-                            System.out.println(oid);
+
+                            Intent orderStatus = new Intent(CartActivity.this, OrderStatusActivity.class);
+                            orderStatus.putExtra("oid", oid);
+                            startActivity(orderStatus);
+                            finish();
                         }
                     }
 
@@ -318,11 +324,7 @@ public class CartActivity extends AppCompatActivity implements CartRecyclerViewA
     }
 
     public class TotalValue {
-        private double preSubtotal;
-        private double preShippingFee;
-        private double discountSubtotal;
-        private double discountShippingFee;
-        private double totalVal;
+        private double preSubtotal, preShippingFee;
 
         DecimalFormat df = new DecimalFormat("#.##");
 
@@ -330,9 +332,7 @@ public class CartActivity extends AppCompatActivity implements CartRecyclerViewA
             if(items.isEmpty()) {
                 preSubtotal = 0;
                 preShippingFee = 0;
-                discountSubtotal = 0;
-                discountShippingFee = 0;
-                setValueToView("0", "0", "0", "0", "0");
+                setValueToView("0.0", "0.0", "0.0", "0.0", "0.0");
             }
             else {
                 preSubtotal = calculateSubtotal(items);
@@ -372,25 +372,13 @@ public class CartActivity extends AppCompatActivity implements CartRecyclerViewA
                     }
                     else {
                         CheckVoucherRes.Discount res = response.body().getDiscount();
-                        discountShippingFee = res.getShipping();
-                        discountSubtotal = res.getTotal();
 
-                        String discountValue = "0";
-                        if(Double.compare(Double.parseDouble(String.valueOf(discountSubtotal)), preSubtotal) !=0) {
-                            discountValue = df.format(preSubtotal - discountSubtotal);
-                        }
-                        else if(Double.compare(Double.parseDouble(String.valueOf(discountShippingFee)), preShippingFee) !=0) {
-                            discountValue = df.format(preShippingFee - discountShippingFee);
-                        }
-                        else {
-                            discountValue = "0";
-                        }
+                        discountVal = res.getDiscount();
+                        taxVal = res.getTax();
+                        shippingVal = preShippingFee;
+                        totalVal = res.getTotal();
 
-                        double taxValue = (discountSubtotal + discountShippingFee) * taxRate;
-                        String totalValue = df.format(discountSubtotal + discountShippingFee + taxValue);
-                        totalVal = Double.parseDouble(totalValue.replace(",", "."));
-
-                        setValueToView(df.format(preSubtotal), df.format(preShippingFee), discountValue, df.format(taxValue), totalValue);
+                        setValueToView(df.format(preSubtotal), df.format(preShippingFee), df.format(discountVal), df.format(taxVal), df.format(totalVal));
 
                     }
                 }
@@ -404,9 +392,5 @@ public class CartActivity extends AppCompatActivity implements CartRecyclerViewA
         }
 
         public TotalValue() {}
-
-        public double getTotalVal() {
-            return totalVal;
-        }
     }
 }

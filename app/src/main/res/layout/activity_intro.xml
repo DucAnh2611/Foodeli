@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activities.Introduce.IntroActivity"
+    android:orientation="vertical"
+    android:background="@color/white"
     >
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
-        android:layout_height="600dp">
+        android:layout_height="0sp"
+        android:layout_weight="0.6"
+        >
 
     </androidx.viewpager.widget.ViewPager>
 
@@ -18,35 +22,56 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:gravity="center"
+        android:padding="5dp"
         >
 
     </LinearLayout>
 
-    <View
-        android:layout_above="@id/dots_pages"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-
-    <Button
-        android:id="@+id/btn_next"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginRight="0dp"
-        android:layout_marginBottom="100dp"
-        android:text="Next" />
+        android:layout_height="0sp"
+        android:layout_weight="0.35"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        >
 
-    <Button
-        android:id="@+id/btn_skip"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginRight="0dp"
-        android:layout_marginBottom="30dp"
-        android:text="Skip" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_next"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:background="@drawable/custom_button_style"
+            android:textSize="15sp"
+            android:fontFamily="@font/poppins_bold"
+            android:textColor="@color/white"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:text="Next"
+            android:elevation="0dp"
+            android:outlineProvider="none"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_skip"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:background="@drawable/custom_input_style"
+            android:textSize="15sp"
+            android:fontFamily="@font/poppins_medium"
+            android:textColor="@color/grey_100"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:text="Skip"
+            android:elevation="0dp"
+            android:outlineProvider="none"
+            />
+    </LinearLayout>
 
 
-</RelativeLayout>
+
+</LinearLayout>

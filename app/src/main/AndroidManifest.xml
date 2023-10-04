@@ -18,6 +18,18 @@
         android:theme="@style/Theme.Foodeli"
         tools:targetApi="31">
         <activity
+            android:name=".Activities.Find.FindResultActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.OrderStatus.SelectCancelReasonActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.Find.FindActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.OrderStatus.OrderStatusActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activities.SelectPayment.SelectPaymentActivity"
             android:exported="false" />
         <activity

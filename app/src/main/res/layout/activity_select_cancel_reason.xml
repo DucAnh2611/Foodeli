@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.OrderStatus.SelectCancelReasonActivity"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        >
+
+        <ImageButton
+            android:id="@+id/back_btn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/back_2"
+            android:scaleType="centerInside"
+            app:tint="@color/green_100"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:contentDescription="back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:fontFamily="@font/poppins_medium"
+            android:text="Cancel Order"
+            android:layout_marginTop="2dp"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            />
+
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <GridView
+            android:id="@+id/cancel_reason_gridview"
+            android:layout_width="match_parent"
+            android:layout_height="360dp"
+            android:verticalSpacing="8dp"
+            android:padding="5dp"
+            android:scrollbars="none"/>
+
+        <LinearLayout
+            android:id="@+id/cancel_reason_other_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp"
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="Other"
+                android:gravity="center_vertical"
+                android:textSize="17sp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/poppins_bold"
+                />
+
+            <EditText
+                android:id="@+id/cancel_reason_other_context"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="textMultiLine"
+                android:hint="Reason for cancel this order."
+                android:gravity="start"
+                android:padding="10dp"
+                android:textSize="11sp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/grey_100"
+                android:lines="5"
+                android:maxLines="10"
+                android:background="@drawable/custom_input_style"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/cancel_order_btn"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@drawable/custom_button_style"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:textSize="18sp"
+        android:fontFamily="@font/poppins_bold"
+        android:text="Cancel Order"
+        android:letterSpacing="0.05"
+        />
+
+</LinearLayout>

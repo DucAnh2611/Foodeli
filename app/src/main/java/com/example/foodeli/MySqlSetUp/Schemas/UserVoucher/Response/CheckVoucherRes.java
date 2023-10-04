@@ -9,19 +9,23 @@ public class CheckVoucherRes extends ResponseApi {
     private Discount discount;
 
     public class Discount {
-        @SerializedName("OrderTotal")
-        private double total;
 
-        @SerializedName("OrderShippingFee")
-        private double shipping;
+        @SerializedName("OrderTax") private double tax;
+        @SerializedName("OrderDiscount") private double discount;
+        @SerializedName("OrderTotal") private double total;
 
-        public double getShipping() {
-            return shipping;
+        public double getTax() {
+            return tax;
+        }
+
+        public double getDiscount() {
+            return discount;
         }
 
         public double getTotal() {
             return total;
         }
+
     }
 
     public Discount getDiscount() {

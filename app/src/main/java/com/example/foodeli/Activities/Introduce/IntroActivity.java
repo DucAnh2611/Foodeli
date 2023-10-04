@@ -14,20 +14,23 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.foodeli.Activities.Auth.Login.Login;
+import com.example.foodeli.Activities.ProductDetail.InitDots;
 import com.example.foodeli.R;
 
 public class IntroActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ViewPager viewPager;
     private LinearLayout dotsLayout;
-    private Button btnNext, btnSkip;
+    private AppCompatButton btnNext, btnSkip;
     private IntroAdapter introAdapter;
     private TextView[] mDots;
     private PrefManager prefManager;
     private int currentItem;
+    private InitDots initDots;
 
     @Override
     protected void onCreate(Bundle saveInstanceState){
@@ -49,7 +52,7 @@ public class IntroActivity extends AppCompatActivity implements View.OnClickList
 
         setClickListener();
 
-        addDotsIndicator(0);
+        initDots.createDotIndicators(introAdapter.getCount());
     }
 
     private void launchMainScreen(){
@@ -81,34 +84,12 @@ public class IntroActivity extends AppCompatActivity implements View.OnClickList
         dotsLayout = findViewById( R.id.dots_pages );
         btnNext = findViewById( R.id.btn_next );
         btnSkip = findViewById( R.id.btn_skip );
+        initDots = new InitDots(this, dotsLayout);
     }
 
     private void setClickListener() {
         btnSkip.setOnClickListener(this);
         btnNext.setOnClickListener(this);
-    }
-
-    public void addDotsIndicator(int position){
-        // Adding TetView dynamically
-        mDots=new TextView[introAdapter.getCount()];
-
-        /* Remove aprvious views when called next time
-         if not called then views will keep on adding*/
-        dotsLayout.removeAllViews();
-
-        // Set bullets in each dot text view
-        for (int i=0; i< mDots.length; i++){
-            mDots[i]= new TextView(this);
-            mDots[i].setText(Html.fromHtml("•"));
-            mDots[i].setTextSize(35);
-            mDots[i].setTextColor(getResources().getColor(R.color.grey_400));
-
-            dotsLayout.addView(mDots[i]);
-        }
-
-        if (mDots.length>0){
-            mDots[position].setTextColor(getResources().getColor(R.color.green_100));
-        }
     }
 
     ViewPager.OnPageChangeListener pageChangeListener = new ViewPager.OnPageChangeListener() {
@@ -121,7 +102,7 @@ public class IntroActivity extends AppCompatActivity implements View.OnClickList
         public void onPageSelected(int position) {
             currentItem = position;
 
-            addDotsIndicator(position);
+            initDots.updateDotIndicator(position);
 
             if (position==introAdapter.getCount()-1){
                 // last page, make it "finish" and make the skip button invisible

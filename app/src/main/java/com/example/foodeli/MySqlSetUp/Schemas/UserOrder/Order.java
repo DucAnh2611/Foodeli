@@ -8,12 +8,10 @@ public class Order {
     private int oid;
     @SerializedName("OrderUserID")
     private int uid;
-    @SerializedName("OrderShipAddressId")
-    private int addid;
-    @SerializedName("VoucherId")
-    private int vid;
-    @SerializedName("OrderStateId")
-    private int stateId;
+    @SerializedName("OrderShipAddress")
+    private String address;
+    @SerializedName("OrderDiscount")
+    private double discount;
     @SerializedName("CheckoutMethodId")
     private int ckid;
     @SerializedName("OrderShipName")
@@ -26,17 +24,74 @@ public class Order {
     private String create;
     @SerializedName("Modified")
     private String modified;
-    @SerializedName("OrderShipped")
-    private int shipped;
     @SerializedName("OrderTotal")
     private float total;
     @SerializedName("Payed")
     private int payed;
-    @SerializedName("Confirm")
-    private int confirm;
     @SerializedName("OrderTax")
     private float tax;
     @SerializedName("OrderShippingFee")
     private float shipFee;
+    @SerializedName("OrderStateId")
+    private int stateId;
 
+    public int getOid() {
+        return oid;
+    }
+
+    public int getUid() {
+        return uid;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public double getDiscount() {
+        return discount;
+    }
+
+    public int getCkid() {
+        return ckid;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getCreate() {
+        return create;
+    }
+
+    public String getModified() {
+        return modified;
+    }
+
+    public float getTotal() {
+        return total;
+    }
+
+    public int getPayed() {
+        return payed;
+    }
+
+    public float getTax() {
+        return tax;
+    }
+
+    public float getShipFee() {
+        return shipFee;
+    }
+
+    public int getStateId() {
+        return stateId;
+    }
 }

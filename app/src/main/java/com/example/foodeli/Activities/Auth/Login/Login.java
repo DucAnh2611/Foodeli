@@ -3,9 +3,14 @@ package com.example.foodeli.Activities.Auth.Login;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.InputType;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.WindowCompat;
 
 import com.example.foodeli.Activities.Auth.ForgotPassword.ForgotPasswordTypeEmall;
+import com.example.foodeli.Activities.Auth.PasswordShow;
 import com.example.foodeli.Activities.Auth.Signup.SignUp;
 import com.example.foodeli.Activities.Auth.ValidationField;
 import com.example.foodeli.Activities.Home.HomeActivity;
@@ -36,6 +42,10 @@ import retrofit2.Response;
 public class Login extends AppCompatActivity {
     
     Pool pool = new Pool();
+    private EditText fieldForm, password;
+    private ImageButton showPassword;
+    private String fieldData, passData;
+    PasswordShow passwordShow;
     
     @Override
     protected void onCreate(Bundle saveInstanceStanceState) {
@@ -46,7 +56,48 @@ public class Login extends AppCompatActivity {
         TextView forgot = (TextView) findViewById(R.id.forgot_link);
         TextView signup = (TextView) findViewById(R.id.signup_link);
         Button login = findViewById(R.id.btn_login);
-        
+
+        fieldForm = findViewById(R.id.field_form);
+        password  = findViewById(R.id.password);
+        showPassword = findViewById(R.id.login_icon_password);
+
+        PasswordShow passwordShow = new PasswordShow(password, showPassword, this);
+        passwordShow.setUp();
+
+        fieldForm.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                fieldData = s.toString();
+            }
+        });
+
+        password.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                passData = s.toString();
+            }
+        });
+
         forgot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,15 +115,8 @@ public class Login extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                startActivity(new Intent(Login.this, HomeActivity.class));
 
-                EditText fieldForm = findViewById(R.id.field_form);
-                EditText password  = findViewById(R.id.password);
-
-                String fieldData = fieldForm.getText().toString();
-                String passData = password.getText().toString();
-
-                if(!fieldData.isEmpty() && !passData.isEmpty()) {
+                if(!fieldData.equals("") && !passData.equals("")) {
 
                     ValidationField valid = new ValidationField(
                             fieldData,
@@ -81,7 +125,9 @@ public class Login extends AppCompatActivity {
                     );
 
                     LoginForm form = null;
+
                     if(valid.verifyBothEmailAndPhone()) {
+
                         if(valid.verifyPhone()) {
                             form = new LoginForm(
                                     "",
@@ -139,7 +185,6 @@ public class Login extends AppCompatActivity {
                             }
                         });
                     }
-
 
                 }
                 else if(fieldData.isEmpty()){

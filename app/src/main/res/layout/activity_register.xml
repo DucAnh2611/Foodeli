@@ -94,20 +94,38 @@
                 android:textSize="15sp"
                 tools:textColorHint="@color/grey_100" />
 
-            <EditText
-                android:id="@+id/password"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/custom_input_style"
-                android:paddingStart="20dp"
-                android:ems="10"
-                android:gravity="center_vertical"
-                android:hint="Password"
-                android:inputType="textPassword"
-                android:textColor="@color/black"
-                android:textSize="15dp"
-                tools:textColorHint="@color/grey_100" />
+                android:layout_marginTop="20dp">
+
+                <EditText
+                    android:id="@+id/password"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="@drawable/custom_input_style"
+                    android:paddingStart="20dp"
+                    android:ems="10"
+                    android:gravity="center_vertical"
+                    android:hint="Password"
+                    android:inputType="textPassword"
+                    android:textColor="@color/black"
+                    android:textSize="15dp"
+                    tools:textColorHint="@color/grey_100"/>
+
+                <ImageButton
+                    android:id="@+id/signup_icon_password"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/eye_open"
+                    android:scaleType="fitXY"
+                    android:background="@android:color/transparent"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="20dp"
+                    app:tint="@color/green_100" />
+
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_marginTop="20dp"

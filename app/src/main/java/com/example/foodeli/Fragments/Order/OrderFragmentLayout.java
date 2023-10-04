@@ -94,8 +94,8 @@ public class OrderFragmentLayout extends Fragment {
         setupViewPager(viewPager, frags);
 
         tabLayout.getTabAt(0).setText(R.string.order_active);
-        tabLayout.getTabAt(1).setText(R.string.order_completed);
-        tabLayout.getTabAt(2).setText(R.string.order_cancelled);
+        tabLayout.getTabAt(1).setText("Completed");
+        tabLayout.getTabAt(2).setText("Cancelled");
 
         return view;
     }
