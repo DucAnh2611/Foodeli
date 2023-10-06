@@ -39,27 +39,32 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int itemId = item.getItemId();
+
                 if (itemId == R.id.page_home) {
                     HomeFragment homeFragment = new HomeFragment();
 
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, homeFragment).commit();
                     return true;
-                } else if (itemId == R.id.page_order) {
+                }
+                else if (itemId == R.id.page_order) {
                     OrderFragmentLayout orderLayout = new OrderFragmentLayout();
 
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, orderLayout).commit();
                     return true;
-                }else if (itemId == R.id.page_shop) {
+                }
+                else if (itemId == R.id.page_shop) {
                     ShopFragment shopFragment = new ShopFragment();
 
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, shopFragment).commit();
                     return true;
-                }else if (itemId == R.id.page_profile) {
+                }
+                else if (itemId == R.id.page_profile) {
                     ProfileFragment profileFragment = new ProfileFragment();
 
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, profileFragment).commit();
                     return true;
                 }
+
                 return false;
             }
         });

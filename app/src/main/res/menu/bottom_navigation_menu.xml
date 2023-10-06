@@ -10,7 +10,7 @@
         android:id="@+id/page_order"
         android:enabled="true"
         android:icon="@drawable/order_selector"
-        android:title="Order" />
+        android:title="Order"/>
 
     <item
         android:id="@+id/empty"

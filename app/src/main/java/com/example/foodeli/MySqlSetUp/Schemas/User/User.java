@@ -88,4 +88,36 @@ public class User {
     public String getMobile() {
         return this.phone;
     }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
+    public void setRegisAt(String regisAt) {
+        this.regisAt = regisAt;
+    }
+
+    public void setModified(String modified) {
+        this.modified = modified;
+    }
 }

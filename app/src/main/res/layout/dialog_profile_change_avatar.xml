@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:clipToOutline="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:background="@drawable/bg_items_subgridview_support_method"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:fontFamily="@font/poppins_medium"
+            android:text="Change Picture"
+            android:layout_marginTop="2dp"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            />
+
+
+    </RelativeLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/change_picture_take"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/bg_items_subgridview_support_method"
+        android:fontFamily="@font/poppins_medium"
+        android:text="Take a picture"
+        android:textSize="14sp"
+        android:textAllCaps="false"
+        android:textColor="@color/green_100"
+        android:stateListAnimator="@null"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/change_picture_choose"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/bg_items_subgridview_support_method"
+        android:fontFamily="@font/poppins_medium"
+        android:text="Choose from library"
+        android:textSize="14sp"
+        android:textAllCaps="false"
+        android:textColor="@color/green_100"
+        android:stateListAnimator="@null"/>
+
+</LinearLayout>

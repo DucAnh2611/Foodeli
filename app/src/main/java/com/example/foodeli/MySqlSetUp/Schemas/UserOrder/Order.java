@@ -2,7 +2,9 @@ package com.example.foodeli.MySqlSetUp.Schemas.UserOrder;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Order {
+import java.io.Serializable;
+
+public class Order implements Serializable {
 
     @SerializedName("OrderID")
     private int oid;

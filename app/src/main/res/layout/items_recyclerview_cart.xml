@@ -14,7 +14,6 @@
         android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-
         >
 
         <com.google.android.material.imageview.ShapeableImageView
@@ -24,6 +23,7 @@
             android:background="@color/green_100"
             app:shapeAppearanceOverlay="@style/Circular"
             android:src="@drawable/mycart"
+            android:scaleType="centerCrop"
             />
 
     </LinearLayout>

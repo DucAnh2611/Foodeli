@@ -9,12 +9,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.foodeli.Activities.Home.HomeViewModel;
+import com.example.foodeli.Activities.OrderDetail.OrderDetailActivity;
 import com.example.foodeli.Activities.SelectPayment.ConvertIconMethodIcon;
 import com.example.foodeli.Fragments.Order.IdToSerialString;
 import com.example.foodeli.MySqlSetUp.Pool;
@@ -27,6 +29,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import retrofit2.Call;
@@ -37,12 +40,13 @@ public class OrderStatusActivity extends AppCompatActivity {
 
     private Pool pool;
     private int oid, uid;
+    private Intent orderDetailIntent;
     private OrderTrackRes.OrderWithValue order;
-    private ArrayList<OrderTrackRes.OrderItems> orderItems;
     private HomeViewModel homeViewModel;
-    private GridView timelineGV, productGV;
+    private GridView timelineGV;
     private ImageView methodIconView;
     private TextView orderId, address, estimate, subtotal, shipping, discount, tax, total, methodNum;
+    private Button orderDetailBtn;
     private OrderStatusStateAdapter stateAdapter;
     private IdToSerialString idToSerialString = new IdToSerialString();
     private ConvertIconMethodIcon methodIcon = new ConvertIconMethodIcon();
@@ -78,17 +82,27 @@ public class OrderStatusActivity extends AppCompatActivity {
         discount = findViewById(R.id.order_status_discount);
         tax = findViewById(R.id.order_status_tax);
         total = findViewById(R.id.order_status_total);
+        orderDetailBtn = findViewById(R.id.order_status_btn_to_detail);
 
+        orderDetailIntent = new Intent(OrderStatusActivity.this, OrderDetailActivity.class);
         Intent OrderIntent = getIntent();
         int t_oid = OrderIntent.getIntExtra("oid", 0);
         oid = t_oid;
         uid = user.getId();
 
-        getOrderInfomation(oid, uid);
+        getOrderInformation(oid, uid);
+
+        orderDetailBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                orderDetailIntent.putExtra("oid", oid);
+                startActivity(orderDetailIntent);
+            }
+        });
 
     }
 
-    private void getOrderInfomation(int oid, int uid) {
+    private void getOrderInformation(int oid, int uid) {
         pool = new Pool();
 
         Call<OrderTrackRes> getOrderInfo = pool.getApiCallUserOrder().trackingOrder(oid, uid);
@@ -110,6 +124,8 @@ public class OrderStatusActivity extends AppCompatActivity {
                     order = response.body().getOrder().getInfo();
                     ArrayList<OrderTrackRes.OrderTimeLine> dateUpdate = response.body().getOrder().getOrderTimeLines();
                     OrderTrackRes.PaymentMethod method = response.body().getOrder().getPaymentMethod();
+
+                    orderDetailIntent.putExtra("orderInfo", response.body().getOrder());
 
                     homeViewModel.getOrderState().observe(OrderStatusActivity.this, new Observer<ArrayList<OrderState>>() {
                         @Override

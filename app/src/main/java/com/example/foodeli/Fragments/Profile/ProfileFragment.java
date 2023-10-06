@@ -18,10 +18,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.foodeli.Activities.Auth.Login.Login;
+import com.example.foodeli.Activities.Find.FilterScreenDialog;
+import com.example.foodeli.MySqlSetUp.Schemas.General.Body.Category;
 import com.example.foodeli.MySqlSetUp.Schemas.User.User;
 import com.example.foodeli.R;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.gson.Gson;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -42,7 +46,9 @@ public class ProfileFragment extends Fragment {
     private TextView username, phone;
     private ShapeableImageView avatar;
     private LinearLayout paymentLay, addressLay, voucherLay, logoutLay;
-    private AppCompatButton editProfile;
+    private AppCompatButton changeAva;
+    private Bitmap imageBitmap;
+    private User user;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -84,13 +90,13 @@ public class ProfileFragment extends Fragment {
         Gson gson = new Gson();
         SharedPreferences mPrefs = getContext().getSharedPreferences("UserInfo", Context.MODE_PRIVATE);
         String json = mPrefs.getString("user", "");
-        User user = gson.fromJson(json, User.class);
+        user = gson.fromJson(json, User.class);
 
         avatar = view.findViewById(R.id.profile_avatar);
         username = view.findViewById(R.id.profile_username);
         phone = view.findViewById(R.id.profile_phone);
 
-        editProfile = view.findViewById(R.id.profile_btn_edit);
+        changeAva = view.findViewById(R.id.profile_btn_edit);
         paymentLay = view.findViewById(R.id.profile_btn_payment);
         addressLay = view.findViewById(R.id.profile_btn_address);
         voucherLay = view.findViewById(R.id.profile_btn_voucher);
@@ -103,6 +109,13 @@ public class ProfileFragment extends Fragment {
         username.setText(user.getName());
         phone.setText(user.getMobile());
 
+        changeAva.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPicturePicker();
+            }
+        });
+
         logoutLay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -112,14 +125,30 @@ public class ProfileFragment extends Fragment {
                 editor.remove("user");
 
                 if(editor.commit()) {
-
                     startActivity(loginIntent);
                     getActivity().finish();
-
                 }
             }
         });
 
         return view;
     }
+
+    private void showPicturePicker() {
+        ChangePicturePickDialog dialog = new ChangePicturePickDialog(getContext());
+        dialog.show(getActivity().getSupportFragmentManager(), "dialog_select_avatar");
+        dialog.setOnSelectImage(new ChangePicturePickDialog.OnSelectedImage() {
+            @Override
+            public void onSelectedImage() {
+                imageBitmap = dialog.getImageBitmap();
+                showPreviewPicture();
+            }
+        });
+    }
+
+    private void showPreviewPicture() {
+        PreviewPictureDialog dialog2 = new PreviewPictureDialog(getContext(), imageBitmap, user.getId());
+        dialog2.show(getActivity().getSupportFragmentManager(), "dialog_preview_avatar");
+    }
+
 }

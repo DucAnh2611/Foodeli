@@ -1,12 +1,14 @@
 package com.example.foodeli.Fragments.Order;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.example.foodeli.Activities.OrderDetail.OrderDetailActivity;
 import com.example.foodeli.MySqlSetUp.Schemas.UserOrder.OrderWithState;
 import com.example.foodeli.R;
 
@@ -65,7 +67,9 @@ public class OrderCancelledGVAdapter extends BaseAdapter {
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent orderDetail = new Intent(context, OrderDetailActivity.class);
+                orderDetail.putExtra("oid", item.getOid());
+                context.startActivity(orderDetail);
             }
         });
 

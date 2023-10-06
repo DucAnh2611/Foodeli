@@ -5,6 +5,7 @@ import com.example.foodeli.MySqlSetUp.Schemas.Cart.Response.GetCartRes;
 import com.example.foodeli.MySqlSetUp.Schemas.UserOrder.Order;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class OrderTrackRes extends ResponseApi {
@@ -12,7 +13,7 @@ public class OrderTrackRes extends ResponseApi {
     @SerializedName("order")
     private OrderInfo order;
 
-    public static class OrderInfo {
+    public static class OrderInfo implements Serializable {
         @SerializedName("info")
         private OrderWithValue info;
 
@@ -35,60 +36,7 @@ public class OrderTrackRes extends ResponseApi {
         }
     }
 
-    public static class OrderItems{
-
-        @SerializedName("ProductID")
-        private int pid;
-        @SerializedName("ProductName")
-        private String pname;
-        @SerializedName("ProductPrice")
-        private float price;
-        @SerializedName("ProductQuantity")
-        private float quantity;
-        @SerializedName("ProductUnit")
-        private String unit;
-        @SerializedName("ProdctImage")
-        private ProductImage image;
-
-        public int getPid() {
-            return pid;
-        }
-
-        public String getPname() {
-            return pname;
-        }
-
-        public float getPrice() {
-            return price;
-        }
-
-        public float getQuantity() {
-            return quantity;
-        }
-
-        public String getUnit() {
-            return unit;
-        }
-
-        public ProductImage getImage() {
-            return image;
-        }
-    }
-
-    public static class ProductImage {
-        @SerializedName("id") private int productImageId;
-        @SerializedName("base64") private String base64Image;
-
-        public int getProductImageId() {
-            return productImageId;
-        }
-
-        public String getBase64Image() {
-            return base64Image;
-        }
-    }
-
-    public static class OrderTimeLine {
+    public static class OrderTimeLine implements Serializable {
         @SerializedName("StateID") private int stateTimelineId;
         @SerializedName("UpdateAt") private String updateAt;
 
@@ -101,7 +49,7 @@ public class OrderTrackRes extends ResponseApi {
         }
     }
 
-    public static class OrderWithValue  extends Order {
+    public static class OrderWithValue extends Order implements Serializable {
         @SerializedName("OrderEstimate")
         private String estimate;
         @SerializedName("OrderSubTotal")
@@ -116,7 +64,7 @@ public class OrderTrackRes extends ResponseApi {
         }
     }
 
-    public static class PaymentMethod {
+    public static class PaymentMethod implements Serializable {
         @SerializedName("UserMethodNumber") private String number;
         @SerializedName("MethodType") private String methodType;
 

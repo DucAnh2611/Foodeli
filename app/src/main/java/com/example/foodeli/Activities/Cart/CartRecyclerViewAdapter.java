@@ -21,6 +21,7 @@ import com.example.foodeli.MySqlSetUp.Schemas.Cart.Response.DeleteItemRes;
 import com.example.foodeli.MySqlSetUp.Schemas.Cart.Response.GetCartRes;
 import com.example.foodeli.MySqlSetUp.Schemas.Cart.Response.UpdateItemRes;
 import com.example.foodeli.R;
+import com.example.foodeli.Supports.SupportImage;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -42,6 +43,7 @@ public class CartRecyclerViewAdapter extends RecyclerView.Adapter<CartRecyclerVi
     Pool pool;
     private OnItemUpdate onItemUpdate;
     private int uid;
+    private SupportImage supportImage = new SupportImage();
 
     public CartRecyclerViewAdapter(ArrayList<GetCartRes.ProductWithImage> list, Context context, int uid) {
         this.list = list;
@@ -68,9 +70,7 @@ public class CartRecyclerViewAdapter extends RecyclerView.Adapter<CartRecyclerVi
         holder.cartProductQuantity.setText(String.valueOf(item.getQuantity()));
 
         if(item.getImage() != null) {
-            byte[] decodedString = Base64.decode(item.getImage(), Base64.DEFAULT);
-            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-            holder.cartProductImage.setImageBitmap(decodedByte);
+            holder.cartProductImage.setImageBitmap(supportImage.convertBase64ToBitmap(item.getImage()));
         }
         else {
             holder.cartProductImage.setImageResource(R.drawable.cart);

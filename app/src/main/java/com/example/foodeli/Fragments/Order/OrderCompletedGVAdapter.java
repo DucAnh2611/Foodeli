@@ -1,6 +1,7 @@
 package com.example.foodeli.Fragments.Order;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatButton;
 
+import com.example.foodeli.Activities.OrderDetail.OrderDetailActivity;
 import com.example.foodeli.MySqlSetUp.Schemas.UserOrder.OrderWithState;
 import com.example.foodeli.R;
 
@@ -70,10 +72,12 @@ public class OrderCompletedGVAdapter extends BaseAdapter {
         leaveReview = convertView.findViewById(R.id.order_completed_leave_review);
         detail = convertView.findViewById(R.id.order_completed_details);
 
-        leaveReview.setOnClickListener(new View.OnClickListener() {
+        detail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent orderDetail = new Intent(context, OrderDetailActivity.class);
+                orderDetail.putExtra("oid", item.getOid());
+                context.startActivity(orderDetail);
             }
         });
 

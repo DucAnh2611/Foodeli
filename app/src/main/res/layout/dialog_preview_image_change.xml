@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:gravity="center_horizontal">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:background="@drawable/bg_items_subgridview_support_method"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:fontFamily="@font/poppins_medium"
+            android:text="Preview Picture"
+            android:layout_marginTop="2dp"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="300dp"
+        android:layout_height="300dp">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/preview_ava"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_centerInParent="true"
+            android:background="@color/green_100"
+            android:scaleType="centerCrop"
+            app:shapeAppearanceOverlay="@style/Circular" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/preview_ava_cancel"
+            android:layout_width="0sp"
+            android:layout_weight="0.5"
+            android:layout_height="45dp"
+            android:background="@drawable/custom_input_style_stroke_green100"
+            android:fontFamily="@font/poppins_medium"
+            android:text="Cancel"
+            android:textSize="14sp"
+            android:textAllCaps="false"
+            android:textColor="@color/green_100"
+            android:layout_marginRight="10dp"
+            android:stateListAnimator="@null"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/preview_ava_confirm"
+            android:layout_width="0sp"
+            android:layout_weight="0.5"
+            android:layout_height="45dp"
+            android:background="@drawable/custom_button_style"
+            android:fontFamily="@font/poppins_medium"
+            android:text="Confirm"
+            android:textSize="14sp"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:layout_marginLeft="10dp"
+            android:stateListAnimator="@null"/>
+
+    </LinearLayout>
+
+</LinearLayout>
