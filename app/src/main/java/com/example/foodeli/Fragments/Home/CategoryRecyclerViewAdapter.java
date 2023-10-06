@@ -1,6 +1,7 @@
 package com.example.foodeli.Fragments.Home;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
@@ -13,8 +14,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.foodeli.Activities.Find.FindResultActivity;
 import com.example.foodeli.MySqlSetUp.Schemas.General.Body.Category;
 import com.example.foodeli.R;
+import com.google.android.material.imageview.ShapeableImageView;
 
 import java.util.ArrayList;
 
@@ -60,7 +63,7 @@ public class CategoryRecyclerViewAdapter extends RecyclerView.Adapter<CategoryRe
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView CategoryTV;
-        private ImageView CategoryImage;
+        private ShapeableImageView CategoryImage;
         private int cid ;
 
         public ViewHolder(@NonNull View itemView) {
@@ -72,7 +75,9 @@ public class CategoryRecyclerViewAdapter extends RecyclerView.Adapter<CategoryRe
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    System.out.println(cid);
+                    Intent findIntent = new Intent(context, FindResultActivity.class);
+                    findIntent.putExtra("cid", cid);
+                    context.startActivity(findIntent);
                 }
             });
         }

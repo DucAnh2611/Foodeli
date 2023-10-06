@@ -63,7 +63,7 @@
                 <androidx.viewpager.widget.ViewPager
                     android:id="@+id/productdetail_viewpager_image"
                     android:layout_width="match_parent"
-                    android:layout_height="250dp"
+                    android:layout_height="300dp"
                     android:background="@color/white"
                     android:scaleType="centerInside" />
 
@@ -71,6 +71,7 @@
                     android:id="@+id/productdetail_dots_index_image"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
                     android:padding="5dp"
                     android:orientation="horizontal"
                     android:gravity="center"

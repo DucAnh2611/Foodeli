@@ -11,9 +11,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.GridView;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.foodeli.Activities.Home.HomeViewModel;
+import com.example.foodeli.Activities.SelectPayment.ConvertIconMethodIcon;
 import com.example.foodeli.Fragments.Order.IdToSerialString;
 import com.example.foodeli.MySqlSetUp.Pool;
 import com.example.foodeli.MySqlSetUp.ResponseApi;
@@ -39,9 +41,11 @@ public class OrderStatusActivity extends AppCompatActivity {
     private ArrayList<OrderTrackRes.OrderItems> orderItems;
     private HomeViewModel homeViewModel;
     private GridView timelineGV, productGV;
-    private TextView orderId, address, estimate, subtotal, shipping, discount, tax, total;
+    private ImageView methodIconView;
+    private TextView orderId, address, estimate, subtotal, shipping, discount, tax, total, methodNum;
     private OrderStatusStateAdapter stateAdapter;
     private IdToSerialString idToSerialString = new IdToSerialString();
+    private ConvertIconMethodIcon methodIcon = new ConvertIconMethodIcon();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +67,8 @@ public class OrderStatusActivity extends AppCompatActivity {
             }
         });
 
+        methodIconView = findViewById(R.id.order_status_payment_icon);
+        methodNum = findViewById(R.id.order_status_payment_number);
         timelineGV = findViewById(R.id.order_status_gridview_timeline);
         orderId = findViewById(R.id.order_status_id);
         address = findViewById(R.id.order_status_address);
@@ -103,6 +109,7 @@ public class OrderStatusActivity extends AppCompatActivity {
                 else {
                     order = response.body().getOrder().getInfo();
                     ArrayList<OrderTrackRes.OrderTimeLine> dateUpdate = response.body().getOrder().getOrderTimeLines();
+                    OrderTrackRes.PaymentMethod method = response.body().getOrder().getPaymentMethod();
 
                     homeViewModel.getOrderState().observe(OrderStatusActivity.this, new Observer<ArrayList<OrderState>>() {
                         @Override
@@ -113,6 +120,8 @@ public class OrderStatusActivity extends AppCompatActivity {
                             orderId.setText(idToSerialString.convertIdToSerialString(oid));
                             address.setText(order.getAddress());
                             estimate.setText(order.getEstimate());
+                            methodIconView.setImageResource(methodIcon.convertTypeToIcon(method.getMethodType()));
+                            methodNum.setText(method.getMethodType().equals("Cash") ? "Cash" : method.getNumber());
                             subtotal.setText("$" + order.getSubtotal());
                             shipping.setText("$" + order.getShipFee());
                             discount.setText("$" + order.getDiscount());

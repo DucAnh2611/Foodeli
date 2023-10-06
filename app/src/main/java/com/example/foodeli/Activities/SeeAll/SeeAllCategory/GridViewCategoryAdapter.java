@@ -1,6 +1,7 @@
 package com.example.foodeli.Activities.SeeAll.SeeAllCategory;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.example.foodeli.Activities.Find.FindResultActivity;
 import com.example.foodeli.MySqlSetUp.Schemas.General.Body.Category;
 import com.example.foodeli.R;
 import com.google.android.material.imageview.ShapeableImageView;
@@ -66,6 +68,15 @@ public class GridViewCategoryAdapter extends BaseAdapter {
         }
 
         c_name.setText(cate.getName());
+
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent findIntent = new Intent(context, FindResultActivity.class);
+                findIntent.putExtra("cid", cate.getCid());
+                context.startActivity(findIntent);
+            }
+        });
 
         return convertView;
     }

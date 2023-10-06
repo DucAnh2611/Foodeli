@@ -35,6 +35,8 @@ public class SelectPaymentActivity extends AppCompatActivity {
     private Button addMethodSupport, confirmMethod;
     private SelectPaymentAdapter adapter;
 
+    private ConvertIconMethodIcon iconMethod = new ConvertIconMethodIcon();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +54,7 @@ public class SelectPaymentActivity extends AppCompatActivity {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                backBtnClick(ckid, cknum, mid, convertTypeToIcon(cktype));
+                backBtnClick(ckid, cknum, mid, iconMethod.convertTypeToIcon(cktype));
             }
         });
 
@@ -80,7 +82,7 @@ public class SelectPaymentActivity extends AppCompatActivity {
                     HashMap<String, Integer> mapIconSupportList = new HashMap<>();
 
                     for (MethodSupport method : methods) {
-                        mapIconSupportList.put(method.getType(), convertTypeToIcon(method.getType()));
+                        mapIconSupportList.put(method.getType(), iconMethod.convertTypeToIcon(method.getType()));
                     }
 
                     adapter = new SelectPaymentAdapter(methods, uid, mid ,ckid, cknum, mapIconSupportList, SelectPaymentActivity.this);
@@ -102,7 +104,7 @@ public class SelectPaymentActivity extends AppCompatActivity {
                 cktype = adapter.getItemType();
                 mid = adapter.getItemSelect();
                 cknum = adapter.getItemNumber();
-                backBtnClick(ckid, cknum, mid, convertTypeToIcon(cktype));
+                backBtnClick(ckid, cknum, mid, iconMethod.convertTypeToIcon(cktype));
             }
         });
 
@@ -117,20 +119,4 @@ public class SelectPaymentActivity extends AppCompatActivity {
         finish();
     }
 
-    private int convertTypeToIcon(String type){
-        switch (type.toLowerCase()) {
-            case "cash":
-                return R.drawable.cash;
-            case "visa":
-                return R.drawable.visa;
-            case "mastercard":
-                return R.drawable.mastercard;
-            case "paypal":
-                return R.drawable.paypal;
-            case "foodelipay":
-                return R.drawable.logo;
-            default:
-                return R.drawable.wallet_non_select;
-        }
-    }
 }

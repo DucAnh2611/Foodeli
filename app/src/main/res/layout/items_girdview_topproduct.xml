@@ -17,6 +17,7 @@
             android:background="@color/green_100"
             android:src="@drawable/category_default"
             app:shapeAppearanceOverlay="@style/RoundTopLeftRRight"
+            android:scaleType="centerCrop"
             />
     </RelativeLayout>
 
@@ -43,7 +44,7 @@
                 android:layout_height="50dp"
                 android:background="@color/green_400"
                 android:src="@drawable/profile_select"
-                android:scaleType="fitXY"
+                android:scaleType="centerCrop"
                 app:shapeAppearanceOverlay="@style/Circular"
                 />
             <LinearLayout

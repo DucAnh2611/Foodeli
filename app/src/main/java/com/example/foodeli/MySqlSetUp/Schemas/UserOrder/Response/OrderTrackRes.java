@@ -19,12 +19,19 @@ public class OrderTrackRes extends ResponseApi {
         @SerializedName("timeline")
         private ArrayList<OrderTimeLine> orderTimeLines;
 
+        @SerializedName("payment")
+        private PaymentMethod paymentMethod;
+
         public OrderWithValue getInfo() {
             return info;
         }
 
         public ArrayList<OrderTimeLine> getOrderTimeLines() {
             return orderTimeLines;
+        }
+
+        public PaymentMethod getPaymentMethod() {
+            return paymentMethod;
         }
     }
 
@@ -106,6 +113,19 @@ public class OrderTrackRes extends ResponseApi {
 
         public double getSubtotal() {
             return subtotal;
+        }
+    }
+
+    public static class PaymentMethod {
+        @SerializedName("UserMethodNumber") private String number;
+        @SerializedName("MethodType") private String methodType;
+
+        public String getNumber() {
+            return number;
+        }
+
+        public String getMethodType() {
+            return methodType;
         }
     }
 

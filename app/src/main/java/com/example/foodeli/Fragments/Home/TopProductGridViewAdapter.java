@@ -19,6 +19,7 @@ import com.google.android.material.imageview.ShapeableImageView;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class TopProductGridViewAdapter extends BaseAdapter {
@@ -102,4 +103,6 @@ public class TopProductGridViewAdapter extends BaseAdapter {
 
         return convertView;
     }
+
+    public void addItems(ArrayList<GetTopProduct.ProductWithAvg> list) {this.topProducts.addAll(list);}
 }

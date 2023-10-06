@@ -1,5 +1,6 @@
 package com.example.foodeli.MySqlSetUp.Api;
 
+import com.example.foodeli.MySqlSetUp.Schemas.General.Response.GetTopProduct;
 import com.example.foodeli.MySqlSetUp.Schemas.ShopProduct.Body.CreateProductBody;
 import com.example.foodeli.MySqlSetUp.Schemas.ShopProduct.Body.UpdateProductCategoryBody;
 import com.example.foodeli.MySqlSetUp.Schemas.ShopProduct.Body.UpdateProductDataBody;
@@ -21,7 +22,7 @@ public interface RetrofitAPICallShopProduct {
     String base = "shop/product/";
 
     @GET(base + "search")
-    Call<FindProductRes> findProduct(
+    Call<GetTopProduct> findProduct(
             @Query("key") String key, @Query("min") float min, @Query("max") float max,
             @Query("cid") int cid, @Query("page") int page
     );

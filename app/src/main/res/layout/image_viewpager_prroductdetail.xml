@@ -6,7 +6,8 @@
     >
     <ImageView
         android:id="@+id/image_viewpager_pd"
-        android:layout_width="300dp"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:scaleType="centerCrop"
         />
 </LinearLayout>

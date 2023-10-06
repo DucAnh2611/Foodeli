@@ -25,7 +25,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 public class FindActivity extends AppCompatActivity{
-    private int MAX_ITEM_IN_HISTORY = 10, SEARCH_TYPE = 0;
+    private int MAX_ITEM_IN_HISTORY = 10;
     private SharedPreferences historyPrefs;
     private SharedPreferences.Editor editor;
     private HomeViewModel homeViewModel;
@@ -119,8 +119,11 @@ public class FindActivity extends AppCompatActivity{
         if (histories.size() > MAX_ITEM_IN_HISTORY) {
             histories.remove(0);
         }
-        histories.remove(key);
-        histories.add(0, key);
+        if(!key.equals("")) {
+            histories.remove(key);
+            histories.add(0, key);
+        }
+
 
         filterFind.setKey(keySearch.getText().toString());
 
@@ -128,7 +131,7 @@ public class FindActivity extends AppCompatActivity{
         findProductIntent.putExtra("min", filterFind.getMin());
         findProductIntent.putExtra("max", filterFind.getMax());
         findProductIntent.putExtra("cid", filterFind.getCid());
-        findProductIntent.putExtra("page", filterFind.getPage());
+        findProductIntent.putExtra("page", 1);
 
         Gson gson = new Gson();
         String json = gson.toJson(histories);

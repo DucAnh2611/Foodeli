@@ -11,7 +11,7 @@ public class GetTopProduct extends ResponseApi {
     @SerializedName("items")
     private ArrayList<ProductWithAvg> list;
 
-    public class ProductWithAvg extends Product {
+    public static class ProductWithAvg extends Product {
 
 
         @SerializedName("ProductAverageRating")
