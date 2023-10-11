@@ -5,7 +5,7 @@ import com.example.foodeli.MySqlSetUp.Schemas.UserShop.Body.MangerUserBody;
 import com.example.foodeli.MySqlSetUp.Schemas.UserShop.Body.UpdateShopBody;
 import com.example.foodeli.MySqlSetUp.Schemas.UserShop.Response.CreateShopResponse;
 import com.example.foodeli.MySqlSetUp.Schemas.UserShop.Response.GetAllShopUserHaveResponse;
-import com.example.foodeli.MySqlSetUp.Schemas.UserShop.Response.GetShopInfomationResponse;
+import com.example.foodeli.MySqlSetUp.Schemas.UserShop.Response.GetShopInformationResponse;
 import com.example.foodeli.MySqlSetUp.Schemas.UserShop.Response.MangeUserRes;
 
 import retrofit2.Call;
@@ -27,10 +27,10 @@ public interface RetrofitAPICallUserShop {
     Call<GetAllShopUserHaveResponse> getAllShopOfUser(@Query("id") int uid);
 
     @GET(base + "method?type=info")
-    Call<GetShopInfomationResponse> getShop(@Query("id") int sid);
+    Call<GetShopInformationResponse> getShop(@Query("id") int sid);
 
     @PUT(base + "method")
-    Call<GetShopInfomationResponse> updateShop(@Query("type") String type, @Body UpdateShopBody body);
+    Call<GetShopInformationResponse> updateShop(@Query("type") String type, @Body UpdateShopBody body);
 
     @POST(base + "manageUser")
     Call<MangeUserRes> createEmployee(@Body MangerUserBody body);

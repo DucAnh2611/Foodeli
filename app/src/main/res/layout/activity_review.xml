@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activities.Review.Review"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:gravity="center_horizontal">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -42,72 +43,121 @@
     </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/review_recyclerview_products"
         android:layout_width="match_parent"
-        android:layout_height="100dp"/>
+        android:layout_height="120dp"
+        android:paddingLeft="20dp"
+        android:paddingEnd="20dp"
+        android:clipToPadding="false"
+        android:orientation="horizontal"/>
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/review_product_form_image"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginBottom="20dp"
+        app:shapeAppearanceOverlay="@style/RoundedSquare"
+        android:background="@color/green_100"
+        android:scaleType="centerCrop"/>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="vertical"
-        android:gravity="center_horizontal">
-        
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:gravity="center_vertical">
+        android:id="@+id/review_product_rate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        >
 
-            <ImageButton
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/rate"
-                android:scaleType="centerInside"
-                android:background="@android:color/transparent"
-                android:contentDescription="Rating icon"
-                app:tint="@color/orange_400"/>
+        <ImageButton
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/rate"
+            android:scaleType="centerInside"
+            android:background="@android:color/transparent"
+            android:contentDescription="Rating icon"
+            app:tint="@color/grey_300"/>
 
-            <ImageButton
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/rate"
-                android:scaleType="centerInside"
-                android:background="@android:color/transparent"
-                android:contentDescription="Rating icon"
-                app:tint="@color/orange_400" />
+        <ImageButton
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/rate"
+            android:scaleType="centerInside"
+            android:background="@android:color/transparent"
+            android:contentDescription="Rating icon"
+            app:tint="@color/grey_300" />
 
-            <ImageButton
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/rate"
-                android:scaleType="centerInside"
-                android:background="@android:color/transparent"
-                android:contentDescription="Rating icon"
-                app:tint="@color/grey_300" />
+        <ImageButton
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/rate"
+            android:scaleType="centerInside"
+            android:background="@android:color/transparent"
+            android:contentDescription="Rating icon"
+            app:tint="@color/grey_300" />
 
-            <ImageButton
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/rate"
-                android:scaleType="centerInside"
-                android:background="@android:color/transparent"
-                android:contentDescription="Rating icon"
-                app:tint="@color/grey_300" />
+        <ImageButton
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/rate"
+            android:scaleType="centerInside"
+            android:background="@android:color/transparent"
+            android:contentDescription="Rating icon"
+            app:tint="@color/grey_300" />
 
-            <ImageButton
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/rate"
-                android:scaleType="centerInside"
-                android:background="@android:color/transparent"
-                android:contentDescription="Rating icon"
-                app:tint="@color/grey_300" />
+        <ImageButton
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/rate"
+            android:scaleType="centerInside"
+            android:background="@android:color/transparent"
+            android:contentDescription="Rating icon"
+            app:tint="@color/grey_300" />
 
-
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
 
     </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:textColor="@color/grey_100"
+        android:textSize="13sp"
+        android:text="Enjoyed your food? Rate the product,\nyour feedback is matter."/>
+
+    <EditText
+        android:id="@+id/review_description"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:inputType="textMultiLine"
+        android:hint="Review description..."
+        android:gravity="start"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:padding="20dp"
+        android:textSize="12sp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/grey_100"
+        android:lines="5"
+        android:maxLines="10"
+        android:background="@drawable/custom_input_style"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/review_submit"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@drawable/custom_button_style"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:textSize="18sp"
+        android:fontFamily="@font/poppins_bold"
+        android:textColor="@color/white"
+        android:text="Submit"
+        android:letterSpacing="0.05"/>
+
 
 </LinearLayout>

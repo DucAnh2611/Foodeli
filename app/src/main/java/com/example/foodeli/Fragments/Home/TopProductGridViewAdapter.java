@@ -85,6 +85,7 @@ public class TopProductGridViewAdapter extends BaseAdapter {
             Bitmap decodedPByte = BitmapFactory.decodeByteArray(decodedPString, 0, decodedPString.length);
             pimage.setImageBitmap(decodedPByte);
         }
+        System.out.println(item.getPImage());
         if(!item.getSImage().equals("")) {
             byte[] decodedSString = Base64.decode(item.getSImage(), Base64.DEFAULT);
             Bitmap decodedSByte = BitmapFactory.decodeByteArray(decodedSString, 0, decodedSString.length);

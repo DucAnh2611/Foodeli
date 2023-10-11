@@ -28,9 +28,9 @@
                 android:layout_height="match_parent"
                 android:layout_centerInParent="true"
                 android:background="@color/white"
-                android:scaleType="centerInside"
+                android:scaleType="centerCrop"
                 android:src="@drawable/profile_select"
-                app:shapeAppearanceOverlay="@style/Circular" />
+                app:shapeAppearanceOverlay="@style/Circular"/>
 
         </RelativeLayout>
 

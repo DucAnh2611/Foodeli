@@ -28,7 +28,6 @@ public class Voucher {
     private String modified;
     @SerializedName("VoucherShopOwner")
     private int owner;
-
     @SerializedName("VoucherTarget")
     private String target;
     @SerializedName("VoucherExpired")

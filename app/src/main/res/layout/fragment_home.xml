@@ -27,7 +27,7 @@
                 android:layout_height="35dp"
                 android:background="@color/green_100"
                 android:src="@drawable/profile_select"
-                android:scaleType="fitXY"
+                android:scaleType="centerCrop"
                 app:shapeAppearanceOverlay="@style/Circular"
                 />
 

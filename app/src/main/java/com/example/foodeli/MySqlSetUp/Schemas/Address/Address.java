@@ -13,10 +13,11 @@ public class Address {
     @SerializedName("Deleted")
     private int deleted;
 
-    public Address(int aid, int uid, String address) {
+    public Address(int aid, int uid, String address, int deleted) {
         this.aid = aid;
         this.uid= uid;
         this.address = address;
+        this.deleted = deleted;
     }
 
     public int getUid() {
@@ -33,5 +34,9 @@ public class Address {
 
     public String getAddress() {
         return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

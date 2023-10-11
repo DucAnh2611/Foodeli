@@ -43,7 +43,7 @@ public class PreviewPictureDialog extends DialogFragment {
     private Pool pool;
     private ShapeableImageView imagePreview;
     private AppCompatButton cancel, confirm;
-    private ChangePicturePickDialog.OnSelectedImage onSelectedImage;
+    private ImageChangeInterface onConfirmImage;
     private SupportImage supportImage = new SupportImage();
     private int uid;
 
@@ -127,6 +127,8 @@ public class PreviewPictureDialog extends DialogFragment {
                     json = gson.toJson(user);
                     prefsEditor.putString("user", json);
                     prefsEditor.apply();
+
+                    onConfirmImage.onConfirmImage();
                     dismiss();
                 }
             }
@@ -138,5 +140,7 @@ public class PreviewPictureDialog extends DialogFragment {
         });
 
     }
+
+    public void setOnConfirmImage(ImageChangeInterface onConfirmImage) {this.onConfirmImage = onConfirmImage;}
 
 }

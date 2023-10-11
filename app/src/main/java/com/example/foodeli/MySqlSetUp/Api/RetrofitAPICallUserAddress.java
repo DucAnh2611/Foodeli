@@ -25,7 +25,7 @@ public interface RetrofitAPICallUserAddress {
     Call<GetAllAddressRes> getAll(@Query("id") int uid);
 
     @DELETE(base + "delete")
-    Call<DeleteAddressRes> deleteAddress(@Query("id") int aid);
+    Call<DeleteAddressRes> deleteAddress(@Query("id") int uid, @Query("addressId") int aid);
 
     @PUT(base + "update")
     Call<CreateAddressRes> updateAddress(@Body Address address);

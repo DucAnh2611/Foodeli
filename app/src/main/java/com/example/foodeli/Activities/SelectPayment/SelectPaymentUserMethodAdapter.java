@@ -72,7 +72,8 @@ public class SelectPaymentUserMethodAdapter extends BaseAdapter {
         int year = Integer.parseInt(splitDate[0].substring(2));
         int month = Integer.parseInt(splitDate[1]);
 
-        expireDate.setText((month < 10 ? "0" + month  : String.valueOf(month)) + year);
+        number.setText(method.getNumber());
+        expireDate.setText((month < 10 ? "0" + month  : String.valueOf(month)) + "/" + year);
 
         if(tempMethodId == method.getId()) {
             selectInner.setVisibility(View.VISIBLE);

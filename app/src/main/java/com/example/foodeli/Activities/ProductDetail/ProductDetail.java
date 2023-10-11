@@ -16,6 +16,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.foodeli.Activities.Home.HomeViewModel;
+import com.example.foodeli.Activities.OrderDetail.OrderDetailActivity;
+import com.example.foodeli.Activities.ShopDetail.ShopDetailActivity;
 import com.example.foodeli.MySqlSetUp.Pool;
 import com.example.foodeli.MySqlSetUp.ResponseApi;
 import com.example.foodeli.MySqlSetUp.Schemas.Cart.Body.AddToCartBody;
@@ -23,6 +25,8 @@ import com.example.foodeli.MySqlSetUp.Schemas.Cart.Response.AddToCartRes;
 import com.example.foodeli.MySqlSetUp.Schemas.ShopProduct.Response.GetProductInfo;
 import com.example.foodeli.MySqlSetUp.Schemas.User.User;
 import com.example.foodeli.R;
+import com.example.foodeli.Supports.SupportImage;
+import com.google.android.material.imageview.ShapeableImageView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -44,6 +48,7 @@ public class ProductDetail extends AppCompatActivity {
     private int quantity = 1;
     private int pid;
     private HomeViewModel homeViewModel;
+    private SupportImage supportImage = new SupportImage();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,6 +139,9 @@ public class ProductDetail extends AppCompatActivity {
                     TextView estimate = findViewById(R.id.productdetail_estimate);
                     TextView onStock = findViewById(R.id.productdetail_stock);
                     TextView price = findViewById(R.id.productdetail_price);
+                    LinearLayout shopLayout = findViewById(R.id.productdetail_shop_layout);
+                    TextView shopName = findViewById(R.id.productdetail_shop_name);
+                    ShapeableImageView shopImage = findViewById(R.id.productdetail_shop_image);
 
                     DecimalFormat df = new DecimalFormat("#.#");
 
@@ -149,6 +157,10 @@ public class ProductDetail extends AppCompatActivity {
 
                     rate.setText(df.format(product.getProduct().getRate()));
                     estimate.setText( String.valueOf(product.getProduct().getTimeStart()) + "m-" + String.valueOf(product.getProduct().getTimeFinish().toString()) + "m");
+
+
+                    shopName.setText(product.getShop().getName());
+                    shopImage.setImageBitmap(supportImage.convertBase64ToBitmap(product.getShop().getAvatar()));
 
                     minus.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -201,6 +213,14 @@ public class ProductDetail extends AppCompatActivity {
                         }
                     });
 
+                    shopLayout.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent shopDetail = new Intent(ProductDetail.this, ShopDetailActivity.class);
+                            shopDetail.putExtra("sid", product.getShop().getSid());
+                            startActivity(shopDetail);
+                        }
+                    });
                 }
             }
 

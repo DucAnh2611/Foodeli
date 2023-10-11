@@ -25,6 +25,7 @@ import com.example.foodeli.MySqlSetUp.Schemas.UserOrder.OrderWithState;
 import com.example.foodeli.MySqlSetUp.Schemas.UserOrder.Response.CancelRes;
 import com.example.foodeli.MySqlSetUp.Schemas.UserOrder.Response.OrderTrackRes;
 import com.example.foodeli.MySqlSetUp.Schemas.UserOrder.Response.TrackOrderInStateRes;
+import com.example.foodeli.MySqlSetUp.Schemas.UserShop.Response.GetAllShopUserHaveResponse;
 import com.example.foodeli.MySqlSetUp.Schemas.UserVoucher.Response.GetAllVoucherRes;
 import com.example.foodeli.MySqlSetUp.Schemas.UserVoucher.Voucher;
 import com.google.gson.Gson;
@@ -54,6 +55,7 @@ public class HomeViewModel extends ViewModel {
     private MutableLiveData<ArrayList<GetTopProduct.ProductWithAvg>> topProducts;
     private MutableLiveData<ArrayList<OrderState>> listOrderState;
     private MutableLiveData<ArrayList<CancelReason>> listReason;
+    private MutableLiveData<ArrayList<GetAllShopUserHaveResponse.ShopWithDetail>> listShop;
 
     public MutableLiveData<ArrayList<Address>> getListUserAddress(int uid) {
         if (this.listUserAddress == null) {
@@ -165,6 +167,14 @@ public class HomeViewModel extends ViewModel {
             loadReasonSystem();
         }
         return this.listReason;
+    }
+
+    public LiveData<ArrayList<GetAllShopUserHaveResponse.ShopWithDetail>> getListUserShop(int uid) {
+        if(this.listShop == null) {
+            this.listShop = new MutableLiveData<ArrayList<GetAllShopUserHaveResponse.ShopWithDetail>>();
+            loadShopUser(uid);
+        }
+        return this.listShop;
     }
 
     private void loadCategories() {
@@ -535,6 +545,39 @@ public class HomeViewModel extends ViewModel {
 
             @Override
             public void onFailure(Call<CancelReasonRes> call, Throwable t) {
+                System.out.println("fail to fetch API");
+            }
+        });
+    }
+
+    private void loadShopUser(int uid) {
+        pool = new Pool();
+
+        Call<GetAllShopUserHaveResponse> getList = pool.getApiCallUserShop().getAllShopOfUser(uid);
+        getList.enqueue(new Callback<GetAllShopUserHaveResponse>() {
+            @Override
+            public void onResponse(Call<GetAllShopUserHaveResponse> call, Response<GetAllShopUserHaveResponse> response) {
+                if (!response.isSuccessful()) {
+                    Gson gson = new GsonBuilder().create();
+                    ResponseApi res;
+                    try {
+                        res = gson.fromJson(response.errorBody().string(), ResponseApi.class);
+                        System.out.println(res.getMessage());
+                    } catch (IOException e) {
+                        System.out.println("parse err false");
+                    }
+                }
+                else {
+                    if(response.body().getShops() != null) {
+                        listShop.setValue(response.body().getShops());
+                    }
+                    else listShop.setValue(new ArrayList<>());
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GetAllShopUserHaveResponse> call, Throwable t) {
                 System.out.println("fail to fetch API");
             }
         });

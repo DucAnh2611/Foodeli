@@ -48,6 +48,9 @@ public class GetProductReviewRes extends ResponseApi {
         @SerializedName("ProductId")
         private int pid;
 
+        @SerializedName("OrderId")
+        private int oid;
+
         @SerializedName("ReviewTitle")
         private String title;
 
@@ -78,6 +81,10 @@ public class GetProductReviewRes extends ResponseApi {
 
         public int getRate() {
             return rate;
+        }
+
+        public int getOid() {
+            return oid;
         }
 
         public int getRid() {

@@ -1,6 +1,7 @@
 package com.example.foodeli.Activities.SelectAddress;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,9 +16,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.foodeli.Activities.Address.DialogFormAddress;
 import com.example.foodeli.MySqlSetUp.Pool;
 import com.example.foodeli.MySqlSetUp.ResponseApi;
 import com.example.foodeli.MySqlSetUp.Schemas.Address.Address;
+import com.example.foodeli.MySqlSetUp.Schemas.Address.Body.CreateAddress;
+import com.example.foodeli.MySqlSetUp.Schemas.Address.Response.CreateAddressRes;
 import com.example.foodeli.MySqlSetUp.Schemas.Address.Response.GetAllAddressRes;
 import com.example.foodeli.R;
 import com.google.gson.Gson;
@@ -31,14 +35,17 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class SelectAddressActivity extends AppCompatActivity {
-    private int aid, uid;
-    private String aname;
+    private int aid, uid, t_aid;
+    private ArrayList<Address> listAdd;
+    private String aname, t_aname;
     private Intent cartIntent;
     private GridView gridview;
     private LinearLayout gridviewLayout;
     private SelectAddressAdapter adapter;
+    private AppCompatButton addNewAddress;
     private Button applyAddBtn;
     private Pool pool;
+    private DialogFormAddress dialogForm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +55,8 @@ public class SelectAddressActivity extends AppCompatActivity {
         pool = new Pool();
 
         cartIntent = getIntent();
-        aid = cartIntent.getIntExtra("aid", 0);
-        aname = cartIntent.getStringExtra("aname");
+        t_aid = aid = cartIntent.getIntExtra("aid", 0);
+        t_aname = aname = cartIntent.getStringExtra("aname");
         uid = cartIntent.getIntExtra("uid", 0);
 
         ImageButton backBtn = findViewById(R.id.back_btn);
@@ -60,6 +67,7 @@ public class SelectAddressActivity extends AppCompatActivity {
             }
         });
 
+        addNewAddress = findViewById(R.id.selectaddress_add_new_btn);
         gridview = findViewById(R.id.selectaddress_gridview);
         applyAddBtn = findViewById(R.id.selectaddress_confirm_btn);
 
@@ -79,10 +87,23 @@ public class SelectAddressActivity extends AppCompatActivity {
                     }
                 }
                 else {
-                    ArrayList<Address> listAdd = response.body().getList();
+                    listAdd = response.body().getList();
                     gridviewLayout = findViewById(R.id.selectaddress_gridview_layout);
                     if(!listAdd.isEmpty()) {
                         adapter = new SelectAddressAdapter(listAdd, aid, aname, SelectAddressActivity.this);
+                        adapter.setOnSelectAddress(new SelectAddressAdapter.OnSelectAddress() {
+                            @Override
+                            public void onSelectAddress(int position) {
+                                if(t_aid != listAdd.get(position).getAid()) {
+                                    t_aid = listAdd.get(position).getAid();
+                                    t_aname = listAdd.get(position).getAddress();
+                                }
+                                else {
+                                    t_aid = 0;
+                                    t_aname = "Select Address";
+                                }
+                            }
+                        });
                         gridview.setAdapter(adapter);
                     }
                     else {
@@ -121,11 +142,19 @@ public class SelectAddressActivity extends AppCompatActivity {
             }
         });
 
+        addNewAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openAddressForm();
+            }
+        });
         applyAddBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(adapter.getTempSelect() != 0) {
-                    backBtnClick(adapter.getTempSelect(), adapter.getTempName());
+                if(t_aid != 0) {
+                    aid = t_aid;
+                    aname = t_aname;
+                    backBtnClick(aid, aname);
                 }
                 else Toast.makeText(SelectAddressActivity.this, "No address selected", Toast.LENGTH_SHORT).show();
 
@@ -138,5 +167,51 @@ public class SelectAddressActivity extends AppCompatActivity {
         cartIntent.putExtra("aid", aid);
         setResult(RESULT_OK, cartIntent);
         finish();
+    }
+
+    private void openAddressForm() {
+        dialogForm = new DialogFormAddress(SelectAddressActivity.this, uid);
+        dialogForm.setHandleFormAddress(new DialogFormAddress.HandleFormAddress() {
+            @Override
+            public void onUpdateAddress(com.example.foodeli.MySqlSetUp.Schemas.Address.Address address, String newAdd) {
+            }
+
+            @Override
+            public void onCreateAddress(String address) {
+                createAddress(uid, address);
+            }
+        });
+        dialogForm.show(getSupportFragmentManager(), "address_dialog_form" );
+    }
+
+    private void createAddress(int uid, String newAdd) {
+        CreateAddress body = new CreateAddress(newAdd, uid);
+        pool = new Pool();
+
+        Call<CreateAddressRes> createAdd = pool.getApiCallUserAddress().createAddress(body);
+        createAdd.enqueue(new Callback<CreateAddressRes>() {
+            @Override
+            public void onResponse(Call<CreateAddressRes> call, Response<CreateAddressRes> response) {
+                if (response.code() != 200) {
+                    Gson gson = new GsonBuilder().create();
+                    ResponseApi res;
+                    try {
+                        res = gson.fromJson(response.errorBody().string(), ResponseApi.class);
+                        Toast.makeText(SelectAddressActivity.this, res.getMessage(), Toast.LENGTH_SHORT).show();
+                    } catch (IOException e) {
+                        System.out.println("parse err false");
+                    }
+                }
+                else {
+                    listAdd.add(response.body().getAddress());
+                    adapter.setListAdd(listAdd);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CreateAddressRes> call, Throwable t) {
+                System.out.println(t.getMessage());
+            }
+        });
     }
 }

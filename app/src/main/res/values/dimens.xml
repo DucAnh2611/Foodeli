@@ -10,5 +10,8 @@
     <dimen name="dot_indicator_selected_width">30dp</dimen>
     <dimen name="dot_indicator_unselected_width">5dp</dimen>
     <dimen name="item_in_cart_height">120dp</dimen>
-
+    <dimen name="item_in_method">70dp</dimen>
+    <dimen name="item_gap_in_method">10dp</dimen>
+    <dimen name="item_in_shop">120dp</dimen>
+    <dimen name="item_gap_in_shop">5dp</dimen>
 </resources>

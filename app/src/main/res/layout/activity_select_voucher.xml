@@ -52,7 +52,9 @@
         android:fontFamily="@font/poppins_bold"
         android:text="Find voucher"
         android:textAllCaps="false"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:stateListAnimator="@null"
+        android:elevation="0dp"/>
 
     <LinearLayout
         android:id="@+id/selectvoucher_gridview_layout"

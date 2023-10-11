@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="130dp"
+    android:orientation="horizontal"
+    android:background="@drawable/custom_input_style"
+    android:gravity="start"
+    android:padding="20dp"
+    >
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/user_voucher_code"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Title"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppins_medium_italic"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/user_voucher_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Title"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppins_bold"
+            android:textSize="15sp"
+            />
+
+        <TextView
+            android:id="@+id/user_voucher_desc"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColor="@color/grey_100"
+            android:gravity="start"
+            android:textSize="13sp"
+            android:text="Desc"
+            android:singleLine="true"
+            android:ellipsize="end"
+            />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_marginStart="15dp"
+        android:layout_width="40dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        >
+
+        <LinearLayout
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            >
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@drawable/more"
+                app:tint="@color/green_100"/>
+
+            <TextView
+                android:id="@+id/user_voucher_quantity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:text="0"
+                android:textSize="13sp"
+                android:fontFamily="@font/poppins_medium"
+                android:textColor="@color/green_100"
+                />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>

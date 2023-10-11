@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:clipToOutline="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:background="@drawable/bg_items_subgridview_support_method"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:fontFamily="@font/poppins_medium"
+            android:text="Pick Address"
+            android:layout_marginTop="2dp"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            />
+
+
+    </RelativeLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:hint="Address"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="10dp"
+        tools:textColorHint="@color/black" />
+
+    <EditText
+        android:id="@+id/address_form_text"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@drawable/custom_input_style"
+        android:paddingStart="20dp"
+        android:ems="10"
+        android:gravity="center_vertical"
+        android:hint="Type your address"
+        android:inputType="text"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        tools:textColorHint="@color/grey_100"
+        android:layout_marginBottom="20dp"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/address_form_confirm"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/custom_button_style"
+        android:layout_margin="10dp"
+        android:fontFamily="@font/poppins_medium"
+        android:text="Confirm"
+        android:textSize="15sp"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:stateListAnimator="@null"/>
+
+</LinearLayout>

@@ -1,14 +1,32 @@
 package com.example.foodeli.Fragments.Shop;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridView;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.example.foodeli.Activities.Home.HomeViewModel;
+import com.example.foodeli.Activities.SelectVoucher.SelectVoucherActivity;
+import com.example.foodeli.MySqlSetUp.Schemas.General.Body.CancelReason;
+import com.example.foodeli.MySqlSetUp.Schemas.User.User;
+import com.example.foodeli.MySqlSetUp.Schemas.UserShop.Response.GetAllShopUserHaveResponse;
 import com.example.foodeli.R;
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +43,12 @@ public class ShopFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private ArrayList<GetAllShopUserHaveResponse.ShopWithDetail> listShop;
+    private LinearLayout gridviewLayout;
+    private GridView listShopGV;
+    private ImageButton addNewShop;
+    private HomeViewModel homeViewModel;
+    private ListShopGridviewAdapter adapter;
 
     public ShopFragment() {
         // Required empty public constructor
@@ -60,7 +84,67 @@ public class ShopFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        View view = inflater.inflate(R.layout.fragment_shop, container, false);
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_shop, container, false);
+
+        Gson gson = new Gson();
+        SharedPreferences mPrefs = getContext().getSharedPreferences("UserInfo", Context.MODE_PRIVATE);
+        String json = mPrefs.getString("user", "");
+        User user = gson.fromJson(json, User.class);
+
+        addNewShop = view.findViewById(R.id.shop_list_add);
+        gridviewLayout = view.findViewById(R.id.shop_list_gridview_layout);
+        listShopGV = view.findViewById(R.id.shop_list_gridview);
+
+        homeViewModel = new ViewModelProvider(getActivity()).get(HomeViewModel.class);
+
+        homeViewModel.getListUserShop(user.getId()).observe(getViewLifecycleOwner(), new Observer<ArrayList<GetAllShopUserHaveResponse.ShopWithDetail>>() {
+            @Override
+            public void onChanged(ArrayList<GetAllShopUserHaveResponse.ShopWithDetail> shopWithDetails) {
+                listShop = shopWithDetails;
+                if(!listShop.isEmpty()) {
+                    adapter = new ListShopGridviewAdapter(listShop, getContext());
+                    listShopGV.setLayoutParams(new LinearLayout.LayoutParams(
+                            ViewGroup.LayoutParams.MATCH_PARENT ,
+                            ViewGroup.LayoutParams.MATCH_PARENT ));
+                    listShopGV.setAdapter(adapter);
+                }
+                else {
+                    listShopGV.setLayoutParams(new LinearLayout.LayoutParams(0 ,0 ));
+                    gridviewLayout.setGravity(Gravity.CENTER);
+
+                    TextView noItem = new TextView(getContext());
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                            ViewGroup.LayoutParams.MATCH_PARENT,
+                            ViewGroup.LayoutParams.WRAP_CONTENT
+                    );
+
+                    noItem.setText("No Shop found");
+                    noItem.setTextColor(getContext().getColor(R.color.black));
+                    noItem.setTextSize(17);
+                    noItem.setGravity(Gravity.CENTER);
+
+                    ImageView noItemImage = new ImageView(getContext());
+                    LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(
+                            ViewGroup.LayoutParams.MATCH_PARENT,
+                            ViewGroup.LayoutParams.WRAP_CONTENT
+                    );
+                    noItemImage.setImageResource(R.drawable.no_data);
+
+                    gridviewLayout.addView(noItem);
+                    gridviewLayout.addView(noItemImage);
+                }
+            }
+        });
+
+        addNewShop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        return view;
     }
 }

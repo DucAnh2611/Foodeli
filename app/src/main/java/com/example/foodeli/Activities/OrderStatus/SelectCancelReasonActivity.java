@@ -45,7 +45,7 @@ public class SelectCancelReasonActivity extends AppCompatActivity implements Can
     private Button confirmCancel;
     private int rid = 0;
     private int oid;
-    private String desc;
+    private String desc = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

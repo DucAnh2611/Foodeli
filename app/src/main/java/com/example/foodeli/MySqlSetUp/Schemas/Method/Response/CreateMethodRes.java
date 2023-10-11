@@ -2,31 +2,16 @@ package com.example.foodeli.MySqlSetUp.Schemas.Method.Response;
 
 import com.example.foodeli.MySqlSetUp.ResponseApi;
 import com.example.foodeli.MySqlSetUp.Schemas.Method.Body.CreateMethod;
+import com.example.foodeli.MySqlSetUp.Schemas.Method.Method;
+import com.example.foodeli.MySqlSetUp.Schemas.Method.MethodWithTypeName;
 import com.google.gson.annotations.SerializedName;
 
 public class CreateMethodRes extends ResponseApi {
 
     @SerializedName("method")
-    private CreateMethod method;
+    private MethodWithTypeName method;
 
-    public class CreatedMethod {
-        @SerializedName("UserMethodId")
-        private int id;
-        @SerializedName("UserId")
-        private int uid;
-        @SerializedName("MethodId")
-        private int mid;
-        @SerializedName("Number")
-        private String number;
-        @SerializedName("ExpiredAt")
-        private String expired;
-        @SerializedName("Description")
-        private String desc;
-        @SerializedName("Deleted")
-        private int delete;
-    }
-
-    public CreateMethod getMethod() {return this.method;}
+    public MethodWithTypeName getMethod() {return this.method;}
 
 
 }

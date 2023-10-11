@@ -166,7 +166,7 @@ public class CartActivity extends AppCompatActivity implements CartRecyclerViewA
                 User user = gson.fromJson(json, User.class);
 
                 PlaceOrderBody body = new PlaceOrderBody(
-                        uid, ckid, vid,cknum.equals("Cash") ? 0 : 1,
+                        uid, ckid, vid, cknum.equals("Cash") ? 0 : 1,
                         user.getName(),user.getPhone(), user.getEmail(),
                         aname, totalVal, discountVal, shippingVal, taxVal
                 );
@@ -233,24 +233,23 @@ public class CartActivity extends AppCompatActivity implements CartRecyclerViewA
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == ADDRESS_REQUEST_CODE) {
-                int temp_aid = data.getIntExtra("aid", 0);
-                aid = temp_aid;
-                if(temp_aid !=0 && list != null) {
-                    String temp_aname = data.getStringExtra("aName");
-                    aname = temp_aname;
-                    addressText.setText(temp_aname);
+                aid = data.getIntExtra("aid", 0);
+                aname = data.getStringExtra("aName");
+                addressText.setText(aname);
+
+                if(aid != 0) {
                     addressIcon.setImageResource(R.drawable.address_bold);
                     addressSelect.setBackgroundResource(R.drawable.custom_button_style_sec);
                 }
-                else {
-                    Toast.makeText(this, "Can not select address while cart is empty", Toast.LENGTH_SHORT).show();
-                    defaultAdd();
+                else{
+                    addressIcon.setImageResource(R.drawable.address_select);
+                    addressSelect.setBackgroundResource(R.drawable.custom_input_style);
                 }
             }
             else if (requestCode == VOUCHER_REQUEST_CODE) {
                 int temp_vid = data.getIntExtra("vid", 0);
                 vid = temp_vid;
-                if(temp_vid !=0 && list != null) {
+                if(list != null) {
                     String temp_vcode = data.getStringExtra("vcode");
                     vcode = temp_vcode;
 
@@ -269,7 +268,7 @@ public class CartActivity extends AppCompatActivity implements CartRecyclerViewA
             else if (requestCode == PAYMENT_REQUEST_CODE) {
                 int temp_ckid = data.getIntExtra("ckid", 0);
                 ckid = temp_ckid;
-                if(temp_ckid !=0 && list != null) {
+                if(list != null) {
 
                     String tempNum = data.getStringExtra("cknum");
                     cknum = tempNum;
@@ -324,19 +323,17 @@ public class CartActivity extends AppCompatActivity implements CartRecyclerViewA
     }
 
     public class TotalValue {
-        private double preSubtotal, preShippingFee;
+        private double preSubtotal, preShippingFee = 5;
 
         DecimalFormat df = new DecimalFormat("#.##");
 
         public void calculateFromList(ArrayList<GetCartRes.ProductWithImage> items) {
             if(items.isEmpty()) {
                 preSubtotal = 0;
-                preShippingFee = 0;
                 setValueToView("0.0", "0.0", "0.0", "0.0", "0.0");
             }
             else {
                 preSubtotal = calculateSubtotal(items);
-                preShippingFee = 5;
                 checkVid();
             }
 
@@ -365,7 +362,7 @@ public class CartActivity extends AppCompatActivity implements CartRecyclerViewA
                         try {
                             res = gson.fromJson(response.errorBody().string(), ResponseApi.class);
                             Toast.makeText(CartActivity.this, res.getMessage(), Toast.LENGTH_SHORT).show();
-                            System.out.println(res.getMessage());
+                            vid = 0;
                         } catch (IOException e) {
                             System.out.println("parse err false");
                         }

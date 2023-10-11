@@ -23,7 +23,9 @@ public class OrderItemsRes implements Serializable {
         @SerializedName("ProductUnit")
         private String unit;
         @SerializedName("ProductImage")
-        private ProductImage image;
+        private String image;
+        @SerializedName("CanReview")
+        private int canReview;
 
         public int getPid() {
             return pid;
@@ -45,21 +47,12 @@ public class OrderItemsRes implements Serializable {
             return unit;
         }
 
-        public ProductImage getImage() {
+        public String getImage() {
             return image;
         }
-    }
 
-    public static class ProductImage implements Serializable {
-        @SerializedName("id") private int productImageId;
-        @SerializedName("base64") private String base64Image;
-
-        public int getProductImageId() {
-            return productImageId;
-        }
-
-        public String getBase64Image() {
-            return base64Image;
+        public int getCanReview() {
+            return canReview;
         }
     }
 

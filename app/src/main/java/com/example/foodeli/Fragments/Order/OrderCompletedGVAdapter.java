@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.appcompat.widget.AppCompatButton;
 
 import com.example.foodeli.Activities.OrderDetail.OrderDetailActivity;
+import com.example.foodeli.Activities.Review.Review;
 import com.example.foodeli.MySqlSetUp.Schemas.UserOrder.OrderWithState;
 import com.example.foodeli.R;
 
@@ -84,11 +85,14 @@ public class OrderCompletedGVAdapter extends BaseAdapter {
         leaveReview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent reviewIntent = new Intent(context, Review.class);
+                reviewIntent.putExtra("oid", item.getOid());
+                context.startActivity(reviewIntent);
             }
         });
 
 
         return convertView;
     }
+
 }

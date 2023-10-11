@@ -4,14 +4,37 @@ import com.example.foodeli.MySqlSetUp.ResponseApi;
 import com.example.foodeli.MySqlSetUp.Schemas.UserShop.ShopWithRole;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class GetAllShopUserHaveResponse extends ResponseApi {
+public class GetAllShopUserHaveResponse extends ResponseApi implements Serializable {
 
-    @SerializedName("shops")
-    private ArrayList<ShopWithRole> shops;
+    @SerializedName("shop")
+    private ArrayList<ShopWithDetail> shops;
 
-    public ArrayList<ShopWithRole> getShops() {
+    public ArrayList<ShopWithDetail> getShops() {
         return shops;
+    }
+    public static class ShopWithDetail extends ShopWithRole implements Serializable {
+        @SerializedName("ProductQuantity")
+        private int productQuantity;
+
+        @SerializedName("ShopRating")
+        private float shopRating;
+
+        @SerializedName("Sold")
+        private int sold;
+
+        public int getProductQuantity() {
+            return productQuantity;
+        }
+
+        public float getShopRating() {
+            return shopRating;
+        }
+
+        public int getSold() {
+            return sold;
+        }
     }
 }

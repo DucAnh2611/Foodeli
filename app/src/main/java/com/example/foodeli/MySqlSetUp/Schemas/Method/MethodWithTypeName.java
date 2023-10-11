@@ -24,4 +24,8 @@ public class MethodWithTypeName extends Method {
     public String getType() {
         return type;
     }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 }

@@ -338,14 +338,13 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginStart="2dp"
+                        android:fontFamily="@font/poppins_medium"
                         android:gravity="center_vertical"
                         android:text="Shipping fee"
-                        android:fontFamily="@font/poppins_medium"
                         android:textColor="@color/black"
-                        android:textSize="13sp"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        />
+                        android:textSize="13sp" />
 
                     <TextView
                         android:id="@+id/order_status_shipping_fee"

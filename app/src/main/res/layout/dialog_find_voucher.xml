@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:clipToOutline="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:background="@drawable/bg_items_subgridview_support_method"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:fontFamily="@font/poppins_medium"
+            android:text="Find Voucher"
+            android:layout_marginTop="2dp"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            />
+
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:text="Voucher Code"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="10dp"
+        tools:textColor="@color/black" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <EditText
+            android:id="@+id/find_voucher_code"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/custom_input_style"
+            android:paddingStart="15dp"
+            android:ems="10"
+            android:gravity="center_vertical"
+            android:hint="Search"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:inputType="text"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            tools:textColorHint="@color/grey_100"/>
+
+        <ImageButton
+            android:id="@+id/find_voucher_icon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/find"
+            android:scaleType="fitXY"
+            android:background="@android:color/transparent"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="20dp"
+            app:tint="@color/green_100" />
+
+    </RelativeLayout>
+    
+    <LinearLayout
+        android:id="@+id/find_voucher_gridview_holder"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:padding="10dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp">
+
+        <GridView
+            android:id="@+id/find_voucher_gridview"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:scrollbars="none"
+            android:verticalSpacing="10dp"/>
+
+    </LinearLayout>
+
+</LinearLayout>

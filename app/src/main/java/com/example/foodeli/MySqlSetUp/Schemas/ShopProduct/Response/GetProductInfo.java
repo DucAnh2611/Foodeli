@@ -2,6 +2,7 @@ package com.example.foodeli.MySqlSetUp.Schemas.ShopProduct.Response;
 
 import com.example.foodeli.MySqlSetUp.ResponseApi;
 import com.example.foodeli.MySqlSetUp.Schemas.Product.Product;
+import com.example.foodeli.MySqlSetUp.Schemas.UserShop.Shop;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ public class GetProductInfo extends ResponseApi {
     @SerializedName("item")
     private ProductInfo item;
 
-    public class ProductInfo {
+    public static class ProductInfo {
 
         @SerializedName("data")
         private GetProductWithAvg product;
@@ -19,8 +20,10 @@ public class GetProductInfo extends ResponseApi {
         @SerializedName("images")
         private ArrayList<ImageWithId> images;
 
+        @SerializedName("shopInfo")
+        private Shop shop;
 
-        public class GetProductWithAvg extends Product {
+        public static class GetProductWithAvg extends Product {
 
             @SerializedName("ProductAverageRating")
             private float rate;
@@ -39,6 +42,9 @@ public class GetProductInfo extends ResponseApi {
             return images;
         }
 
+        public Shop getShop() {
+            return shop;
+        }
     }
 
     public static class ImageWithId {

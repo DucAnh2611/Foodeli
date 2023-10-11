@@ -42,18 +42,19 @@
 
     </RelativeLayout>
 
-
     <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/selectaddress_add_new_btn"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_margin="20dp"
-            android:background="@drawable/custom_button_style_sec"
-            android:textColor="@color/green_100"
-            android:fontFamily="@font/poppins_bold"
-            android:text="Add new address"
-            android:textAllCaps="false"
-            android:textSize="16sp" />
+        android:id="@+id/selectaddress_add_new_btn"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="20dp"
+        android:background="@drawable/custom_button_style_sec"
+        android:textColor="@color/green_100"
+        android:fontFamily="@font/poppins_bold"
+        android:text="Add new address"
+        android:textAllCaps="false"
+        android:textSize="16sp"
+        android:stateListAnimator="@null"
+        android:elevation="0dp"/>
     <LinearLayout
         android:id="@+id/selectaddress_gridview_layout"
         android:layout_width="match_parent"
@@ -74,7 +75,6 @@
             />
 
     </LinearLayout>
-
 
     <Button
         android:id="@+id/selectaddress_confirm_btn"

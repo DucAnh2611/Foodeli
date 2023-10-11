@@ -68,7 +68,7 @@ public class OrderDetailProductsAdapter extends BaseAdapter {
         price.setText(String.valueOf(item.getPrice()));
         unit.setText(String.valueOf(item.getUnit()));
         quan.setText("Quan: " + item.getQuantity());
-        productImage.setImageBitmap(supportImage.convertBase64ToBitmap(item.getImage().getBase64Image()));
+        productImage.setImageBitmap(supportImage.convertBase64ToBitmap(item.getImage()));
 
         return convertView;
     }

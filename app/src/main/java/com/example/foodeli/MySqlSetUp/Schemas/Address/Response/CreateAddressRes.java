@@ -9,4 +9,7 @@ public class CreateAddressRes extends ResponseApi {
     @SerializedName("address")
     private Address address;
 
+    public Address getAddress() {
+        return address;
+    }
 }

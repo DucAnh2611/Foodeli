@@ -28,6 +28,7 @@ public class SelectAddressAdapter extends BaseAdapter {
     private TextView addressText;
     private RelativeLayout selectLayout;
     private View innerSelect;
+    private OnSelectAddress onSelectAddress;
 
     public SelectAddressAdapter(ArrayList<Address> listAdd, int aid, String aname, Context context) {
         this.listAdd = listAdd;
@@ -90,12 +91,11 @@ public class SelectAddressAdapter extends BaseAdapter {
             public void onClick(View v) {
                 if(tempSelect == item.getAid()) {
                     tempSelect = 0;
-                    tempName = "";
                 }
                 else {
                     tempSelect = item.getAid();
-                    tempName = item.getAddress();
                 }
+                onSelectAddress.onSelectAddress(position);
                 notifyDataSetChanged();
             }
         });
@@ -103,11 +103,16 @@ public class SelectAddressAdapter extends BaseAdapter {
         return convertView;
     }
 
-    public int getTempSelect() {
-        return tempSelect;
+    public void setListAdd(ArrayList<Address> listAdd) {
+        this.listAdd = listAdd;
+        notifyDataSetChanged();
     }
 
-    public String getTempName() {
-        return tempName;
+    public interface OnSelectAddress {
+        void onSelectAddress(int position);
+    }
+
+    public void setOnSelectAddress(OnSelectAddress onSelectAddress) {
+        this.onSelectAddress = onSelectAddress;
     }
 }
