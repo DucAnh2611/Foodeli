@@ -23,6 +23,7 @@ import com.example.foodeli.MySqlSetUp.ResponseApi;
 import com.example.foodeli.MySqlSetUp.Schemas.General.Body.CancelReason;
 import com.example.foodeli.MySqlSetUp.Schemas.User.User;
 import com.example.foodeli.MySqlSetUp.Schemas.UserOrder.Body.CancelOrderBody;
+import com.example.foodeli.MySqlSetUp.Schemas.UserOrder.OrderWithState;
 import com.example.foodeli.MySqlSetUp.Schemas.UserOrder.Response.CancelRes;
 import com.example.foodeli.R;
 import com.google.gson.Gson;
@@ -43,8 +44,8 @@ public class SelectCancelReasonActivity extends AppCompatActivity implements Can
     private LinearLayout otherLayout;
     private CancelReasonAdapter adapter;
     private Button confirmCancel;
-    private int rid = 0;
-    private int oid;
+    private int rid = 0, position = 0, uid = 0;
+    private OrderWithState order;
     private String desc = "";
 
     @Override
@@ -53,14 +54,11 @@ public class SelectCancelReasonActivity extends AppCompatActivity implements Can
         setContentView(R.layout.activity_select_cancel_reason);
 
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
-
-        Gson gson = new Gson();
-        SharedPreferences mPrefs = getSharedPreferences("UserInfo", Context.MODE_PRIVATE);
-        String json = mPrefs.getString("user", "");
-        User user = gson.fromJson(json, User.class);
         
         Intent orderIntent = getIntent();
-        oid = orderIntent.getIntExtra("oid", 0);
+        order = (OrderWithState) orderIntent.getSerializableExtra("order");
+        position = orderIntent.getIntExtra("position", 0);
+        uid = orderIntent.getIntExtra("uid", 0);
 
         selectReasonGV = findViewById(R.id.cancel_reason_gridview);
         otherLayout = findViewById(R.id.cancel_reason_other_layout);
@@ -81,7 +79,7 @@ public class SelectCancelReasonActivity extends AppCompatActivity implements Can
             @Override
             public void onClick(View v) {
                 if(rid !=0) {
-                    CancelOrderBody body = new CancelOrderBody(oid, user.getId(), rid, desc);
+                    CancelOrderBody body = new CancelOrderBody(order.getOid(), uid, rid, desc);
                     Pool pool = new Pool();
                     Call<CancelRes> cancelResCall = pool.getApiCallUserOrder().cancelOrder(body);
 
@@ -99,6 +97,10 @@ public class SelectCancelReasonActivity extends AppCompatActivity implements Can
                                 }
                             }
                             else {
+                                orderIntent.putExtra("order", order);
+                                orderIntent.putExtra("postition", position);
+                                orderIntent.putExtra("uid", uid);
+                                setResult(RESULT_OK, orderIntent);
                                 finish();
                             }
                         }

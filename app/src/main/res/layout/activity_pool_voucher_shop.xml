@@ -1,9 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.PoolVoucherShop.PoolVoucherShop">
+    tools:context=".Activities.PoolVoucherShop.PoolVoucherShop"
+    android:orientation="vertical">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingStart="20dp"
+        android:paddingEnd="30dp"
+        android:background="@drawable/bg_items_subgridview_support_method">
+
+        <ImageButton
+            android:id="@+id/back_btn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/back_2"
+            android:scaleType="centerInside"
+            app:tint="@color/green_100"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:contentDescription="back" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/green_100"
+            android:textSize="17sp"
+            android:fontFamily="@font/poppins_medium"
+            android:text="Shop Voucher"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="40dp"
+            />
+
+        <ImageButton
+            android:id="@+id/shop_detail_find"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:background="@android:color/transparent"
+            android:src="@drawable/find"
+            android:scaleType="fitCenter"
+            android:scaleX="1"
+            android:scaleY="1"
+            app:tint="@color/green_100" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/pool_voucher_gridview_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <GridView
+            android:id="@+id/pool_voucher_gridview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:verticalSpacing="10dp"
+            android:padding="20dp"
+            android:scrollbars="none"/>
+
+    </LinearLayout>
+
+</LinearLayout>

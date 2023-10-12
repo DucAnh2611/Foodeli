@@ -2,7 +2,9 @@ package com.example.foodeli.MySqlSetUp.Schemas.UserOrder;
 
 import com.google.gson.annotations.SerializedName;
 
-public class OrderWithState extends Order{
+import java.io.Serializable;
+
+public class OrderWithState extends Order implements Serializable {
 
     @SerializedName("StateContent")
     private String state;

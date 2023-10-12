@@ -42,6 +42,7 @@ public class OrderActiveGVAdapter extends BaseAdapter {
     private AppCompatButton cancelButton, trackButton, confirmButton;
     private LinearLayout buttonLayout;
     private IdToSerialString idToSerialString = new IdToSerialString();
+    private OnSelectMethodOrder onSelectMethodOrder;
 
     public OrderActiveGVAdapter(ArrayList<OrderWithState> listOrder, Context context) {
         this.listOrderActive = listOrder;
@@ -72,9 +73,7 @@ public class OrderActiveGVAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        if(convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.items_gridview_orderactive, parent, false);
-        }
+        convertView = LayoutInflater.from(context).inflate(R.layout.items_gridview_orderactive, parent, false);
 
         OrderWithState item = getItem(position);
 
@@ -92,27 +91,24 @@ public class OrderActiveGVAdapter extends BaseAdapter {
         orderIcon.setImageResource(convertIdStateToIcon(item.getStateId()));
         orderModify.setText("Modify: " + item.getModified());
         idAndState.setText(idToSerialString.convertIdToSerialString(item.getOid()) + ": " + item.getState());
-        itemCount.setText(item.getItemCount() + (item.getItemCount() > 1 ?" Items" : " Item"));
+        itemCount.setText(item.getItemCount() + (item.getItemCount() > 1 ? " Items" : " Item"));
         orderPayed.setText(item.getPayed() == 1 ? "Paid" : "Unpaid");
         orderTotal.setText(String.valueOf(item.getTotal()));
 
-        if(item.getStateId() == 4) {
+        if (item.getStateId() == 4) {
             buttonLayout.removeView(cancelButton);
             confirmButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    showPopupConfirm(parent, position);
+                    onSelectMethodOrder.onSelectConfirm(item, position);
                 }
             });
-        }
-        else{
+        } else {
             buttonLayout.removeView(confirmButton);
             cancelButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent cancelOrder = new Intent(context, SelectCancelReasonActivity.class);
-                    cancelOrder.putExtra("oid", item.getOid());
-                    context.startActivity(cancelOrder);
+                    onSelectMethodOrder.onSelectCancel(item, position);
                 }
             });
         }
@@ -146,70 +142,14 @@ public class OrderActiveGVAdapter extends BaseAdapter {
         }
     }
 
-    private void showPopupConfirm(ViewGroup parent, int position) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        View view = LayoutInflater.from(context).inflate(R.layout.dialog_confirm_order, parent, false);
-        builder.setView(view);
-
-        TextView title = view.findViewById(R.id.dialog_confirm_title);
-        TextView message = view.findViewById(R.id.dialog_confirm_message);
-        AppCompatButton cancelBtn = view.findViewById(R.id.dialog_cancel_btn);
-        AppCompatButton confirmBtn = view.findViewById(R.id.dialog_confirm_btn);
-
-        title.setText("Confirm Order");
-        message.setText("Are you sure to confirm this order?");
-        cancelBtn.setText("Cancel");
-        confirmBtn.setText("Confirm");
-
-        AlertDialog alertDialog = builder.create();
-
-        confirmBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                pool = new Pool();
-
-                Gson gson = new Gson();
-                SharedPreferences mPrefs = context.getSharedPreferences("UserInfo", Context.MODE_PRIVATE);
-                String json = mPrefs.getString("user", "");
-                User user = gson.fromJson(json, User.class);
-
-                Call<ConfirmRes> confirmOrder = pool.getApiCallUserOrder().confirmOrder(user.getId(), (int) getItemId(position));
-                confirmOrder.enqueue(new Callback<ConfirmRes>() {
-                    @Override
-                    public void onResponse(Call<ConfirmRes> call, Response<ConfirmRes> response) {
-                        if (!response.isSuccessful()) {
-                            Gson gson = new GsonBuilder().create();
-                            ResponseApi res;
-                            try {
-                                res = gson.fromJson(response.errorBody().string(), ResponseApi.class);
-                                System.out.println(res.getMessage());
-                            } catch (IOException e) {
-                                System.out.println("parse err false");
-                            }
-                        }
-                        else {
-                            alertDialog.dismiss();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<ConfirmRes> call, Throwable t) {
-                        System.out.print(t.getMessage());
-                    }
-                });
-            }
-        });
-
-        cancelBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                alertDialog.dismiss();
-            }
-        });
-
-        alertDialog.show();
+    public interface OnSelectMethodOrder {
+        void onSelectCancel(OrderWithState order, int position);
+        void onSelectConfirm(OrderWithState order, int position);
     }
 
+    public void setOnSelectMethodOrder(OnSelectMethodOrder onSelectMethodOrder) {
+        this.onSelectMethodOrder = onSelectMethodOrder;
+    }
 }
 
 

@@ -96,4 +96,8 @@ public class Order implements Serializable {
     public int getStateId() {
         return stateId;
     }
+
+    public void setModified(String modified) {
+        this.modified = modified;
+    }
 }

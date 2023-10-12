@@ -27,6 +27,7 @@ import com.example.foodeli.MySqlSetUp.ResponseApi;
 import com.example.foodeli.MySqlSetUp.Schemas.Cart.Response.GetCartRes;
 import com.example.foodeli.MySqlSetUp.Schemas.User.User;
 import com.example.foodeli.MySqlSetUp.Schemas.UserOrder.Body.PlaceOrderBody;
+import com.example.foodeli.MySqlSetUp.Schemas.UserOrder.OrderWithState;
 import com.example.foodeli.MySqlSetUp.Schemas.UserOrder.Response.PlaceOrderRes;
 import com.example.foodeli.MySqlSetUp.Schemas.UserVoucher.Body.CheckCanUseVoucher;
 import com.example.foodeli.MySqlSetUp.Schemas.UserVoucher.Response.CheckVoucherRes;
@@ -77,8 +78,8 @@ public class CartActivity extends AppCompatActivity implements CartRecyclerViewA
                 finish();
             }
         });
-        Intent CartIntent = getIntent();
-        int uid = CartIntent.getIntExtra("uid", 0);
+        Intent HomeIntent = getIntent();
+        int uid = HomeIntent.getIntExtra("uid", 0);
 
         RecyclerView recyclerView = findViewById(R.id.cart_all_gv);
         placeOrder = findViewById(R.id.place_orer_btn);
@@ -165,42 +166,53 @@ public class CartActivity extends AppCompatActivity implements CartRecyclerViewA
                 String json = mPrefs.getString("user", "");
                 User user = gson.fromJson(json, User.class);
 
-                PlaceOrderBody body = new PlaceOrderBody(
-                        uid, ckid, vid, cknum.equals("Cash") ? 0 : 1,
-                        user.getName(),user.getPhone(), user.getEmail(),
-                        aname, totalVal, discountVal, shippingVal, taxVal
-                );
+                if(list != null || !list.isEmpty()) {
+                    if(ckid != 0 && aname != "") {
+                        PlaceOrderBody body = new PlaceOrderBody(
+                                uid, ckid, vid, cknum.equals("Cash") ? 0 : 1,
+                                user.getName(), user.getPhone(), user.getEmail(),
+                                aname, totalVal, discountVal, shippingVal, taxVal
+                        );
+                        Call<PlaceOrderRes> PlaceOrderRes = pool.getApiCallUserOrder().placeOrder(body);
 
-                Call<PlaceOrderRes> PlaceOrderRes = pool.getApiCallUserOrder().placeOrder(body);
+                        PlaceOrderRes.enqueue(new Callback<com.example.foodeli.MySqlSetUp.Schemas.UserOrder.Response.PlaceOrderRes>() {
+                            @Override
+                            public void onResponse(Call<PlaceOrderRes> call, Response<PlaceOrderRes> response) {
+                                if (!response.isSuccessful()) {
+                                    Gson gson = new GsonBuilder().create();
+                                    ResponseApi res;
+                                    try {
+                                        res = gson.fromJson(response.errorBody().string(), ResponseApi.class);
+                                        Toast.makeText(CartActivity.this, res.getMessage(), Toast.LENGTH_SHORT).show();
+                                    } catch (IOException e) {
+                                        System.out.println("parse err false");
+                                    }
+                                } else {
+                                    OrderWithState order = response.body().getOrder();
 
-                PlaceOrderRes.enqueue(new Callback<com.example.foodeli.MySqlSetUp.Schemas.UserOrder.Response.PlaceOrderRes>() {
-                    @Override
-                    public void onResponse(Call<PlaceOrderRes> call, Response<PlaceOrderRes> response) {
-                        if (!response.isSuccessful()) {
-                            Gson gson = new GsonBuilder().create();
-                            ResponseApi res;
-                            try {
-                                res = gson.fromJson(response.errorBody().string(), ResponseApi.class);
-                                Toast.makeText(CartActivity.this, res.getMessage(), Toast.LENGTH_SHORT).show();
-                            } catch (IOException e) {
-                                System.out.println("parse err false");
+                                    HomeIntent.putExtra("order", order);
+                                    setResult(RESULT_OK, HomeIntent);
+                                    finish();
+
+                                    Intent orderStatus = new Intent(CartActivity.this, OrderStatusActivity.class);
+                                    orderStatus.putExtra("oid", order.getOid());
+                                    startActivity(orderStatus);
+                                }
                             }
-                        }
-                        else {
-                            int oid = response.body().getOrderId();
 
-                            Intent orderStatus = new Intent(CartActivity.this, OrderStatusActivity.class);
-                            orderStatus.putExtra("oid", oid);
-                            startActivity(orderStatus);
-                            finish();
-                        }
+                            @Override
+                            public void onFailure(Call<PlaceOrderRes> call, Throwable t) {
+                                System.out.println(t.getMessage());
+                            }
+                        });
                     }
-
-                    @Override
-                    public void onFailure(Call<PlaceOrderRes> call, Throwable t) {
-                        System.out.println(t.getMessage());
+                    else {
+                        Toast.makeText(CartActivity.this, "Address and Payment is required", Toast.LENGTH_SHORT).show();
                     }
-                });
+                }
+                else {
+                    Toast.makeText(CartActivity.this, "Empty cart", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -247,13 +259,11 @@ public class CartActivity extends AppCompatActivity implements CartRecyclerViewA
                 }
             }
             else if (requestCode == VOUCHER_REQUEST_CODE) {
-                int temp_vid = data.getIntExtra("vid", 0);
-                vid = temp_vid;
-                if(list != null) {
-                    String temp_vcode = data.getStringExtra("vcode");
-                    vcode = temp_vcode;
+                vid = data.getIntExtra("vid", 0);
+                vcode = data.getStringExtra("vcode");
+                voucherText.setText(vcode);
 
-                    voucherText.setText(vcode);
+                if(vid != 0) {
                     voucherIcon.setImageResource(R.drawable.voucher_select);
                     voucherSelect.setBackgroundResource(R.drawable.custom_button_style_sec);
 
@@ -261,28 +271,24 @@ public class CartActivity extends AppCompatActivity implements CartRecyclerViewA
                     updateTotal.calculateFromList(list);
                 }
                 else {
-                    Toast.makeText(this, "Can not apply voucher while cart is empty", Toast.LENGTH_SHORT).show();
-                    defaultVoucher();
+                    voucherIcon.setImageResource(R.drawable.voucher_non_select);
+                    voucherSelect.setBackgroundResource(R.drawable.custom_input_style);
                 }
             }
             else if (requestCode == PAYMENT_REQUEST_CODE) {
-                int temp_ckid = data.getIntExtra("ckid", 0);
-                ckid = temp_ckid;
-                if(list != null) {
+                ckid = data.getIntExtra("ckid", 0);
+                cknum = data.getStringExtra("cknum");
 
-                    String tempNum = data.getStringExtra("cknum");
-                    cknum = tempNum;
+                ckicon = data.getIntExtra("ckicon", 0);
+                mid = data.getIntExtra("mid", 0);
+                paymentText.setText(cknum);
+                paymentIcon.setImageResource(ckicon);
 
-                    ckicon = data.getIntExtra("ckicon", 0);
-                    mid = data.getIntExtra("mid", 0);
-
-                    paymentText.setText(cknum);
-                    paymentIcon.setImageResource(ckicon);
+                if(ckid != 0) {
                     paymentSelect.setBackgroundResource(R.drawable.custom_button_style_sec);
                 }
                 else {
-                    Toast.makeText(this, "Can not select payment while cart is empty", Toast.LENGTH_SHORT).show();
-                    defaultPayment();
+                    paymentSelect.setBackgroundResource(R.drawable.custom_input_style);
                 }
             }
         }
@@ -362,10 +368,10 @@ public class CartActivity extends AppCompatActivity implements CartRecyclerViewA
                         try {
                             res = gson.fromJson(response.errorBody().string(), ResponseApi.class);
                             Toast.makeText(CartActivity.this, res.getMessage(), Toast.LENGTH_SHORT).show();
-                            vid = 0;
                         } catch (IOException e) {
                             System.out.println("parse err false");
                         }
+                        defaultVoucher();
                     }
                     else {
                         CheckVoucherRes.Discount res = response.body().getDiscount();

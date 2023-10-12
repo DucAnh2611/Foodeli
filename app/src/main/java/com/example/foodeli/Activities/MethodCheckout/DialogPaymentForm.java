@@ -29,7 +29,6 @@ import java.util.HashMap;
 public class DialogPaymentForm extends DialogFragment {
 
     private Context context;
-    private MethodWithTypeName method;
     private AppCompatButton cancelBtn, submitBtn;
     private EditText numberCard, expiredMonth, expiredYear;
     private Spinner selectType;
@@ -43,9 +42,9 @@ public class DialogPaymentForm extends DialogFragment {
         this.context = context;
     }
 
-    public DialogPaymentForm(MethodWithTypeName method, Context context) {
+    public DialogPaymentForm(ArrayList<MethodSupport> methods, Context context) {
         this.context = context;
-        this.method = method;
+        this.methods = methods;
     }
 
     @Override

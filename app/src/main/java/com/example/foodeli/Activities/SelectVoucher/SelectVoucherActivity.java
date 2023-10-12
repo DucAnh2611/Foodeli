@@ -1,6 +1,7 @@
 package com.example.foodeli.Activities.SelectVoucher;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +16,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.foodeli.Activities.Address.DialogFormAddress;
+import com.example.foodeli.Activities.SelectAddress.SelectAddressActivity;
+import com.example.foodeli.Activities.Voucher.DialogFindVoucher;
 import com.example.foodeli.MySqlSetUp.Pool;
 import com.example.foodeli.MySqlSetUp.ResponseApi;
 import com.example.foodeli.MySqlSetUp.Schemas.UserVoucher.Response.GetAllVoucherRes;
@@ -35,11 +39,12 @@ public class SelectVoucherActivity extends AppCompatActivity {
     private int uid, vid;
     private String vcode;
     private Intent cartIntent;
-
+    private AppCompatButton findVoucher;
     private Button applyVoucher;
     private GridView gridviewVoucher;
     private LinearLayout gridviewVoucherHolder;
     private SelectVoucherAdapter adapter;
+    private DialogFindVoucher dialogFindVoucher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +60,7 @@ public class SelectVoucherActivity extends AppCompatActivity {
 
         ImageButton backBtn = findViewById(R.id.back_btn);
         applyVoucher = findViewById(R.id.selectvoucher_confirm_btn);
+        findVoucher = findViewById(R.id.selectvoucher_find_btn);
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -126,6 +132,13 @@ public class SelectVoucherActivity extends AppCompatActivity {
             }
         });
 
+        findVoucher.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openVoucherFind();
+            }
+        });
+
         applyVoucher.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -147,5 +160,17 @@ public class SelectVoucherActivity extends AppCompatActivity {
         setResult(RESULT_OK, cartIntent);
         finish();
     }
+    private void openVoucherFind() {
+        dialogFindVoucher = new DialogFindVoucher(SelectVoucherActivity.this, uid);
+        dialogFindVoucher.setOnSuccessSaveVoucher(new DialogFindVoucher.OnSuccessSaveVoucher() {
+            @Override
+            public void onSuccessSaveVoucher(GetAllVoucherRes.VoucherWithRemain voucher) {
+                adapter.AddToDataset(voucher);
+                dialogFindVoucher.dismiss();
+            }
+        });
+        dialogFindVoucher.show(getSupportFragmentManager(), "find voucher_dialog_form" );
+    }
+
 
 }

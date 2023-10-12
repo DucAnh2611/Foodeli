@@ -177,6 +177,18 @@ public class HomeViewModel extends ViewModel {
         return this.listShop;
     }
 
+    public void setListOrderActive(ArrayList<OrderWithState> listOrderActive) {
+        this.listOrderActive.setValue(listOrderActive);
+    }
+
+    public void setListOrderCompleted(ArrayList<OrderWithState> listOrderCompleted) {
+        this.listOrderCompleted.setValue(listOrderCompleted);
+    }
+
+    public void setListOrderCancelled(ArrayList<OrderWithState> listOrderCancelled) {
+        this.listOrderCancelled.setValue(listOrderCancelled);
+    }
+
     private void loadCategories() {
         pool = new Pool();
         Call<CategoryRes> getCategories = pool.getApiCallGeneral().getSystemCategory(6);

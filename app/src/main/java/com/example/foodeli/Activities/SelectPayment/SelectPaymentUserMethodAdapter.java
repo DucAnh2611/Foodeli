@@ -87,7 +87,7 @@ public class SelectPaymentUserMethodAdapter extends BaseAdapter {
             public void onClick(View v) {
                 if(tempMethodId == method.getId()) {
                     tempMethodId = 0;
-                    tempMethodNumber = "";
+                    tempMethodNumber = "Payment";
                 }
                 else {
                     tempMethodId = method.getId();

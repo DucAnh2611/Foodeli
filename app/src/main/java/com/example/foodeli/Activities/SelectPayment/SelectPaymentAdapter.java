@@ -40,7 +40,7 @@ import retrofit2.Response;
 public class SelectPaymentAdapter extends BaseAdapter implements SelectPaymentUserMethodAdapter.OnClickItem{
 
     private ArrayList<MethodSupport> listSupport;
-    private HashMap<String, ArrayList<MethodWithTypeName>> mapListMethod = new HashMap<>();
+    private HashMap<String, ArrayList<MethodWithTypeName>> mapListMethod;
     private int itemSelect = -1, uid, ckSelect = -1;
     private boolean load=false;
     private String itemNumber = "", itemType = "";
@@ -56,53 +56,16 @@ public class SelectPaymentAdapter extends BaseAdapter implements SelectPaymentUs
     private SelectPaymentUserMethodAdapter adapter;
 
     public SelectPaymentAdapter(ArrayList<MethodSupport> listSupport, int uid, int itemSelect, int ckSelect,
-                                String itemNumber, HashMap<String, Integer> mapIconSupportList, Context context) {
+                                HashMap<String, ArrayList<MethodWithTypeName>> mapListMethod, String itemNumber,
+                                HashMap<String, Integer> mapIconSupportList, Context context) {
         this.listSupport = listSupport;
+        this.mapListMethod = mapListMethod;
         this.itemSelect = itemSelect;
         this.itemNumber = itemNumber;
         this.ckSelect = ckSelect;
         this.uid = uid;
         this.mapIconSupportList = mapIconSupportList;
         this.context = context;
-    }
-
-    private void CallAPIUserHave() {
-        pool = new Pool();
-
-        Call<GetAllMethod> allMethodUserCall = pool.getApiCallUserMethod().getAllMethod(uid);
-        allMethodUserCall.enqueue(new Callback<GetAllMethod>() {
-            @Override
-            public void onResponse(Call<GetAllMethod> call, Response<GetAllMethod> response) {
-                if (!response.isSuccessful()) {
-                    Gson gson = new GsonBuilder().create();
-                    ResponseApi res;
-                    try {
-                        res = gson.fromJson(response.errorBody().string(), ResponseApi.class);
-                        Toast.makeText(context, res.getMessage(), Toast.LENGTH_SHORT).show();
-                    } catch (IOException e) {
-                        System.out.println("parse err false");
-                    }
-                }
-                else {
-                    ArrayList<MethodWithTypeName> listMethodSupport = response.body().getList();
-
-                    for (MethodWithTypeName item: listMethodSupport) {
-                        ArrayList<MethodWithTypeName> addedEl = mapListMethod.containsKey(item.getType())
-                                ? mapListMethod.get(item.getType())
-                                : new ArrayList<>();
-
-                        addedEl.add(item);
-                        mapListMethod.put(item.getType(), addedEl);
-                    }
-                    notifyDataSetChanged();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<GetAllMethod> call, Throwable t) {
-                System.out.println(t.getMessage());
-            }
-        });
     }
 
     @Override
@@ -129,10 +92,7 @@ public class SelectPaymentAdapter extends BaseAdapter implements SelectPaymentUs
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        if(convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.items_select_payment_gridview, parent, false);
-        }
-
+        convertView = LayoutInflater.from(context).inflate(R.layout.items_select_payment_gridview, parent, false);
         MethodSupport methodSupport = getItem(position);
 
         iconSupport = convertView.findViewById(R.id.method_support_icon);
@@ -143,75 +103,70 @@ public class SelectPaymentAdapter extends BaseAdapter implements SelectPaymentUs
         supportSelectLayout = convertView.findViewById(R.id.method_support_layout);
         innerSelect = convertView.findViewById(R.id.method_support_inner);
 
-        if(!load) {
-            load =true;
-            CallAPIUserHave();
-        }
-        else if(mapListMethod != null && !mapListMethod.isEmpty() ){
-            iconSupport.setImageResource(mapIconSupportList.get(methodSupport.getType()));
-            typeSupport.setText(methodSupport.getType());
 
-            if (itemSelect == methodSupport.getMid()) {
-                if (methodSupport.getType().equals("Cash")) {
-                    innerSelect.setVisibility(View.VISIBLE);
+        iconSupport.setImageResource(mapIconSupportList.get(methodSupport.getType()));
+        typeSupport.setText(methodSupport.getType());
 
-                    if(paymentLayout.findViewById(R.id.method_support_is_select) != null) {
-                        paymentLayout.removeView(isOpenIconSupport);
-                    }
+        if (itemSelect == methodSupport.getMid()) {
+            if (methodSupport.getType().equals("Cash")) {
+                innerSelect.setVisibility(View.VISIBLE);
+                isOpenIconSupport.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
 
-                }
-                else {
-                    if(paymentLayout.findViewById(R.id.method_support_layout) != null) {
-                        paymentLayout.removeView(supportSelectLayout);
-                    }
-
-                    if(mapListMethod.get(methodSupport.getType()) != null) {
-                        adapter = new SelectPaymentUserMethodAdapter(mapListMethod.get(methodSupport.getType()), ckSelect, context);
-                        adapter.itemClick(this);
-                        subGridViewUserMethod.setAdapter(adapter);
-                    }
-
-                    isOpenIconSupport.setImageResource(R.drawable.down_arrow);
-                    subGridViewUserMethod.setLayoutParams(new LinearLayout.LayoutParams(
-                            ViewGroup.LayoutParams.MATCH_PARENT,
-                            ViewGroup.LayoutParams.WRAP_CONTENT
-                    ));
-                }
-                paymentLayout.setBackgroundResource(R.drawable.custom_button_style_sec);
             }
             else {
-                if (methodSupport.getType().equals("Cash")) {
-                    paymentLayout.removeView(isOpenIconSupport);
-                    innerSelect.setVisibility(View.INVISIBLE);
-                }
-                else {
-                    paymentLayout.removeView(supportSelectLayout);
-                    isOpenIconSupport.setImageResource(R.drawable.right_arrow);
+                supportSelectLayout.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
+
+                if (mapListMethod.get(methodSupport.getType()) != null) {
+                    adapter = new SelectPaymentUserMethodAdapter(mapListMethod.get(methodSupport.getType()), ckSelect, context);
+                    adapter.itemClick(this);
+                    subGridViewUserMethod.setAdapter(adapter);
+
+                    int desiredHeight = (int) (mapListMethod.get(methodSupport.getType()) == null ? 0 : mapListMethod.get(methodSupport.getType()).size() *
+                            (context.getResources().getDimension(R.dimen.item_in_method) +
+                                    context.getResources().getDimension(R.dimen.item_gap_in_method)) + subGridViewUserMethod.getPaddingTop() + subGridViewUserMethod.getPaddingBottom());
+                    subGridViewUserMethod.setLayoutParams(new LinearLayout.LayoutParams(
+                            ViewGroup.LayoutParams.MATCH_PARENT,
+                            desiredHeight
+                    ));
                 }
 
-                subGridViewUserMethod.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
-                paymentLayout.setBackgroundResource(R.drawable.custom_input_style);
+                isOpenIconSupport.setImageResource(R.drawable.down_arrow);
             }
-            paymentLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(itemSelect == methodSupport.getMid() ) {
-                        itemSelect = 0;
-                        itemType = "";
-                        itemNumber = "";
-                    }
-                    else {
-                        itemSelect = methodSupport.getMid();
-                        itemType = methodSupport.getType();
-                        if(methodSupport.getType().equals("Cash")) {
-                            itemNumber = "Cash";
-                            ckSelect = mapListMethod.get("Cash").get(0).getId();
-                        }
-                    }
-                    notifyDataSetChanged();
-                }
-            });
+            paymentLayout.setBackgroundResource(R.drawable.custom_button_style_sec);
         }
+        else {
+            if (methodSupport.getType().equals("Cash")) {
+                isOpenIconSupport.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
+                innerSelect.setVisibility(View.INVISIBLE);
+            } else {
+                supportSelectLayout.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
+                isOpenIconSupport.setImageResource(R.drawable.right_arrow);
+            }
+
+            subGridViewUserMethod.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
+            paymentLayout.setBackgroundResource(R.drawable.custom_input_style);
+        }
+        paymentLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (itemSelect == methodSupport.getMid()) {
+                    itemSelect = 0;
+                    itemType = "";
+                    itemNumber = "Payment";
+                    if (methodSupport.getType().equals("Cash")) {
+                        ckSelect = 0;
+                    }
+                } else {
+                    itemSelect = methodSupport.getMid();
+                    itemType = methodSupport.getType();
+                    if (methodSupport.getType().equals("Cash")) {
+                        itemNumber = "Cash";
+                        ckSelect = mapListMethod.get("Cash").get(0).getId();
+                    }
+                }
+                notifyDataSetChanged();
+            }
+        });
 
         return convertView;
     }
@@ -236,6 +191,15 @@ public class SelectPaymentAdapter extends BaseAdapter implements SelectPaymentUs
     public void onClickItem() {
         itemNumber = adapter.getTempMethodNumber();
         ckSelect = adapter.getTempMethodId();
+    }
+
+    public HashMap<String, ArrayList<MethodWithTypeName>> getMapListMethod() {
+        return mapListMethod;
+    }
+
+    public void setMapListMethod(HashMap<String, ArrayList<MethodWithTypeName>> mapListMethod) {
+        this.mapListMethod = mapListMethod;
+        notifyDataSetChanged();
     }
 }
 

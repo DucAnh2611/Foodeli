@@ -24,7 +24,7 @@ public class ItemProductShopAdapter extends BaseAdapter {
     private ShapeableImageView productImage;
     private TextView pName, pDesc, pPrice, pRate;
     private AppCompatButton addToCartBtn;
-
+    private OnAddToCart onAddToCart;
     public ItemProductShopAdapter(ArrayList<GetTopProduct.ProductWithAvg> list, Context context){
         this.list = list;
         this.context = context;
@@ -54,9 +54,7 @@ public class ItemProductShopAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        if(convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.items_recyclerview_shop_products, parent, false);
-        }
+        convertView = LayoutInflater.from(context).inflate(R.layout.items_recyclerview_shop_products, parent, false);
 
         GetTopProduct.ProductWithAvg item = getItem(position);
 
@@ -76,10 +74,18 @@ public class ItemProductShopAdapter extends BaseAdapter {
         addToCartBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                onAddToCart.onAddToCart(item.getPid());
             }
         });
 
         return convertView;
+    }
+
+    public interface OnAddToCart {
+        void onAddToCart(int pid);
+    }
+
+    public void setOnAddToCart(OnAddToCart onAddToCart) {
+        this.onAddToCart = onAddToCart;
     }
 }

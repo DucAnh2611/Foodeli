@@ -87,7 +87,7 @@ public class SelectVoucherAdapter extends BaseAdapter {
             public void onClick(View v) {
                 if(tempVid == voucher.getId()) {
                     tempVid = 0;
-                    tempCode = "";
+                    tempCode = "Apply Voucher";
                 }
                 else {
                     tempVid = voucher.getId();
@@ -106,5 +106,10 @@ public class SelectVoucherAdapter extends BaseAdapter {
 
     public int getTempVid() {
         return tempVid;
+    }
+
+    public void AddToDataset(GetAllVoucherRes.VoucherWithRemain voucher) {
+        this.listVoucher.add(voucher);
+        notifyDataSetChanged();
     }
 }

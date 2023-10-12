@@ -93,7 +93,7 @@ public class OrderFragmentLayout extends Fragment {
 
         setupViewPager(viewPager, frags);
 
-        tabLayout.getTabAt(0).setText(R.string.order_active);
+        tabLayout.getTabAt(0).setText("Active");
         tabLayout.getTabAt(1).setText("Completed");
         tabLayout.getTabAt(2).setText("Cancelled");
 
@@ -112,7 +112,7 @@ public class OrderFragmentLayout extends Fragment {
 
     }
 
-    public class TabAdapter extends FragmentPagerAdapter {
+    public static class TabAdapter extends FragmentPagerAdapter {
 
         ArrayList<Fragment> fragmentArrayList= new ArrayList<>();
 

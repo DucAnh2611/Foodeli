@@ -54,9 +54,7 @@ public class TopProductGridViewAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        if(convertView == null) {
-            convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.items_girdview_topproduct, parent, false);
-        }
+        convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.items_girdview_topproduct, parent, false);
 
         if(topProducts.isEmpty()) {
             return convertView;
@@ -71,7 +69,6 @@ public class TopProductGridViewAdapter extends BaseAdapter {
         GetTopProduct.ProductWithAvg item = topProducts.get(position);
 
         DecimalFormat df = new DecimalFormat("#.#");
-        df.setRoundingMode(RoundingMode.CEILING);
 
         rate.setText( String.format(df.format(item.getAvg())) );
 
@@ -85,7 +82,6 @@ public class TopProductGridViewAdapter extends BaseAdapter {
             Bitmap decodedPByte = BitmapFactory.decodeByteArray(decodedPString, 0, decodedPString.length);
             pimage.setImageBitmap(decodedPByte);
         }
-        System.out.println(item.getPImage());
         if(!item.getSImage().equals("")) {
             byte[] decodedSString = Base64.decode(item.getSImage(), Base64.DEFAULT);
             Bitmap decodedSByte = BitmapFactory.decodeByteArray(decodedSString, 0, decodedSString.length);

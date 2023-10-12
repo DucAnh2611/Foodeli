@@ -49,9 +49,7 @@ public class OrderCancelledGVAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        if(convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.items_gridview_ordercancelled, parent, false);
-        }
+        convertView = LayoutInflater.from(context).inflate(R.layout.items_gridview_ordercancelled, parent, false);
         OrderWithState item = getItem(position);
 
         idAndState = convertView.findViewById(R.id.order_cancelled_id_and_status);

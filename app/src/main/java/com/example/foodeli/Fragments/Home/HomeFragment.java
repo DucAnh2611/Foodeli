@@ -1,5 +1,6 @@
 package com.example.foodeli.Fragments.Home;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -27,6 +28,7 @@ import com.example.foodeli.Activities.SeeAll.SeeAllCategory.AllCategory;
 import com.example.foodeli.Activities.SeeAll.SeeAllTopProducts.AllTopProduct;
 import com.example.foodeli.MySqlSetUp.Schemas.Cart.Response.GetCartRes;
 import com.example.foodeli.MySqlSetUp.Schemas.User.User;
+import com.example.foodeli.MySqlSetUp.Schemas.UserOrder.OrderWithState;
 import com.example.foodeli.R;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.gson.Gson;
@@ -44,12 +46,14 @@ public class HomeFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static int REQUEST_CART = 1;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
     private HomeViewModel homeViewModel;
+    private User user;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -92,7 +96,7 @@ public class HomeFragment extends Fragment {
         Gson gson = new Gson();
         SharedPreferences mPrefs = getContext().getSharedPreferences("UserInfo", Context.MODE_PRIVATE);
         String json = mPrefs.getString("user", "");
-        User user = gson.fromJson(json, User.class);
+        user = gson.fromJson(json, User.class);
 
         ShapeableImageView UserImage = view.findViewById(R.id.user_img_home);
         TextView UserFullName =  view.findViewById(R.id.user_name_home);
@@ -116,11 +120,12 @@ public class HomeFragment extends Fragment {
             CategoryRecyclerViewAdapter adapter = new CategoryRecyclerViewAdapter(categories, view.getContext());
             CategoryRV.setAdapter(adapter);
 
-            homeViewModel.getTopProducts().observe(getViewLifecycleOwner(), products -> {
-                TopProductGridViewAdapter adapter2 = new TopProductGridViewAdapter(products, view.getContext());
-                topProducts.setAdapter(adapter2);
+        });
 
-            });
+        homeViewModel.getTopProducts().observe(getViewLifecycleOwner(), products -> {
+            TopProductGridViewAdapter adapter2 = new TopProductGridViewAdapter(products, view.getContext());
+            topProducts.setAdapter(adapter2);
+
         });
 
         TextView seeMoreCategory = view.findViewById(R.id.home_more_category);
@@ -146,10 +151,24 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
                 Intent cartIntent = new Intent(getActivity(), CartActivity.class);
                 cartIntent.putExtra("uid", user.getId());
-                startActivity(cartIntent);
+                startActivityForResult(cartIntent, REQUEST_CART);
             }
         });
 
         return view;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == Activity.RESULT_OK) {
+            if(requestCode == REQUEST_CART) {
+                ArrayList<OrderWithState> orderActive = homeViewModel.getListOrderActive(user.getId()).getValue();
+                OrderWithState order = (OrderWithState) data.getSerializableExtra("order");
+                if(!orderActive.isEmpty()) {
+                    orderActive.add(0, order);
+                    homeViewModel.setListOrderActive(orderActive);
+                }
+            }
+        }
     }
 }

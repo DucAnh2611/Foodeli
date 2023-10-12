@@ -52,7 +52,9 @@
         android:fontFamily="@font/poppins_bold"
         android:text="Add payment"
         android:textAllCaps="false"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:stateListAnimator="@null"
+        android:elevation="0sp"/>
 
     <LinearLayout
         android:id="@+id/selectpayment_gridview_layout"

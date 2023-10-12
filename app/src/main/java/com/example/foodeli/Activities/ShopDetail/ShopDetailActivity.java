@@ -15,8 +15,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.foodeli.Activities.PoolVoucherShop.PoolVoucherShop;
+import com.example.foodeli.Activities.ProductDetail.ProductDetail;
 import com.example.foodeli.MySqlSetUp.Pool;
 import com.example.foodeli.MySqlSetUp.ResponseApi;
+import com.example.foodeli.MySqlSetUp.Schemas.Cart.Body.AddToCartBody;
+import com.example.foodeli.MySqlSetUp.Schemas.Cart.Response.AddToCartRes;
 import com.example.foodeli.MySqlSetUp.Schemas.General.Response.GetTopProduct;
 import com.example.foodeli.MySqlSetUp.Schemas.User.User;
 import com.example.foodeli.MySqlSetUp.Schemas.UserShop.Response.GetAllShopUserHaveResponse;
@@ -46,11 +50,17 @@ public class ShopDetailActivity extends AppCompatActivity {
     private LinearLayout poolVoucherShop;
     private ItemProductShopAdapter adapter;
     private SupportImage supportImage = new SupportImage();
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop_detail);
+
+        Gson gson = new Gson();
+        SharedPreferences mPrefs = getSharedPreferences("UserInfo", Context.MODE_PRIVATE);
+        String json = mPrefs.getString("user", "");
+        user = gson.fromJson(json, User.class);
 
         ImageButton backBtn = findViewById(R.id.back_btn);
         backBtn.setOnClickListener(new View.OnClickListener() {
@@ -59,11 +69,6 @@ public class ShopDetailActivity extends AppCompatActivity {
                 finish();
             }
         });
-
-//        Gson gson = new Gson();
-//        SharedPreferences mPrefs = getSharedPreferences("UserInfo", Context.MODE_PRIVATE);
-//        String json = mPrefs.getString("user", "");
-//        User user = gson.fromJson(json, User.class);
 
         Intent productIntent = getIntent();
         sid = productIntent.getIntExtra("sid", 0);
@@ -82,7 +87,9 @@ public class ShopDetailActivity extends AppCompatActivity {
         poolVoucherShop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent VoucherPoolIntent = new Intent(ShopDetailActivity.this, PoolVoucherShop.class);
+                VoucherPoolIntent.putExtra("sid", sid);
+                startActivity(VoucherPoolIntent);
             }
         });
     }
@@ -117,6 +124,12 @@ public class ShopDetailActivity extends AppCompatActivity {
                     sProducts.setText(String.format("%d Products", shop.getProductQuantity()));
 
                     adapter = new ItemProductShopAdapter(products, ShopDetailActivity.this);
+                    adapter.setOnAddToCart(new ItemProductShopAdapter.OnAddToCart() {
+                        @Override
+                        public void onAddToCart(int pid) {
+                            addToCart(user.getId(), pid, 1);
+                        }
+                    });
                     listProductsGv.setAdapter(adapter);
 
                     int desiredHeight = (int) (products.size() * (getResources().getDimension(R.dimen.item_in_shop) + getResources().getDimension(R.dimen.item_gap_in_shop)) + listProductsGv.getPaddingTop() + listProductsGv.getPaddingBottom());
@@ -129,6 +142,37 @@ public class ShopDetailActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<GetShopInformationResponse> call, Throwable t) {
+                System.out.println(t.getMessage());
+            }
+        });
+    }
+
+    public void addToCart(int uid, int pid, int quantity) {
+        pool = new Pool();
+
+        AddToCartBody body = new AddToCartBody(uid, pid, quantity);
+        Call<AddToCartRes> addToCartResCall = pool.getApiCallUserCart().addItemToCart(body);
+
+        addToCartResCall.enqueue(new Callback<AddToCartRes>() {
+            @Override
+            public void onResponse(Call<AddToCartRes> call, Response<AddToCartRes> response) {
+                if (!response.isSuccessful()) {
+                    Gson gson = new GsonBuilder().create();
+                    ResponseApi res;
+                    try {
+                        res = gson.fromJson(response.errorBody().string(), ResponseApi.class);
+                        System.out.println(res.getMessage());
+                    } catch (IOException e) {
+                        System.out.println("parse err false");
+                    }
+                }
+                else {
+                    Toast.makeText(ShopDetailActivity.this, response.body().isAdded() ? "Successfully" : "Failed on adding this item to cart", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AddToCartRes> call, Throwable t) {
                 System.out.println(t.getMessage());
             }
         });

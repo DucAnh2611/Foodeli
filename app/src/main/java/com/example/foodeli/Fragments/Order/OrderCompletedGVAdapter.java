@@ -54,9 +54,7 @@ public class OrderCompletedGVAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        if(convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.items_gridview_ordercompleted, parent, false);
-        }
+        convertView = LayoutInflater.from(context).inflate(R.layout.items_gridview_ordercompleted, parent, false);
 
         OrderWithState item = getItem(position);
 
