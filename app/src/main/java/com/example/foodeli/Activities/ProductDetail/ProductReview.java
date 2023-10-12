@@ -12,5 +12,7 @@ public class ProductReview extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_review);
+
+        System.out.println("hello");
     }
 }
