@@ -18,6 +18,6 @@ public interface RetrofitAPICallUserReview {
     Call<CreateReviewRes> createReview(@Body CreateReviewBody body);
 
     @GET(base + "get")
-    Call<GetProductReviewRes> getReviewOfProduct(@Query("pid") int pid, @Query("rate") int rate, @Query("page") int page);
+    Call<GetProductReviewRes> getReviewOfProduct(@Query("pid") int pid, @Query("rate") int rate, @Query("page") int page, @Query("limit") int limit);
 
 }

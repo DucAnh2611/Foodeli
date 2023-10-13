@@ -68,7 +68,7 @@ public class TopProductGridViewAdapter extends BaseAdapter {
 
         GetTopProduct.ProductWithAvg item = topProducts.get(position);
 
-        DecimalFormat df = new DecimalFormat("#.#");
+        DecimalFormat df = new DecimalFormat("0.0");
 
         rate.setText( String.format(df.format(item.getAvg())) );
 

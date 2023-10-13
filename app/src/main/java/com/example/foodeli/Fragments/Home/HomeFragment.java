@@ -164,7 +164,7 @@ public class HomeFragment extends Fragment {
             if(requestCode == REQUEST_CART) {
                 ArrayList<OrderWithState> orderActive = homeViewModel.getListOrderActive(user.getId()).getValue();
                 OrderWithState order = (OrderWithState) data.getSerializableExtra("order");
-                if(!orderActive.isEmpty()) {
+                if(orderActive != null) {
                     orderActive.add(0, order);
                     homeViewModel.setListOrderActive(orderActive);
                 }

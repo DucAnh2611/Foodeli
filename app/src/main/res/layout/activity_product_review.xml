@@ -1,9 +1,208 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.ProductDetail.ProductReview">
+    tools:context=".Activities.ProductReview.ProductReview"
+    android:orientation="vertical"
+    android:background="@color/white">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingStart="20dp"
+        android:paddingEnd="30dp"
+        android:background="@drawable/bg_items_subgridview_support_method">
+
+        <ImageButton
+            android:id="@+id/back_btn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/back_2"
+            android:scaleType="centerInside"
+            app:tint="@color/green_100"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:contentDescription="back" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/green_100"
+            android:textSize="17sp"
+            android:fontFamily="@font/poppins_medium"
+            android:text="Product Review"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="40dp"
+            />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/product_review_rate_layout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:paddingHorizontal="15dp"
+        android:paddingVertical="8dp"
+        android:gravity="center"
+        >
+        <LinearLayout
+            android:id="@+id/product_review_rate5"
+            android:layout_width="0sp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:background="@drawable/custom_input_style"
+            android:paddingHorizontal="10dp"
+            android:layout_marginHorizontal="2dp"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="17dp"
+                android:text="5"
+                android:textSize="13sp"
+                android:textColor="@color/black"
+                android:gravity="center_vertical"/>
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@drawable/rate"
+                android:layout_marginStart="5dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/product_review_rate4"
+            android:layout_width="0sp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:background="@drawable/custom_input_style"
+            android:paddingHorizontal="10dp"
+            android:layout_marginHorizontal="2dp"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="17dp"
+                android:text="4"
+                android:textSize="13sp"
+                android:textColor="@color/black"
+                android:gravity="center_vertical"/>
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@drawable/rate"
+                android:layout_marginStart="5dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/product_review_rate3"
+            android:layout_width="0sp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:background="@drawable/custom_input_style"
+            android:paddingHorizontal="10dp"
+            android:layout_marginHorizontal="2dp"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="17dp"
+                android:text="3"
+                android:textSize="13sp"
+                android:textColor="@color/black"
+                android:gravity="center_vertical"/>
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@drawable/rate"
+                android:layout_marginStart="5dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/product_review_rate2"
+            android:layout_width="0sp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:background="@drawable/custom_input_style"
+            android:paddingHorizontal="10dp"
+            android:layout_marginHorizontal="2dp"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="17dp"
+                android:text="2"
+                android:textSize="13sp"
+                android:textColor="@color/black"
+                android:gravity="center_vertical"/>
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@drawable/rate"
+                android:layout_marginStart="5dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/product_review_rate1"
+            android:layout_width="0sp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:background="@drawable/custom_input_style"
+            android:paddingHorizontal="10dp"
+            android:layout_marginHorizontal="2dp"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="17dp"
+                android:text="1"
+                android:textSize="13sp"
+                android:textColor="@color/black"
+                android:gravity="center_vertical"/>
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@drawable/rate"
+                android:layout_marginStart="5dp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/product_review_gridview_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <GridView
+            android:id="@+id/product_review_gridview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingVertical="10dp"
+            android:scrollbars="none"/>
+
+    </LinearLayout>
+
+</LinearLayout>

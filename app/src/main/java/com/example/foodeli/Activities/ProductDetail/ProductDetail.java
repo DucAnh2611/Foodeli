@@ -1,6 +1,7 @@
 package com.example.foodeli.Activities.ProductDetail;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager.widget.ViewPager;
 
@@ -8,20 +9,24 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.foodeli.Activities.Home.HomeViewModel;
-import com.example.foodeli.Activities.OrderDetail.OrderDetailActivity;
+import com.example.foodeli.Activities.ProductReview.ProductReview;
+import com.example.foodeli.Activities.ProductReview.ReviewListAdapter;
 import com.example.foodeli.Activities.ShopDetail.ShopDetailActivity;
 import com.example.foodeli.MySqlSetUp.Pool;
 import com.example.foodeli.MySqlSetUp.ResponseApi;
 import com.example.foodeli.MySqlSetUp.Schemas.Cart.Body.AddToCartBody;
 import com.example.foodeli.MySqlSetUp.Schemas.Cart.Response.AddToCartRes;
+import com.example.foodeli.MySqlSetUp.Schemas.ProductReview.Response.GetProductReviewRes;
 import com.example.foodeli.MySqlSetUp.Schemas.ShopProduct.Response.GetProductInfo;
 import com.example.foodeli.MySqlSetUp.Schemas.User.User;
 import com.example.foodeli.R;
@@ -43,11 +48,15 @@ public class ProductDetail extends AppCompatActivity {
 
     private GetProductInfo.ProductInfo product = null;
     private Pool pool = null;
-    LinearLayout dotsLayout = null;
+    private LinearLayout dotsLayout = null, reviewLayout;
     private List<View> dotViews = new ArrayList<>();
     private int quantity = 1;
     private int pid;
+    private ListView reviewListView;
     private HomeViewModel homeViewModel;
+    private ReviewListAdapter adapter;
+    private AppCompatButton seeAllBtn;
+    private TextView nothing;
     private SupportImage supportImage = new SupportImage();
 
     @Override
@@ -59,6 +68,12 @@ public class ProductDetail extends AppCompatActivity {
 
         ImageButton backBtn = findViewById(R.id.back_btn);
         LinearLayout rateHolder = findViewById(R.id.productdetail_rate_holder);
+        reviewLayout = findViewById(R.id.productdetail_review_layout);
+        reviewListView = findViewById(R.id.productdetail_review_listview);
+        seeAllBtn = findViewById(R.id.productdetail_review_seeall);
+        nothing = findViewById(R.id.productdetail_review_empty_text);
+
+        seeAllBtn.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
 
         Intent productIntent = getIntent();
         pid = productIntent.getIntExtra("pid", 0);
@@ -70,7 +85,7 @@ public class ProductDetail extends AppCompatActivity {
             }
         });
 
-        rateHolder.setOnClickListener(new View.OnClickListener() {
+        seeAllBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent productReview = new Intent(ProductDetail.this, ProductReview.class);
@@ -80,6 +95,8 @@ public class ProductDetail extends AppCompatActivity {
         });
 
         getProductInfomation(pid);
+        loadListReViewByRate(pid, -1, 1);
+
     }
 
     private void getProductInfomation(int pid) {
@@ -262,5 +279,45 @@ public class ProductDetail extends AppCompatActivity {
             }
         });
     }
+    private void loadListReViewByRate(int pid, int rate, int page) {
+        pool = new Pool();
 
+        Call<GetProductReviewRes> getReview = pool.getApiCallUserReview().getReviewOfProduct(pid, rate, page, 3) ;
+        getReview.enqueue(new Callback<GetProductReviewRes>() {
+            @Override
+            public void onResponse(Call<GetProductReviewRes> call, Response<GetProductReviewRes> response) {
+                if (!response.isSuccessful()) {
+                    Gson gson = new GsonBuilder().create();
+                    ResponseApi res;
+                    try {
+                        res = gson.fromJson(response.errorBody().string(), ResponseApi.class);
+                        System.out.println(res.getMessage());
+                    } catch (IOException e) {
+                        System.out.println("parse err false");
+                    }
+                }
+                else {
+                    if(response.body().getReviews() != null) {
+                        ArrayList<GetProductReviewRes.ReviewWithImage> list = response.body().getReviews();
+                        adapter = new ReviewListAdapter(list, ProductDetail.this);
+                        reviewListView.setAdapter(adapter);
+                        if(!list.isEmpty()) {
+                            reviewLayout.removeView(nothing);
+                        }
+                        if(list.size() > 2) {
+                            seeAllBtn.setLayoutParams(new LinearLayout.LayoutParams(
+                                    ViewGroup.LayoutParams.MATCH_PARENT,
+                                    ViewGroup.LayoutParams.WRAP_CONTENT
+                            ));
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GetProductReviewRes> call, Throwable t) {
+                System.out.println("fail to fetch API");
+            }
+        });
+    }
 }

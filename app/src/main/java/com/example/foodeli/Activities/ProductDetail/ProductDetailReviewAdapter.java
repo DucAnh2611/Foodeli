@@ -45,7 +45,7 @@ public class ProductDetailReviewAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return reviews.get(position).getData().getPid();
+        return reviews.get(position).getPid();
     }
 
     @Override
@@ -63,12 +63,12 @@ public class ProductDetailReviewAdapter extends BaseAdapter {
 
             LinearLayout userRateLayout = itemView.findViewById(R.id.productdetail_user_rate_layout);
 
-            userName.setText(item.getData().getFullname());
-            userTitle.setText(item.getData().getTitle());
-            userDesc.setText(item.getData().getDesc());
+            userName.setText(item.getFullname());
+            userTitle.setText(item.getTitle());
+            userDesc.setText(item.getDesc());
 
-            if (!item.getData().getAvatar().equals("")) {
-                byte[] decodedPString = Base64.decode(item.getData().getAvatar(), Base64.DEFAULT);
+            if (!item.getAvatar().equals("")) {
+                byte[] decodedPString = Base64.decode(item.getAvatar(), Base64.DEFAULT);
                 Bitmap decodedPByte = BitmapFactory.decodeByteArray(decodedPString, 0, decodedPString.length);
                 userAvatar.setImageBitmap(decodedPByte);
             }
@@ -80,7 +80,7 @@ public class ProductDetailReviewAdapter extends BaseAdapter {
                 mainReview.removeView(gridView);
             }
 
-            int rating = item.getData().getRate();
+            int rating = item.getRate();
             for (int i = 0; i < 5; i++) {
                 ImageView star = new ImageView(context);
 
@@ -95,5 +95,9 @@ public class ProductDetailReviewAdapter extends BaseAdapter {
 //        }
 
         return itemView;
+    }
+
+    public void setReviews(ArrayList<GetProductReviewRes.ReviewWithImage> reviews) {
+        this.reviews = reviews;
     }
 }

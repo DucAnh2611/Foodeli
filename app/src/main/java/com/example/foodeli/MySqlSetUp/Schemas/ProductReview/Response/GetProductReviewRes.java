@@ -14,22 +14,7 @@ public class GetProductReviewRes extends ResponseApi {
         return reviews;
     }
 
-    public class ReviewWithImage {
-        @SerializedName("data")
-        private Review data;
-
-        @SerializedName("images")
-        private ArrayList<ImageReview> images;
-
-        public Review getData() {
-            return data;
-        }
-        public ArrayList<ImageReview> getImages() {
-            return images;
-        }
-    }
-
-    public static class Review {
+    public static class ReviewWithImage {
         @SerializedName("UserFullName")
         private String fullname;
 
@@ -62,6 +47,9 @@ public class GetProductReviewRes extends ResponseApi {
 
         @SerializedName("ReviewRating")
         private int rate;
+
+        @SerializedName("image")
+        private ArrayList<ImageReview> images;
 
         public int getUid() {
             return uid;
@@ -105,6 +93,10 @@ public class GetProductReviewRes extends ResponseApi {
 
         public String getTitle() {
             return title;
+        }
+
+        public ArrayList<ImageReview> getImages() {
+            return images;
         }
     }
 

@@ -113,6 +113,9 @@ public class FindResultActivity extends AppCompatActivity {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent FindIntent = new Intent(FindResultActivity.this, FindActivity.class);
+                FindIntent.putExtra("key", key);
+                startActivity(FindIntent);
                 finish();
             }
         });

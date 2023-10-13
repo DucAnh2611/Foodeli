@@ -59,7 +59,8 @@ public class CartRecyclerViewAdapter extends RecyclerView.Adapter<CartRecyclerVi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ItemInCart holder, int position) {
+    public void onBindViewHolder(@NonNull ItemInCart holder, int positionTemp) {
+        final int position = holder.getAdapterPosition();
         final GetCartRes.ProductWithImage item = list.get(position);
 
         holder.setPid(item.getPid());
@@ -80,7 +81,9 @@ public class CartRecyclerViewAdapter extends RecyclerView.Adapter<CartRecyclerVi
             @Override
             public void onClick(View v) {
                 if(item.getQuantity() < item.getStock()) {
-                    updateItem(item, uid, item.getPid(), item.getQuantity() + 1, position);
+                    item.setQuantity(item.getQuantity() + 1);
+                    notifyItemChanged(position);
+                    updateItem(uid, item.getPid(), item.getQuantity() + 1, position);
                 }
                 else {
                     Toast.makeText(context, "Maximum item quantity reached", Toast.LENGTH_SHORT).show();
@@ -92,10 +95,14 @@ public class CartRecyclerViewAdapter extends RecyclerView.Adapter<CartRecyclerVi
             @Override
             public void onClick(View v) {
                 if(item.getQuantity() <= 1) {
-                    deleteItem(position, uid, item.getPid());
+                    list.remove(position);
+                    notifyItemRemoved(position);
+                    deleteItem(uid, item.getPid());
                 }
                 else {
-                    updateItem(item, uid, item.getPid(), item.getQuantity() - 1, position);
+                    item.setQuantity(item.getQuantity() - 1);
+                    notifyItemChanged(position);
+                    updateItem(uid, item.getPid(), item.getQuantity() - 1, position);
                 }
             }
         });
@@ -114,7 +121,7 @@ public class CartRecyclerViewAdapter extends RecyclerView.Adapter<CartRecyclerVi
 
     public  ArrayList<GetCartRes.ProductWithImage> getItem() {return this.list;}
 
-    private void deleteItem(int position, int uid, int pid) {
+    private void deleteItem(int uid, int pid) {
         Pool pool = new Pool();
 
         Call<DeleteItemRes> deleteItem = pool.getApiCallUserCart().deleteItem(uid, pid);
@@ -134,8 +141,6 @@ public class CartRecyclerViewAdapter extends RecyclerView.Adapter<CartRecyclerVi
                 }
                 else {
                     if(response.body().isDelete()) {
-                        list.remove(position);
-                        notifyItemRemoved(position);
                         onItemUpdate.onItemUpdate();
                     }
                     else {
@@ -152,7 +157,7 @@ public class CartRecyclerViewAdapter extends RecyclerView.Adapter<CartRecyclerVi
 
     }
 
-    private void updateItem(GetCartRes.ProductWithImage item, int uid, int pid, int newQuantity, int position) {
+    private void updateItem(int uid, int pid, int newQuantity, int position) {
         Pool pool = new Pool();
 
         AddToCartBody body = new AddToCartBody(uid, pid, newQuantity );
@@ -174,8 +179,6 @@ public class CartRecyclerViewAdapter extends RecyclerView.Adapter<CartRecyclerVi
                 }
                 else {
                     if(response.body().isUpdate()) {
-                        item.setQuantity(newQuantity);
-                        notifyItemChanged(position);
                         onItemUpdate.onItemUpdate();
                     }
                     else {

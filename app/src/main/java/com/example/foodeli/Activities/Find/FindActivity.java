@@ -53,7 +53,10 @@ public class FindActivity extends AppCompatActivity{
         });
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
 
+        Intent findRes = getIntent();
+
         filterFind = new Filter();
+        filterFind.setKey(findRes.getStringExtra("key"));
 
         historyPrefs = getSharedPreferences("UserInfo", MODE_PRIVATE);
 
@@ -63,6 +66,8 @@ public class FindActivity extends AppCompatActivity{
         keySearch = findViewById(R.id.find_key);
         searchIcon = findViewById(R.id.find_icon);
         filterOpen = findViewById(R.id.find_filter_btn);
+
+        keySearch.setText(filterFind.getKey());
 
         getHistories();
 
@@ -140,6 +145,7 @@ public class FindActivity extends AppCompatActivity{
         editor.apply();
 
         startActivity(findProductIntent);
+        finish();
 
         getHistories();
     }

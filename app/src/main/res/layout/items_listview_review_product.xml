@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:paddingHorizontal="20dp"
+    android:paddingVertical="15dp"
+    android:orientation="vertical"
+    android:background="@drawable/bg_items_subgridview_support_method">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/item_productdetail_review_user_image"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            app:shapeAppearanceOverlay="@style/Circular"
+            android:background="@color/green_100"
+            android:scaleType="centerCrop"/>
+
+        <LinearLayout
+            android:layout_marginStart="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/item_productdetail_review_user_name"
+                android:layout_width="match_parent"
+                android:layout_height="22dp"
+                android:text="User Name"
+                android:fontFamily="@font/poppins_bold"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:gravity="center_vertical"/>
+
+            <LinearLayout
+                android:id="@+id/item_productdetail_review_user_rate_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:src="@drawable/rate"
+                    app:tint="@color/orange_400"
+                    android:layout_marginEnd="2dp"/>
+
+                <ImageView
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:src="@drawable/rate"
+                    app:tint="@color/orange_400"
+                    android:layout_marginEnd="2dp" />
+
+                <ImageView
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:src="@drawable/rate"
+                    app:tint="@color/orange_400"
+                    android:layout_marginEnd="2dp"/>
+
+                <ImageView
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:src="@drawable/rate"
+                    app:tint="@color/orange_400"
+                    android:layout_marginEnd="2dp"/>
+
+                <ImageView
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:src="@drawable/rate"
+                    app:tint="@color/orange_400" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:id="@+id/item_productdetail_review_user_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Desc"
+            android:textColor="@color/black"
+            android:textSize="13sp"
+            android:gravity="center_vertical"
+            android:maxLines="5"
+            android:ellipsize="end"/>
+
+        <GridView
+            android:id="@+id/item_productdetail_review_user_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:horizontalSpacing="@dimen/item_gap_in_shop"
+            android:verticalSpacing="@dimen/item_gap_in_shop"
+            android:numColumns="4"
+            android:scrollbars="none"/>
+
+    </LinearLayout>
+
+</LinearLayout>

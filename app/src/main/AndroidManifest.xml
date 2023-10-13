@@ -68,7 +68,7 @@
             android:name=".Activities.SelectAddress.SelectAddressActivity"
             android:exported="false" />
         <activity
-            android:name=".Activities.ProductDetail.ProductReview"
+            android:name=".Activities.ProductReview.ProductReview"
             android:exported="false" />
         <activity
             android:name=".Activities.ProductDetail.ProductDetail"
