@@ -1,6 +1,7 @@
 package com.example.foodeli.Fragments.Shop;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -20,6 +21,7 @@ import android.widget.TextView;
 
 import com.example.foodeli.Activities.Home.HomeViewModel;
 import com.example.foodeli.Activities.SelectVoucher.SelectVoucherActivity;
+import com.example.foodeli.Activities.ShopManage.ShopManageActivity;
 import com.example.foodeli.MySqlSetUp.Schemas.General.Body.CancelReason;
 import com.example.foodeli.MySqlSetUp.Schemas.User.User;
 import com.example.foodeli.MySqlSetUp.Schemas.UserShop.Response.GetAllShopUserHaveResponse;
@@ -39,6 +41,7 @@ public class ShopFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static final int REQUEST_SHOP_MANAGE = 1;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -105,6 +108,16 @@ public class ShopFragment extends Fragment {
                 listShop = shopWithDetails;
                 if(!listShop.isEmpty()) {
                     adapter = new ListShopGridviewAdapter(listShop, getContext());
+
+                    adapter.setOnSelectShop(new ListShopGridviewAdapter.OnSelectShop() {
+                        @Override
+                        public void onSelectShop(GetAllShopUserHaveResponse.ShopWithDetail shop) {
+                            Intent shopManage = new Intent(getContext(), ShopManageActivity.class);
+                            shopManage.putExtra("shop", shop);
+                            getActivity().startActivityForResult(shopManage, REQUEST_SHOP_MANAGE);
+                        }
+                    });
+
                     listShopGV.setLayoutParams(new LinearLayout.LayoutParams(
                             ViewGroup.LayoutParams.MATCH_PARENT ,
                             ViewGroup.LayoutParams.MATCH_PARENT ));

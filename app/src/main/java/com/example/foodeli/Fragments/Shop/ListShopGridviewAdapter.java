@@ -1,6 +1,7 @@
 package com.example.foodeli.Fragments.Shop;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ public class ListShopGridviewAdapter extends BaseAdapter {
     private SupportImage supportImage = new SupportImage();
     private ShapeableImageView shopImage;
     private TextView rate, role, name, desc, sold, product;
+    private OnSelectShop onSelectShop;
 
     public ListShopGridviewAdapter(ArrayList<GetAllShopUserHaveResponse.ShopWithDetail> list, Context context) {
         this.list = list;
@@ -50,9 +52,7 @@ public class ListShopGridviewAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        if(convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.items_gridview_list_shop_user, parent,false);
-        }
+        convertView = LayoutInflater.from(context).inflate(R.layout.items_gridview_list_shop_user, parent,false);
 
         GetAllShopUserHaveResponse.ShopWithDetail item = getItem(position);
 
@@ -72,6 +72,21 @@ public class ListShopGridviewAdapter extends BaseAdapter {
         sold.setText(String.format("%d Sold", item.getSold()));
         product.setText(String.format("%d Product", item.getProductQuantity()));
 
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onSelectShop.onSelectShop(item);
+            }
+        });
+
         return convertView;
+    }
+
+    public interface OnSelectShop {
+        void onSelectShop(GetAllShopUserHaveResponse.ShopWithDetail shop);
+    }
+
+    public void setOnSelectShop(OnSelectShop onSelectShop) {
+        this.onSelectShop = onSelectShop;
     }
 }

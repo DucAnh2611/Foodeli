@@ -1,17 +1,15 @@
 package com.example.foodeli.MySqlSetUp.Schemas.UserShop.Response;
 
-import com.example.foodeli.MySqlSetUp.ResponseApi;
 import com.example.foodeli.MySqlSetUp.Schemas.General.Response.GetTopProduct;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
-public class GetShopInformationResponse extends ResponseApi {
-
+public class GetAllProductShop {
     @SerializedName("shop")
-    private GetAllShopUserHaveResponse.ShopWithDetail info;
+    private ArrayList<GetTopProduct.ProductWithAvg> products;
 
-    public GetAllShopUserHaveResponse.ShopWithDetail getInfo() {
-        return info;
+    public ArrayList<GetTopProduct.ProductWithAvg> getProducts() {
+        return products;
     }
 }

@@ -23,6 +23,7 @@ import com.example.foodeli.MySqlSetUp.Schemas.Cart.Body.AddToCartBody;
 import com.example.foodeli.MySqlSetUp.Schemas.Cart.Response.AddToCartRes;
 import com.example.foodeli.MySqlSetUp.Schemas.General.Response.GetTopProduct;
 import com.example.foodeli.MySqlSetUp.Schemas.User.User;
+import com.example.foodeli.MySqlSetUp.Schemas.UserShop.Response.GetAllProductShop;
 import com.example.foodeli.MySqlSetUp.Schemas.UserShop.Response.GetAllShopUserHaveResponse;
 import com.example.foodeli.MySqlSetUp.Schemas.UserShop.Response.GetShopInformationResponse;
 import com.example.foodeli.R;
@@ -82,6 +83,7 @@ public class ShopDetailActivity extends AppCompatActivity {
         poolVoucherShop = findViewById(R.id.shop_detail_pool_voucher);
         listProductsGv = findViewById(R.id.shop_detail_gridview_list_product);
 
+        getShopInformation(sid);
         getShopProducts(sid);
 
         poolVoucherShop.setOnClickListener(new View.OnClickListener() {
@@ -94,11 +96,11 @@ public class ShopDetailActivity extends AppCompatActivity {
         });
     }
 
-    private void getShopProducts(int sid) {
+    private void getShopInformation(int sid) {
         pool = new Pool();
 
-        Call<GetShopInformationResponse> getList = pool.getApiCallUserShop().getShop(sid);
-        getList.enqueue(new Callback<GetShopInformationResponse>() {
+        Call<GetShopInformationResponse> getInfoShop = pool.getApiCallUserShop().getShop(sid);
+        getInfoShop.enqueue(new Callback<GetShopInformationResponse>() {
             @Override
             public void onResponse(Call<GetShopInformationResponse> call, Response<GetShopInformationResponse> response) {
                 if (!response.isSuccessful()) {
@@ -113,8 +115,7 @@ public class ShopDetailActivity extends AppCompatActivity {
                     }
                 }
                 else {
-                    shop = response.body().getShop().getInfo();
-                    products = response.body().getShop().getProducts();
+                    shop = response.body().getInfo();
 
                     shopImage.setImageBitmap(supportImage.convertBase64ToBitmap(shop.getAvatar()));
                     sName.setText(shop.getName());
@@ -122,6 +123,36 @@ public class ShopDetailActivity extends AppCompatActivity {
                     sRate.setText(String.valueOf(shop.getShopRating()));
                     sSold.setText(String.format("%d Sold", shop.getSold()));
                     sProducts.setText(String.format("%d Products", shop.getProductQuantity()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GetShopInformationResponse> call, Throwable t) {
+                System.out.println(t.getMessage());
+            }
+        });
+    }
+
+    private void getShopProducts(int sid) {
+        pool = new Pool();
+
+        Call<GetAllProductShop> getList = pool.getApiCallUserShop().getShopProduct(sid);
+        getList.enqueue(new Callback<GetAllProductShop>() {
+            @Override
+            public void onResponse(Call<GetAllProductShop> call, Response<GetAllProductShop> response) {
+                if (!response.isSuccessful()) {
+                    Gson gson = new GsonBuilder().create();
+                    ResponseApi res;
+                    try {
+                        res = gson.fromJson(response.errorBody().string(), ResponseApi.class);
+                        System.out.println(res.getMessage());
+                        Toast.makeText(ShopDetailActivity.this, res.getMessage(), Toast.LENGTH_SHORT).show();
+                    } catch (IOException e) {
+                        System.out.println("parse err false");
+                    }
+                }
+                else {
+                    products = response.body().getProducts();
 
                     adapter = new ItemProductShopAdapter(products, ShopDetailActivity.this);
                     adapter.setOnAddToCart(new ItemProductShopAdapter.OnAddToCart() {
@@ -141,7 +172,7 @@ public class ShopDetailActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<GetShopInformationResponse> call, Throwable t) {
+            public void onFailure(Call<GetAllProductShop> call, Throwable t) {
                 System.out.println(t.getMessage());
             }
         });
