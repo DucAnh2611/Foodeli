@@ -43,11 +43,12 @@
 
     </RelativeLayout>
 
-    <ScrollView
+    <com.amar.library.ui.StickyScrollView
         android:id="@+id/shop_manage_scrollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="none">
+        android:scrollbars="none"
+        app:stickyHeader="@+id/shop_manage_tab_layout">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -106,6 +107,18 @@
                     app:shapeAppearanceOverlay="@style/RoundedSquare" />
 
             </LinearLayout>
+
+            <Button
+                android:id="@+id/shop_manage_edit_confirm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/custom_button_style"
+                android:layout_margin="15dp"
+                android:paddingVertical="8dp"
+                android:textSize="18sp"
+                android:fontFamily="@font/poppins_bold"
+                android:text="Confirm"
+                />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -207,8 +220,8 @@
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/shop_manage_tab_layout"
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:background="@drawable/bg_items_subgridview_support_method"
+                android:layout_height="40dp"
+                android:background="@color/white"
                 app:tabBackground="@drawable/tab_selected"
                 app:tabSelectedTextAppearance="@style/TabSelectTextAppearance"
                 app:tabSelectedTextColor="@color/green_100"
@@ -222,6 +235,6 @@
 
         </LinearLayout>
 
-    </ScrollView>
+    </com.amar.library.ui.StickyScrollView>
 
 </LinearLayout>
