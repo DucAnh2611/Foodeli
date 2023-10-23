@@ -89,7 +89,12 @@ public class DialogPaymentForm extends DialogFragment {
             public void onClick(View v) {
                 if(!num.equals("") && month!=0 && year!=0) {
                     if(num.length() >= 10) {
-                        onSelectMethodUpdate.onCreatePayment(typeId, type, num, String.format("20%02d-%02d-01", year, month));
+                        if(year >= 24) {
+
+                            onSelectMethodUpdate.onCreatePayment(typeId, type, num, String.format("20%02d-%02d-01", year, month));
+                        }else {
+                            Toast.makeText(context, "Can not add cart in current year", Toast.LENGTH_SHORT).show();
+                        }
                     }
                     else {
                         Toast.makeText(context, "Card number is under 10 characters", Toast.LENGTH_SHORT).show();
@@ -157,8 +162,8 @@ public class DialogPaymentForm extends DialogFragment {
             public void afterTextChanged(Editable s) {
                 if(!s.toString().equals("")) {
                     year = Integer.parseInt(s.toString());
-                    if(year < 23) {
-                        year = 24;
+                    if(year < 0) {
+                        year = 1;
                         expiredYear.setText(String.valueOf(year));
                     }
                 }

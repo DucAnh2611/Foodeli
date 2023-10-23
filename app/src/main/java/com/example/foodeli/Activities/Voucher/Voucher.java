@@ -66,6 +66,9 @@ public class Voucher extends AppCompatActivity {
         voucherLoading.setVisibility(View.VISIBLE);
         voucherEmpty.setVisibility(View.GONE);
 
+        adapter = new UserVoucherGridviewAdapter(new ArrayList<>(), Voucher.this);
+        voucherGV.setAdapter(adapter);
+
         getVoucherList(uid);
         findVoucher.setOnClickListener(new View.OnClickListener() {
             @Override

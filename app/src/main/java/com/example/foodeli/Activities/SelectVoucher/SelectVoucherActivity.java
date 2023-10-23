@@ -72,6 +72,9 @@ public class SelectVoucherActivity extends AppCompatActivity {
         voucherLoading.setVisibility(View.VISIBLE);
         gridviewVoucher.setVisibility(View.GONE);
 
+        adapter=new SelectVoucherAdapter(new ArrayList<>(), vid, vcode, SelectVoucherActivity.this);
+        gridviewVoucher.setAdapter(adapter);
+
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

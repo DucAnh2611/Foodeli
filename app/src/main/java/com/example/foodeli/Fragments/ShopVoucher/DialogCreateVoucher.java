@@ -137,6 +137,7 @@ public class DialogCreateVoucher extends DialogFragment {
             public void afterTextChanged(Editable s) {
                 String input = s.toString();
                 String filteredInput = input.replaceAll("[^a-zA-Z0-9]", "").toUpperCase();
+                filteredInput.replaceAll(" ", "");
 
                 if (!input.equals(filteredInput)) {
                     code = filteredInput;

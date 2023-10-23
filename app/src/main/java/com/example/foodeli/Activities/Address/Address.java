@@ -69,8 +69,10 @@ public class Address extends AppCompatActivity {
         addressEmpty.setVisibility(View.GONE);
         addressLoading.setVisibility(View.VISIBLE);
 
-        getAddressFromUser(uid);
+        adapter = new UserAddressGridViewAdapter(new ArrayList<>(), Address.this );
+        listAddress.setAdapter(adapter);
 
+        getAddressFromUser(uid);
         newAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

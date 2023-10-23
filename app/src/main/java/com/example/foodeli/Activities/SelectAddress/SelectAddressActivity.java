@@ -80,6 +80,9 @@ public class SelectAddressActivity extends AppCompatActivity {
         addressEmpty.setVisibility(View.GONE);
         addressLoading.setVisibility(View.VISIBLE);
 
+        adapter = new SelectAddressAdapter(new ArrayList<>(), aid, aname, SelectAddressActivity.this);
+        gridview.setAdapter(adapter);
+
         Call<GetAllAddressRes> getAllAddress = pool.getApiCallUserAddress().getAll(uid);
 
         getAllAddress.enqueue(new Callback<GetAllAddressRes>() {
