@@ -8,4 +8,7 @@ public class CreateVoucherRes {
     @SerializedName("voucher")
     private Voucher voucher;
 
+    public Voucher getVoucher() {
+        return voucher;
+    }
 }

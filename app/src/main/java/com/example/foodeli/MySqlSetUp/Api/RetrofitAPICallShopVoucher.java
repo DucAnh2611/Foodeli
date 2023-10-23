@@ -20,7 +20,7 @@ public interface RetrofitAPICallShopVoucher {
     @GET(base + "get")
     Call<GetAllVoucherShopRes> getAlVoucherShop(@Query("sid") int sid);
 
-    @POST(base + "create")
+    @POST(base + "new")
     Call<CreateVoucherRes> createVoucher(@Body VoucherShopBody body);
 
     @PUT(base + "update")

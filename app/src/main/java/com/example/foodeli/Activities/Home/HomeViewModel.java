@@ -189,6 +189,24 @@ public class HomeViewModel extends ViewModel {
         this.listOrderCancelled.setValue(listOrderCancelled);
     }
 
+    public void setListShop(ArrayList<GetAllShopUserHaveResponse.ShopWithDetail> listShop) {
+        this.listShop.setValue(listShop);
+    }
+    //RELOAD
+
+    public void ReloadTopProduct() {
+        loadTopProduct();
+    }
+    public void ReloadOrderActive(int uid) {
+        if(listOrderActive == null) {
+            listOrderActive = new MutableLiveData<ArrayList<OrderWithState>>();
+        }
+        loadOrderState(uid, "active");
+    }
+    public void ReloadShopUser(int uid) {
+        loadShopUser(uid);
+    }
+
     private void loadCategories() {
         pool = new Pool();
         Call<CategoryRes> getCategories = pool.getApiCallGeneral().getSystemCategory(6);

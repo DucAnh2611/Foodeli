@@ -15,6 +15,8 @@ public class GetAllShopUserHaveResponse extends ResponseApi implements Serializa
     public ArrayList<ShopWithDetail> getShops() {
         return shops;
     }
+
+
     public static class ShopWithDetail extends ShopWithRole implements Serializable {
         @SerializedName("ProductQuantity")
         private int productQuantity;
@@ -35,6 +37,18 @@ public class GetAllShopUserHaveResponse extends ResponseApi implements Serializa
 
         public int getSold() {
             return sold;
+        }
+
+        public void setProductQuantity(int productQuantity) {
+            this.productQuantity = productQuantity;
+        }
+
+        public void setShopRating(float shopRating) {
+            this.shopRating = shopRating;
+        }
+
+        public void setSold(int sold) {
+            this.sold = sold;
         }
     }
 }

@@ -37,6 +37,8 @@ android {
 
 dependencies {
     implementation 'com.github.amarjain07:StickyScrollView:1.0.3'
+    implementation 'org.apmem.tools:layouts:1.10@aar'
+    implementation 'androidx.viewpager2:viewpager2:1.1.0-alpha01'
     implementation 'mysql:mysql-connector-java:8.0.23'
     implementation 'com.squareup.retrofit2:retrofit:2.7.2'
     implementation 'com.squareup.retrofit2:converter-gson:2.7.2'

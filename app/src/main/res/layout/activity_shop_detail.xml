@@ -71,14 +71,14 @@
                 android:layout_height="wrap_content"
                 android:padding="20dp"
                 android:orientation="horizontal"
-                android:gravity="center_vertical">
+                android:gravity="start">
 
                 <LinearLayout
                     android:layout_width="0sp"
                     android:layout_weight="1"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_marginEnd="10dp">
+                    android:layout_marginEnd="20dp">
                     <TextView
                         android:id="@+id/shop_detail_name"
                         android:layout_width="match_parent"
@@ -89,7 +89,7 @@
                         android:lineHeight="15dp"
                         android:text="Shop name"
                         android:layout_gravity="center_vertical"
-                        android:singleLine="true"
+                        android:maxLines="2"
                         android:ellipsize="end"
                         />
 
@@ -105,6 +105,18 @@
                         android:singleLine="true"
                         android:ellipsize="end"
                         />
+
+                    <TextView
+                        android:id="@+id/shop_detail_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="15dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginTop="10dp"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="Address"
+                        android:textColor="@color/green_100"
+                        android:textSize="12sp"/>
                 </LinearLayout>
 
                 <com.google.android.material.imageview.ShapeableImageView

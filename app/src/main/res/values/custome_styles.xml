@@ -9,6 +9,10 @@
         <item name="cornerSize">10%</item>
     </style>
 
+    <style name="RoundedSquare_button_min">
+        <item name="cornerSize">20%</item>
+    </style>
+
     <style name="RoundTopLeftRRight">
         <item name="cornerSizeTopLeft">10dp</item>
         <item name="cornerSizeTopRight">10dp</item>

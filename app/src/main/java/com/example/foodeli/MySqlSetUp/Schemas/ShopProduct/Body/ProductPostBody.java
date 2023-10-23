@@ -1,7 +1,7 @@
 package com.example.foodeli.MySqlSetUp.Schemas.ShopProduct.Body;
 
 public class ProductPostBody {
-    private int uid, sid, stock;;
+    private int uid, sid, stock, from, to;
     private float price;
     private String name, unit, shortDesc, longDesc;
 
@@ -13,7 +13,9 @@ public class ProductPostBody {
             String name,
             String unit,
             String shortDesc,
-            String longDesc
+            String longDesc,
+            int from,
+            int to
     ) {
         this.uid = uid;
         this.sid = sid;
@@ -23,6 +25,8 @@ public class ProductPostBody {
         this.unit = unit;
         this.shortDesc = shortDesc;
         this.longDesc = longDesc;
+        this.from = from;
+        this.to = to;
     }
 
     public int getSid() {
@@ -31,5 +35,45 @@ public class ProductPostBody {
 
     public int getUid() {
         return this.uid;
+    }
+
+    public void setUid(int uid) {
+        this.uid = uid;
+    }
+
+    public void setSid(int sid) {
+        this.sid = sid;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public int getFrom() {
+        return from;
+    }
+
+    public int getTo() {
+        return to;
+    }
+
+    public float getPrice() {
+        return price;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public String getShortDesc() {
+        return shortDesc;
+    }
+
+    public String getLongDesc() {
+        return longDesc;
     }
 }

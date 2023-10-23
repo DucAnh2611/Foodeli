@@ -98,13 +98,14 @@ public class OrderDetailActivity extends AppCompatActivity {
         if(orderInfo != null) {
             order = orderInfo.getInfo();
             method = orderInfo.getPaymentMethod();
+            ArrayList<OrderTrackRes.OrderTimeLine> orderTimeLines = orderInfo.getOrderTimeLines();
 
             methodIconView.setImageResource(methodIcon.convertTypeToIcon(method.getMethodType()));
             methodNum.setText(method.getMethodType().equals("Cash") ? "Cash" : method.getNumber());
 
             orderId.setText(idToSerialString.convertIdToSerialString(oid));
             address.setText(order.getAddress());
-            timeFinish.setText(order.getEstimate());
+            timeFinish.setText(orderTimeLines.get(orderTimeLines.size()-1).getUpdateAt());
             subtotal.setText("$" + order.getSubtotal());
             shipping.setText("$" + order.getShipFee());
             discount.setText("$" + order.getDiscount());
@@ -132,13 +133,14 @@ public class OrderDetailActivity extends AppCompatActivity {
                     else {
                         order = response.body().getOrder().getInfo();
                         method = response.body().getOrder().getPaymentMethod();
+                        ArrayList<OrderTrackRes.OrderTimeLine> orderTimeLines = response.body().getOrder().getOrderTimeLines();
 
                         methodIconView.setImageResource(methodIcon.convertTypeToIcon(method.getMethodType()));
                         methodNum.setText(method.getMethodType().equals("Cash") ? "Cash" : method.getNumber());
 
                         orderId.setText(idToSerialString.convertIdToSerialString(oid));
                         address.setText(order.getAddress());
-                        timeFinish.setText(order.getEstimate());
+                        timeFinish.setText(orderTimeLines.get(orderTimeLines.size()-1).getUpdateAt());
                         subtotal.setText("$" + order.getSubtotal());
                         shipping.setText("$" + order.getShipFee());
                         discount.setText("$" + order.getDiscount());

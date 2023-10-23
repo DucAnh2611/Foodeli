@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/custom_input_style"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:gravity="start">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/item_dialog_find_emp_image"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:shapeAppearanceOverlay="@style/Circular"
+            android:background="@color/green_100"
+            android:scaleType="centerCrop"/>
+
+        <LinearLayout
+            android:layout_marginStart="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/item_dialog_find_emp_name"
+                android:layout_width="match_parent"
+                android:layout_height="22dp"
+                android:text="User Name"
+                android:fontFamily="@font/poppins_bold"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:gravity="center_vertical"/>
+
+            <TextView
+                android:id="@+id/item_dialog_find_emp_email"
+                android:layout_width="match_parent"
+                android:layout_height="15dp"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:text="Email"
+                android:textColor="@color/green_100"
+                android:textSize="11sp"
+                android:gravity="center_vertical"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="end|center_vertical"
+        android:layout_marginTop="5dp"
+        >
+
+        <LinearLayout
+            android:id="@+id/item_dialog_find_emp_add"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:background="@drawable/custom_button_style_sec"
+            android:paddingHorizontal="10dp"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/add_plus"
+                app:tint="@color/green_100"
+                android:scaleType="centerInside"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="17dp"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:text="Add"
+                android:textColor="@color/green_100"
+                android:textSize="13sp"
+                android:gravity="center_vertical"
+                />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>

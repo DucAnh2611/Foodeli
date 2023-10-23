@@ -15,19 +15,33 @@ public class GetAllUserInShop {
     }
 
     public static class UserInShop extends User {
-        public UserInShop(String name, String phone, String email, String birthday, String regisAt, String modified) {
-            super(name, phone, email, birthday, regisAt, modified);
-        }
-
-        public UserInShop(String phone, String email, String password) {
-            super(phone, email, password);
+        public UserInShop(User user, String role, String update) {
+            super(user.getId(), user.getName(), user.getPassword(), user.getAvatar(), user.getPhone(), user.getEmail(), user.getBirthday(), user.getRegisAt(), user.getModified());
+            this.role = role;
+            this.update = update;
         }
 
         @SerializedName("PermissionType")
         private String role;
 
+        @SerializedName("update")
+        private String update;
+
+
         public String getRole() {
             return role;
+        }
+
+        public void setRole(String role) {
+            this.role = role;
+        }
+
+        public String getUpdate() {
+            return update;
+        }
+
+        public void setUpdate(String update) {
+            this.update = update;
         }
     }
 }

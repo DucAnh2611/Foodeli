@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center_horizontal">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:background="@drawable/bg_items_subgridview_support_method"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:fontFamily="@font/poppins_medium"
+            android:text="Product Form"
+            android:layout_marginTop="2dp"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            />
+
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/dialog_shop_form_product_image_rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="130dp"
+                    app:shapeAppearanceOverlay="@style/RoundedSquare"
+                    android:padding="15dp"
+                    android:clipToPadding="false"/>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/dialog_shop_form_product_add_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:background="@drawable/custom_button_style_radius_max"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="Add image"
+                    android:paddingHorizontal="20dp"
+                    android:textSize="14sp"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:layout_marginVertical="5dp"
+                    android:stateListAnimator="@null"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="10dp">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Product Name"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/dialog_shop_form_product_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/custom_input_style"
+                    android:ems="10"
+                    android:gravity="center_vertical"
+                    android:hint="Product Name"
+                    android:inputType="text"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textSize="13sp"
+                    tools:textColorHint="@color/grey_100" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="0sp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="Price"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:layout_width="0sp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="Unit"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:layout_width="0sp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="Quantity"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:gravity="center_vertical">
+
+                    <EditText
+                        android:id="@+id/dialog_shop_form_product_price"
+                        android:layout_width="0sp"
+                        android:layout_weight="1"
+                        android:layout_height="55dp"
+                        android:background="@drawable/custom_input_style"
+                        android:ems="10"
+                        android:gravity="center_vertical"
+                        android:hint="Price"
+                        android:inputType="numberDecimal"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="20dp"
+                        android:textColor="@color/black"
+                        android:textSize="13sp"
+                        tools:textColorHint="@color/grey_100" />
+
+                    <EditText
+                        android:id="@+id/dialog_shop_form_product_unit"
+                        android:layout_width="0sp"
+                        android:layout_weight="1"
+                        android:layout_height="55dp"
+                        android:background="@drawable/custom_input_style"
+                        android:ems="10"
+                        android:gravity="center_vertical"
+                        android:hint="Unit"
+                        android:inputType="text"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="20dp"
+                        android:textColor="@color/black"
+                        android:textSize="13sp"
+                        tools:textColorHint="@color/grey_100"
+                        android:layout_marginStart="5dp"/>
+
+                    <EditText
+                        android:id="@+id/dialog_shop_form_product_quantity"
+                        android:layout_width="0sp"
+                        android:layout_weight="1"
+                        android:layout_height="55dp"
+                        android:background="@drawable/custom_input_style"
+                        android:ems="10"
+                        android:gravity="center_vertical"
+                        android:hint="Quantity"
+                        android:inputType="number"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="20dp"
+                        android:textColor="@color/black"
+                        android:textSize="13sp"
+                        tools:textColorHint="@color/grey_100"
+                        android:layout_marginStart="5dp"/>
+
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Short Description"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/dialog_shop_form_product_short"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/custom_input_style"
+                    android:ems="10"
+                    android:gravity="center_vertical"
+                    android:hint="Short Description"
+                    android:inputType="text"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
+                    android:textColor="@color/black"
+                    android:textSize="13sp"
+                    tools:textColorHint="@color/grey_100" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Long Description"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/dialog_shop_form_product_long"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/custom_input_style"
+                    android:gravity="start"
+                    android:hint="Long Description"
+                    android:inputType="textMultiLine"
+                    android:maxLines="20"
+                    android:padding="20dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/grey_100"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:text="Category"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Click to each category to remove"
+                    android:textColor="@color/grey_100"
+                    android:fontFamily="@font/poppins_italic"
+                    android:textSize="11sp" />
+
+                <org.apmem.tools.layouts.FlowLayout
+                    android:id="@+id/dialog_shop_form_product_flow_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    app:lineSpacing="5dp">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/dialog_shop_form_product_add_cate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="25dp"
+                        android:text="Add category"
+                        android:paddingHorizontal="15dp"
+                        android:paddingVertical="2.5dp"
+                        android:background="@drawable/custom_button_style_radius_max"
+                        android:textSize="12sp"
+                        android:textColor="@color/white"
+                        android:textAllCaps="false"
+                        android:stateListAnimator="@null"
+                        android:elevation="0sp"
+                        android:layout_marginEnd="5dp"
+                        style="?android:selectableItemBackground"/>
+
+                </org.apmem.tools.layouts.FlowLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Estimate Time - Minutes"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:gravity="center_vertical">
+
+                    <EditText
+                        android:id="@+id/dialog_shop_form_product_from"
+                        android:layout_width="0sp"
+                        android:layout_weight="1"
+                        android:layout_height="55dp"
+                        android:background="@drawable/custom_input_style"
+                        android:ems="10"
+                        android:gravity="center_vertical"
+                        android:hint="Minutes"
+                        android:inputType="number"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="20dp"
+                        android:textColor="@color/black"
+                        android:textSize="13sp"
+                        tools:textColorHint="@color/grey_100" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Minutes"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"
+                        android:layout_marginStart="10dp"/>
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginHorizontal="10dp"
+                        android:src="@drawable/horizon_line"
+                        app:tint="@color/green_100" />
+
+                    <EditText
+                        android:id="@+id/dialog_shop_form_product_to"
+                        android:layout_width="0sp"
+                        android:layout_weight="1"
+                        android:layout_height="55dp"
+                        android:background="@drawable/custom_input_style"
+                        android:ems="10"
+                        android:gravity="center_vertical"
+                        android:hint="Minutes"
+                        android:inputType="number"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="20dp"
+                        android:textColor="@color/black"
+                        android:textSize="13sp"
+                        tools:textColorHint="@color/grey_100"
+                        android:layout_marginStart="5dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Minutes"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"
+                        android:layout_marginStart="10dp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/dialog_shop_form_product_cancel"
+            android:layout_width="0sp"
+            android:layout_weight="0.5"
+            android:layout_height="45dp"
+            android:background="@drawable/custom_input_style_stroke_green100"
+            android:fontFamily="@font/poppins_medium"
+            android:text="Cancel"
+            android:textSize="14sp"
+            android:textAllCaps="false"
+            android:textColor="@color/green_100"
+            android:layout_marginRight="10dp"
+            android:stateListAnimator="@null"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/dialog_shop_form_product_confirm"
+            android:layout_width="0sp"
+            android:layout_weight="0.5"
+            android:layout_height="45dp"
+            android:background="@drawable/custom_button_style"
+            android:fontFamily="@font/poppins_medium"
+            android:text="Confirm"
+            android:textSize="14sp"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:layout_marginLeft="10dp"
+            android:stateListAnimator="@null"/>
+
+    </LinearLayout>
+
+</LinearLayout>

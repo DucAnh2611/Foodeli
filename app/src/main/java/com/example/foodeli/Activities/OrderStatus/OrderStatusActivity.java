@@ -45,7 +45,7 @@ public class OrderStatusActivity extends AppCompatActivity {
     private HomeViewModel homeViewModel;
     private GridView timelineGV;
     private ImageView methodIconView;
-    private TextView orderId, address, estimate, subtotal, shipping, discount, tax, total, methodNum;
+    private TextView orderId, address, subtotal, shipping, discount, tax, total, methodNum;
     private Button orderDetailBtn;
     private OrderStatusStateAdapter stateAdapter;
     private IdToSerialString idToSerialString = new IdToSerialString();
@@ -76,7 +76,6 @@ public class OrderStatusActivity extends AppCompatActivity {
         timelineGV = findViewById(R.id.order_status_gridview_timeline);
         orderId = findViewById(R.id.order_status_id);
         address = findViewById(R.id.order_status_address);
-        estimate = findViewById(R.id.order_status_estimate);
         subtotal = findViewById(R.id.order_status_subtotal);
         shipping = findViewById(R.id.order_status_shipping_fee);
         discount = findViewById(R.id.order_status_discount);
@@ -135,7 +134,6 @@ public class OrderStatusActivity extends AppCompatActivity {
 
                             orderId.setText(idToSerialString.convertIdToSerialString(oid));
                             address.setText(order.getAddress());
-                            estimate.setText(order.getEstimate());
                             methodIconView.setImageResource(methodIcon.convertTypeToIcon(method.getMethodType()));
                             methodNum.setText(method.getMethodType().equals("Cash") ? "Cash" : method.getNumber());
                             subtotal.setText("$" + order.getSubtotal());

@@ -7,9 +7,9 @@ import com.google.gson.annotations.SerializedName;
 public class CreateShopResponse extends ResponseApi {
 
     @SerializedName("shop")
-    private Shop shop;
+    private GetAllShopUserHaveResponse.ShopWithDetail shop;
 
-    public Shop getShop() {
+    public GetAllShopUserHaveResponse.ShopWithDetail getShop() {
         return shop;
     }
 }

@@ -5,6 +5,7 @@ import com.example.foodeli.MySqlSetUp.Schemas.User.Body.ChangeForm;
 import com.example.foodeli.MySqlSetUp.Schemas.User.Body.CreateAccount;
 import com.example.foodeli.MySqlSetUp.Schemas.User.Body.SendOTPBody;
 import com.example.foodeli.MySqlSetUp.Schemas.User.Response.CreateUserResponse;
+import com.example.foodeli.MySqlSetUp.Schemas.User.Response.FindUserResponse;
 import com.example.foodeli.MySqlSetUp.Schemas.User.Response.GetUserResponse;
 import com.example.foodeli.MySqlSetUp.Schemas.User.Body.LoginForm;
 import com.example.foodeli.MySqlSetUp.Schemas.User.Response.LoginRes;
@@ -36,7 +37,8 @@ public interface RetrofitAPICallUserProfile {
     @POST("user/profile/send-otp")
     Call<SendOTPResponse> sendOTP(@Body SendOTPBody body);
 
-
+    @GET("user/profile/find-user")
+    Call<FindUserResponse> findUser(@Query("key") String key);
 
 
 }

@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="15dp"
+    android:background="@drawable/custom_input_style"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/item_shop_list_order_icon_layout"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/custom_button_style_sec"
+            >
+            
+            <ImageView
+                android:id="@+id/item_shop_list_order_icon"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/order_select"
+                android:scaleType="fitCenter"
+                android:scaleY="0.7"
+                android:scaleX="0.7"
+                app:tint="@color/green_100" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:orientation="vertical"
+            >
+            <TextView
+                android:id="@+id/item_shop_list_order_id"
+                android:layout_width="match_parent"
+                android:layout_height="15dp"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:text="Id"
+                android:textColor="@color/green_100"
+                android:fontFamily="@font/poppins_italic"
+                android:textSize="11sp"
+                android:gravity="center_vertical"
+                />
+
+            <TextView
+                android:id="@+id/item_shop_list_order_status"
+                android:layout_width="match_parent"
+                android:layout_height="22dp"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:text="Status"
+                android:textColor="@color/black"
+                android:fontFamily="@font/poppins_bold"
+                android:textSize="16dp"
+                android:gravity="center_vertical"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:orientation="horizontal"
+                    android:gravity="start"
+                    >
+
+                    <TextView
+                        android:id="@+id/item_shop_list_order_item_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:text="0 item"
+                        android:textColor="@color/black"
+                        />
+
+                    <ImageView
+                        android:layout_marginStart="5dp"
+                        android:layout_width="10dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/seperate"
+                        android:scaleType="fitXY"
+                        app:tint="@color/green_100"
+                        />
+
+                    <TextView
+                        android:id="@+id/item_shop_list_order_payed"
+                        android:layout_marginStart="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:text="Payed"
+                        android:textColor="@color/black"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical|end"
+                    >
+
+                    <ImageView
+                        android:id="@+id/item_shop_list_order_total_icon"
+                        android:layout_width="10dp"
+                        android:layout_height="19dp"
+                        android:src="@drawable/dollar"
+                        app:tint="@color/green_100"
+                        android:scaleType="centerCrop"
+                        android:scaleX="1.2"
+                        android:scaleY="1.2"
+                        android:layout_gravity="start"/>
+
+                    <TextView
+                        android:id="@+id/item_shop_list_order_total"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="0.0"
+                        android:gravity="center_vertical"
+                        android:textSize="15sp"
+                        android:textColor="@color/green_100"
+                        android:fontFamily="@font/poppins_medium"
+                        />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/item_shop_list_order_button_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="end|center_vertical"
+        android:layout_marginTop="5dp"
+        >
+
+        <TextView
+            android:id="@+id/item_shop_list_order_update"
+            android:layout_width="0sp"
+            android:layout_height="20dp"
+            android:layout_weight="1"
+            android:textSize="11sp"
+            android:gravity="center_vertical"
+            android:text="Update: "
+            android:fontFamily="@font/poppins_medium_italic"
+            android:textColor="@color/grey_100"
+            />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/item_shop_list_order_method"
+            android:layout_marginStart="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:background="@drawable/custom_button_style"
+            android:text="Method"
+            android:textSize="12sp"
+            android:fontFamily="@font/poppins_medium"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            android:paddingHorizontal="5dp"
+            android:stateListAnimator="@null"
+            android:gravity="center"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>

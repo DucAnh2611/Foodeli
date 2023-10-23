@@ -1,10 +1,17 @@
 package com.example.foodeli.Fragments.Shop;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -18,17 +25,30 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.foodeli.Activities.Home.HomeViewModel;
 import com.example.foodeli.Activities.SelectVoucher.SelectVoucherActivity;
 import com.example.foodeli.Activities.ShopManage.ShopManageActivity;
+import com.example.foodeli.Fragments.Profile.MenuSelectImage;
+import com.example.foodeli.Fragments.Profile.OnSelectMenuPicture;
+import com.example.foodeli.MySqlSetUp.Pool;
+import com.example.foodeli.MySqlSetUp.ResponseApi;
 import com.example.foodeli.MySqlSetUp.Schemas.General.Body.CancelReason;
 import com.example.foodeli.MySqlSetUp.Schemas.User.User;
+import com.example.foodeli.MySqlSetUp.Schemas.UserShop.Body.CreateShopBody;
+import com.example.foodeli.MySqlSetUp.Schemas.UserShop.Response.CreateShopResponse;
 import com.example.foodeli.MySqlSetUp.Schemas.UserShop.Response.GetAllShopUserHaveResponse;
 import com.example.foodeli.R;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
+import java.io.IOException;
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -52,6 +72,10 @@ public class ShopFragment extends Fragment {
     private ImageButton addNewShop;
     private HomeViewModel homeViewModel;
     private ListShopGridviewAdapter adapter;
+    private DialogCreateShop dialog;
+    private Pool pool;
+
+    private User user;
 
     public ShopFragment() {
         // Required empty public constructor
@@ -94,7 +118,7 @@ public class ShopFragment extends Fragment {
         Gson gson = new Gson();
         SharedPreferences mPrefs = getContext().getSharedPreferences("UserInfo", Context.MODE_PRIVATE);
         String json = mPrefs.getString("user", "");
-        User user = gson.fromJson(json, User.class);
+        user = gson.fromJson(json, User.class);
 
         addNewShop = view.findViewById(R.id.shop_list_add);
         gridviewLayout = view.findViewById(R.id.shop_list_gridview_layout);
@@ -111,10 +135,11 @@ public class ShopFragment extends Fragment {
 
                     adapter.setOnSelectShop(new ListShopGridviewAdapter.OnSelectShop() {
                         @Override
-                        public void onSelectShop(GetAllShopUserHaveResponse.ShopWithDetail shop) {
+                        public void onSelectShop(GetAllShopUserHaveResponse.ShopWithDetail shop, int position) {
                             Intent shopManage = new Intent(getContext(), ShopManageActivity.class);
                             shopManage.putExtra("shop", shop);
-                            getActivity().startActivityForResult(shopManage, REQUEST_SHOP_MANAGE);
+                            shopManage.putExtra("position", position);
+                            startActivityForResult(shopManage, REQUEST_SHOP_MANAGE);
                         }
                     });
 
@@ -154,10 +179,85 @@ public class ShopFragment extends Fragment {
         addNewShop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                showDialogCreateShop(user.getId());
             }
         });
 
         return view;
     }
+
+    private void showDialogCreateShop(int uid) {
+        dialog = new DialogCreateShop(getContext());
+        dialog.show(getActivity().getSupportFragmentManager(), "dialog_select_avatar");
+        dialog.setOnCreateShopSelect(new DialogCreateShop.OnCreateShopSelect() {
+            @Override
+            public void onCreatedShop(String name, String desc, String address, String image) {
+                CreateShopBody body = new CreateShopBody(name, desc, address, uid, image);
+                createShop(body, uid);
+            }
+
+            @Override
+            public void onCancelShop() {
+                dialog.dismiss();
+            }
+        });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_SHOP_MANAGE && resultCode == Activity.RESULT_OK) {
+            int position = data.getIntExtra("position", 0);
+            GetAllShopUserHaveResponse.ShopWithDetail shop = (GetAllShopUserHaveResponse.ShopWithDetail) data.getSerializableExtra("shop");
+
+            boolean adjustO, adjustP, adjustE;
+            adjustP = data.getBooleanExtra("adjustP", false);
+            adjustO = data.getBooleanExtra("adjustO", false);
+            adjustE = data.getBooleanExtra("adjustE", false);
+
+            listShop.set(position, shop);
+            adapter.setList(listShop);
+
+            if(adjustP) homeViewModel.ReloadTopProduct();
+            if(adjustE) homeViewModel.ReloadShopUser(user.getId());
+            if(adjustO) homeViewModel.ReloadOrderActive(user.getId());
+        }
+
+    }
+
+    private void createShop(CreateShopBody body, int uid) {
+        pool = new Pool();
+
+        Call<CreateShopResponse> createShop = pool.getApiCallUserShop().createShop(body);
+        createShop.enqueue(new Callback<CreateShopResponse>() {
+            @Override
+            public void onResponse(Call<CreateShopResponse> call, Response<CreateShopResponse> response) {
+                if (response.code() != 200) {
+                    Gson gson = new GsonBuilder().create();
+                    ResponseApi res;
+                    try {
+                        res = gson.fromJson(response.errorBody().string(), ResponseApi.class);
+                        System.out.println(res.getMessage());
+                        Toast.makeText(getContext(), res.getMessage(), Toast.LENGTH_SHORT).show();
+                    } catch (IOException e) {
+                        System.out.println("parse err false");
+                    }
+                }
+                else {
+                    ArrayList<GetAllShopUserHaveResponse.ShopWithDetail> oldList =  homeViewModel.getListUserShop(uid).getValue();
+                    oldList.add(response.body().getShop());
+                    homeViewModel.setListShop(oldList);
+                    dialog.dismiss();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CreateShopResponse> call, Throwable t) {
+                System.out.println(t.getMessage());
+            }
+        });
+    }
+
+
 }

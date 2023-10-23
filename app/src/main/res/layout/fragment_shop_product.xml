@@ -1,14 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragments.ShopProduct.ShopProduct">
+    tools:context=".Fragments.ShopProduct.ShopProduct"
+    android:orientation="vertical"
+    android:background="@color/white">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/item_shop_product_create"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="45dp"
+        android:layout_margin="15dp"
+        android:background="@drawable/custom_button_style_sec"
+        android:stateListAnimator="@null"
+        android:elevation="0sp"
+        android:textAllCaps="false"
+        android:textColor="@color/green_100"
+        android:fontFamily="@font/poppins_bold"
+        android:textSize="15sp"
+        android:text="Create new product"
+        style="?android:selectableItemBackground"
+        />
 
-</FrameLayout>
+    <GridView
+        android:id="@+id/item_shop_product_gridview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:paddingHorizontal="15dp"
+        android:verticalSpacing="5dp"
+        android:scrollbars="none"
+        android:clipToPadding="false"
+        android:paddingBottom="20dp"
+        />
+
+</LinearLayout>

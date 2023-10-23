@@ -23,31 +23,16 @@ public class User {
     @SerializedName("UserLastModifiedDate")
     private String modified;
 
-    public User(
-            String name,
-            String phone,
-            String email,
-            String birthday,
-            String regisAt,
-            String modified
-    ) {
+    public User(int id, String name, String password, String avatar, String phone, String email, String birthday, String regisAt, String modified) {
+        this.id = id;
         this.name = name;
+        this.password = password;
+        this.avatar = avatar;
         this.phone = phone;
         this.email = email;
-
         this.birthday = birthday;
         this.regisAt = regisAt;
         this.modified = modified;
-    };
-
-    public User(
-            String phone,
-            String email,
-            String password
-    ) {
-        this.phone = phone;
-        this.email = email;
-        this.password = password;
     }
 
     public void setAvatar(String avatar) { this.avatar = avatar; };
@@ -120,4 +105,5 @@ public class User {
     public void setModified(String modified) {
         this.modified = modified;
     }
+
 }

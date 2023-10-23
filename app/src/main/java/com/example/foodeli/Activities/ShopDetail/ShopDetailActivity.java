@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.foodeli.Activities.PoolVoucherShop.PoolVoucherShop;
+import com.example.foodeli.Activities.ProductDetail.DialogDeleteCart;
 import com.example.foodeli.Activities.ProductDetail.ProductDetail;
 import com.example.foodeli.MySqlSetUp.Pool;
 import com.example.foodeli.MySqlSetUp.ResponseApi;
@@ -47,11 +48,13 @@ public class ShopDetailActivity extends AppCompatActivity {
 
     private GridView listProductsGv;
     private ImageView shopImage;
-    private TextView sName, sDesc, sRate, sSold, sProducts;
+    private TextView sName, sDesc, sRate, sSold, sProducts, sAddress;
     private LinearLayout poolVoucherShop;
     private ItemProductShopAdapter adapter;
     private SupportImage supportImage = new SupportImage();
     private User user;
+
+    private DialogDeleteCart dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +80,7 @@ public class ShopDetailActivity extends AppCompatActivity {
         shopImage = findViewById(R.id.shop_detail_image);
         sName = findViewById(R.id.shop_detail_name);
         sDesc = findViewById(R.id.shop_detail_desc);
+        sAddress = findViewById(R.id.shop_detail_address);
         sRate = findViewById(R.id.shop_detail_rate);
         sSold = findViewById(R.id.shop_detail_sold);
         sProducts = findViewById(R.id.shop_detail_product);
@@ -120,6 +124,7 @@ public class ShopDetailActivity extends AppCompatActivity {
                     shopImage.setImageBitmap(supportImage.convertBase64ToBitmap(shop.getAvatar()));
                     sName.setText(shop.getName());
                     sDesc.setText(shop.getDesc());
+                    sAddress.setText("Address: " + shop.getAddress());
                     sRate.setText(String.valueOf(shop.getShopRating()));
                     sSold.setText(String.format("%d Sold", shop.getSold()));
                     sProducts.setText(String.format("%d Products", shop.getProductQuantity()));
@@ -192,6 +197,7 @@ public class ShopDetailActivity extends AppCompatActivity {
                     ResponseApi res;
                     try {
                         res = gson.fromJson(response.errorBody().string(), ResponseApi.class);
+                        ShowDialogDeleteCart(pid);
                         System.out.println(res.getMessage());
                     } catch (IOException e) {
                         System.out.println("parse err false");
@@ -207,5 +213,9 @@ public class ShopDetailActivity extends AppCompatActivity {
                 System.out.println(t.getMessage());
             }
         });
+    }
+    private void ShowDialogDeleteCart(int pid) {
+        dialog = new DialogDeleteCart(ShopDetailActivity.this, pid, 1);
+        dialog.show(getSupportFragmentManager(), "dialog_delete_cart");
     }
 }

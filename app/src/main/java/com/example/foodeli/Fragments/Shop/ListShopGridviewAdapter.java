@@ -75,7 +75,7 @@ public class ListShopGridviewAdapter extends BaseAdapter {
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onSelectShop.onSelectShop(item);
+                onSelectShop.onSelectShop(item, position);
             }
         });
 
@@ -83,10 +83,15 @@ public class ListShopGridviewAdapter extends BaseAdapter {
     }
 
     public interface OnSelectShop {
-        void onSelectShop(GetAllShopUserHaveResponse.ShopWithDetail shop);
+        void onSelectShop(GetAllShopUserHaveResponse.ShopWithDetail shop, int position);
     }
 
     public void setOnSelectShop(OnSelectShop onSelectShop) {
         this.onSelectShop = onSelectShop;
+    }
+
+    public void setList(ArrayList<GetAllShopUserHaveResponse.ShopWithDetail> list) {
+        this.list = list;
+        notifyDataSetChanged();
     }
 }

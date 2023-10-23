@@ -19,4 +19,12 @@ public class OrderWithState extends Order implements Serializable {
     public String getState() {
         return state;
     }
+
+    public void setItemCount(int itemCount) {
+        this.itemCount = itemCount;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
 }

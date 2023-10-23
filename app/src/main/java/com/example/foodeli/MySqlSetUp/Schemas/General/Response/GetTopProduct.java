@@ -13,7 +13,6 @@ public class GetTopProduct extends ResponseApi {
 
     public static class ProductWithAvg extends Product {
 
-
         @SerializedName("ProductAverageRating")
         private float avg;
 
@@ -33,6 +32,18 @@ public class GetTopProduct extends ResponseApi {
 
         public String getSImage() {
             return simage;
+        }
+
+        public void setAvg(float avg) {
+            this.avg = avg;
+        }
+
+        public void setPimage(String pimage) {
+            this.pimage = pimage;
+        }
+
+        public void setSimage(String simage) {
+            this.simage = simage;
         }
     }
 

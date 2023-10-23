@@ -58,6 +58,7 @@ public class ProductDetail extends AppCompatActivity {
     private AppCompatButton seeAllBtn;
     private TextView nothing;
     private SupportImage supportImage = new SupportImage();
+    private DialogDeleteCart dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -263,6 +264,7 @@ public class ProductDetail extends AppCompatActivity {
                     ResponseApi res;
                     try {
                         res = gson.fromJson(response.errorBody().string(), ResponseApi.class);
+                        ShowDialogDeleteCart();
                         System.out.println(res.getMessage());
                     } catch (IOException e) {
                         System.out.println("parse err false");
@@ -291,6 +293,7 @@ public class ProductDetail extends AppCompatActivity {
                     ResponseApi res;
                     try {
                         res = gson.fromJson(response.errorBody().string(), ResponseApi.class);
+                        Toast.makeText(ProductDetail.this, res.getMessage(), Toast.LENGTH_SHORT).show();
                         System.out.println(res.getMessage());
                     } catch (IOException e) {
                         System.out.println("parse err false");
@@ -319,5 +322,10 @@ public class ProductDetail extends AppCompatActivity {
                 System.out.println("fail to fetch API");
             }
         });
+    }
+
+    private void ShowDialogDeleteCart() {
+        dialog = new DialogDeleteCart(ProductDetail.this, pid, quantity);
+        dialog.show(getSupportFragmentManager(), "dialog_delete_cart");
     }
 }

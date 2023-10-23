@@ -20,13 +20,15 @@ public class DatePickerCustom {
     private ArrayAdapter<String> yearAdapter, monthAdapter, dayAdapter;
     private int currentYear, currentMonth, currentDay;
     private int selectYear, selectMonth, selectDay;
+    private int maxYear;
     private Context context;
 
-    public DatePickerCustom(Spinner daySpinner, Spinner monthSpinner, Spinner yearSpinner, Context context) {
+    public DatePickerCustom(Spinner daySpinner, Spinner monthSpinner, Spinner yearSpinner, int maxYear,Context context) {
         this.daySpinner = daySpinner;
         this.monthSpinner = monthSpinner;
         this.yearSpinner = yearSpinner;
         this.context = context;
+        this.maxYear = maxYear;
     }
 
     public void setup() {
@@ -58,7 +60,7 @@ public class DatePickerCustom {
         yearSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                int selectedYear = currentYear - position; // Calculate selected year based on position
+                int selectedYear = maxYear > 0 ? currentYear - position : currentYear + position; // Calculate selected year based on position
 
                 selectYear = selectedYear;
                 selectMonth = 1;
@@ -77,7 +79,7 @@ public class DatePickerCustom {
         monthSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                int selectedYear = currentYear - yearSpinner.getSelectedItemPosition();
+                int selectedYear = maxYear > 0 ? currentYear - yearSpinner.getSelectedItemPosition() : currentYear + yearSpinner.getSelectedItemPosition() ;
                 int selectedMonth = position + 1; // Add 1 since it returns zero-based value
 
                 // Update day spinner's data based on selected year and month
@@ -109,9 +111,15 @@ public class DatePickerCustom {
     }
     private void initYearData(int currentYear) {
         List<String> years = new ArrayList<>();
-
-        for (int i = 0; i < 50; i++) {
-            years.add(String.valueOf(currentYear - i));
+        if(maxYear > 0) {
+            for (int i = 0; i < maxYear; i++) {
+                years.add(String.valueOf(currentYear - i));
+            }
+        }
+        else {
+            for (int i = 0; i > maxYear; i--) {
+                years.add(String.valueOf(currentYear - i));
+            }
         }
 
         yearAdapter.clear();
@@ -121,7 +129,7 @@ public class DatePickerCustom {
     private void updateMonthData(int selectedYear) {
         List<String> months = new ArrayList<>();
 
-        if (selectedYear == currentYear) {
+        if (selectedYear == currentYear && maxYear > 0) {
             for (int i = 1; i <= currentMonth; i++) {
                 months.add(String.valueOf(i));
             }
@@ -144,7 +152,7 @@ public class DatePickerCustom {
 
         List<String> days = new ArrayList<>();
 
-        if (selectedYear == currentYear && selectedMonth == currentMonth) {
+        if (selectedYear == currentYear && selectedMonth == currentMonth && maxYear > 0) {
             for (int i = 1; i <= Math.min(currentDay,maxDaysInMonth); i++) {
                 days.add(String.valueOf(i));
             }

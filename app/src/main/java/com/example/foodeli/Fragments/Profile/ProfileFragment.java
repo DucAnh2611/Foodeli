@@ -32,9 +32,11 @@ import com.example.foodeli.Activities.MethodCheckout.PaymentMethodActivity;
 import com.example.foodeli.Activities.Voucher.Voucher;
 import com.example.foodeli.MySqlSetUp.Schemas.User.User;
 import com.example.foodeli.R;
+import com.example.foodeli.Supports.SupportImage;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.gson.Gson;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -63,6 +65,7 @@ public class ProfileFragment extends Fragment {
     private User user;
     private MenuSelectImage dialog;
     private PreviewPictureDialog dialog2;
+    private SupportImage supportImage = new SupportImage();
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -195,7 +198,6 @@ public class ProfileFragment extends Fragment {
             }
         });
     }
-
     private void showPreviewPicture() {
         dialog2 = new PreviewPictureDialog(getContext(), imageBitmap, user.getId());
         dialog2.show(getActivity().getSupportFragmentManager(), "dialog_preview_avatar");
@@ -245,7 +247,7 @@ public class ProfileFragment extends Fragment {
             imageBitmap = getBitmapFromUri(selectedImageUri);
         } else if (requestCode == CAMERA_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             Bundle extras = data.getExtras();
-            imageBitmap = (Bitmap) extras.get("data");
+            imageBitmap = supportImage.convert(supportImage.CompressBitMap(150, (Bitmap) extras.get("data")));
         }
         if(imageBitmap != null) {
             showPreviewPicture();
@@ -257,6 +259,9 @@ public class ProfileFragment extends Fragment {
         try {
             InputStream inputStream = getContext().getContentResolver().openInputStream(uri);
             Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+
+            byte[] compressedImage = supportImage.CompressBitMap(100, bitmap);
+            bitmap = BitmapFactory.decodeByteArray(compressedImage, 0, compressedImage.length);
 
             inputStream.close();
             return bitmap;

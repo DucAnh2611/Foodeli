@@ -1,6 +1,7 @@
 package com.example.foodeli.MySqlSetUp;
 
 import com.example.foodeli.MySqlSetUp.Api.RetrofitAPICallGeneral;
+import com.example.foodeli.MySqlSetUp.Api.RetrofitAPICallShopOrder;
 import com.example.foodeli.MySqlSetUp.Api.RetrofitAPICallShopProduct;
 import com.example.foodeli.MySqlSetUp.Api.RetrofitAPICallShopVoucher;
 import com.example.foodeli.MySqlSetUp.Api.RetrofitAPICallUserAddress;
@@ -23,6 +24,7 @@ public class Pool {
             .build();
     private RetrofitAPICallUserProfile ApiCallUserProfile = retrofit.create(RetrofitAPICallUserProfile.class);
     private RetrofitAPICallGeneral ApiCallGeneral = retrofit.create(RetrofitAPICallGeneral.class);
+    private RetrofitAPICallShopOrder ApiCallShopOrder = retrofit.create(RetrofitAPICallShopOrder.class);
     private RetrofitAPICallShopProduct ApiCallShopProduct = retrofit.create(RetrofitAPICallShopProduct.class);
     private RetrofitAPICallShopVoucher ApiCallShopVoucher = retrofit.create(RetrofitAPICallShopVoucher.class);
     private RetrofitAPICallUserAddress ApiCallUserAddress = retrofit.create(RetrofitAPICallUserAddress.class);
@@ -40,6 +42,10 @@ public class Pool {
 
     public RetrofitAPICallGeneral getApiCallGeneral() {
         return ApiCallGeneral;
+    }
+
+    public RetrofitAPICallShopOrder getApiCallShopOrder() {
+        return ApiCallShopOrder;
     }
 
     public RetrofitAPICallShopProduct getApiCallShopProduct() {

@@ -43,198 +43,207 @@
 
     </RelativeLayout>
 
-    <com.amar.library.ui.StickyScrollView
-        android:id="@+id/shop_manage_scrollview"
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="none"
-        app:stickyHeader="@+id/shop_manage_tab_layout">
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:gravity="start"
+            android:orientation="horizontal"
+            android:padding="20dp">
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="0sp"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="20dp">
+                android:layout_marginEnd="20dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-                <LinearLayout
-                    android:layout_width="0sp"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="10dp"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
+                <EditText
+                    android:id="@+id/shop_manage_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/bg_items_subgridview_support_method"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/poppins_bold"
+                    android:hint="Shop name"
+                    android:maxLines="2"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/grey_300"
+                    android:textSize="20sp" />
 
-                    <EditText
-                        android:id="@+id/shop_manage_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:background="@drawable/bg_items_subgridview_support_method"
-                        android:ellipsize="end"
-                        android:fontFamily="@font/poppins_bold"
-                        android:hint="Shop name"
-                        android:maxLines="2"
-                        android:textColor="@color/black"
-                        android:textColorHint="@color/grey_300"
-                        android:textSize="20sp" />
+                <EditText
+                    android:id="@+id/shop_manage_desc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/bg_items_subgridview_support_method"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/poppins_italic"
+                    android:hint="Desc"
+                    android:maxLines="2"
+                    android:textColor="@color/grey_100"
+                    android:textColorHint="@color/grey_300"
+                    android:textSize="14sp" />
 
-                    <EditText
-                        android:id="@+id/shop_manage_desc"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:background="@drawable/bg_items_subgridview_support_method"
-                        android:ellipsize="end"
-                        android:fontFamily="@font/poppins_italic"
-                        android:hint="Desc"
-                        android:maxLines="2"
-                        android:textColor="@color/grey_100"
-                        android:textColorHint="@color/grey_300"
-                        android:textSize="14sp" />
-                </LinearLayout>
-
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/shop_manage_image"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:background="@color/green_100"
-                    android:scaleType="centerCrop"
-                    app:shapeAppearanceOverlay="@style/RoundedSquare" />
-
+                <TextView
+                    android:id="@+id/shop_manage_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="10dp"
+                    android:maxLines="2"
+                    android:ellipsize="end"
+                    android:text="Address"
+                    android:textColor="@color/green_100"
+                    android:textSize="12sp"/>
             </LinearLayout>
 
-            <Button
-                android:id="@+id/shop_manage_edit_confirm"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/custom_button_style"
-                android:layout_margin="15dp"
-                android:paddingVertical="8dp"
-                android:textSize="18sp"
-                android:fontFamily="@font/poppins_bold"
-                android:text="Confirm"
-                />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:background="@drawable/bg_items_subgridview_suppot_method_sec"
-                android:gravity="center_vertical"
-                android:paddingStart="20dp"
-                android:paddingEnd="20dp">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:background="@drawable/bg_trans_right_border_grey_100"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingLeft="15dp"
-                    android:paddingRight="15dp">
-
-                    <ImageView
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
-                        android:src="@drawable/rate"
-                        app:tint="@color/orange_400" />
-
-                    <TextView
-                        android:id="@+id/shop_manage_rate"
-                        android:layout_width="wrap_content"
-                        android:layout_height="15dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="5dp"
-                        android:ellipsize="end"
-                        android:singleLine="true"
-                        android:text="0.0"
-                        android:textColor="@color/black"
-                        android:textSize="12sp" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:background="@drawable/bg_trans_right_border_grey_100"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:paddingLeft="15dp"
-                    android:paddingRight="15dp">
-
-                    <ImageView
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
-                        android:src="@drawable/cart"
-                        app:tint="@color/orange_400" />
-
-                    <TextView
-
-                        android:id="@+id/shop_manage_sold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="15dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="5dp"
-                        android:ellipsize="end"
-                        android:singleLine="true"
-                        android:text="0 Sold"
-                        android:textColor="@color/black"
-                        android:textSize="12sp" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:paddingLeft="15dp"
-                    android:paddingRight="15dp">
-
-                    <ImageView
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
-                        android:src="@drawable/storage"
-                        app:tint="@color/orange_400" />
-
-                    <TextView
-                        android:id="@+id/shop_manage_product"
-                        android:layout_width="wrap_content"
-                        android:layout_height="15dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="5dp"
-                        android:ellipsize="end"
-                        android:singleLine="true"
-                        android:text="0 Product"
-                        android:textColor="@color/black"
-                        android:textSize="12sp" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/shop_manage_tab_layout"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:background="@color/white"
-                app:tabBackground="@drawable/tab_selected"
-                app:tabSelectedTextAppearance="@style/TabSelectTextAppearance"
-                app:tabSelectedTextColor="@color/green_100"
-                app:tabTextAppearance="@style/TabNotSelectTextAppearance"
-                app:tabTextColor="@color/grey_200" />
-
-            <androidx.viewpager.widget.ViewPager
-                android:id="@+id/shop_manage_tab_view_pager"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/shop_manage_image"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:background="@color/green_100"
+                android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/RoundedSquare" />
 
         </LinearLayout>
 
-    </com.amar.library.ui.StickyScrollView>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/shop_manage_edit_confirm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/grey_400"
+            android:paddingVertical="8dp"
+            android:textSize="12sp"
+            android:textAllCaps="false"
+            android:fontFamily="@font/poppins_medium"
+            android:text="Confirm"
+            android:stateListAnimator="@null"
+            android:elevation="0sp"
+            android:textColor="@color/green_100"
+            />
+
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/bg_items_subgridview_suppot_method_sec"
+            android:gravity="center_vertical"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:background="@drawable/bg_trans_right_border_grey_100"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp">
+
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:src="@drawable/rate"
+                    app:tint="@color/orange_400" />
+
+                <TextView
+                    android:id="@+id/shop_manage_rate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="5dp"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="0.0"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:background="@drawable/bg_trans_right_border_grey_100"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp">
+
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:src="@drawable/cart"
+                    app:tint="@color/orange_400" />
+
+                <TextView
+
+                    android:id="@+id/shop_manage_sold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="5dp"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="0 Sold"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp">
+
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:src="@drawable/storage"
+                    app:tint="@color/orange_400" />
+
+                <TextView
+                    android:id="@+id/shop_manage_product"
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="5dp"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="0 Product"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/shop_manage_tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/white"
+            app:tabBackground="@drawable/tab_selected"
+            app:tabSelectedTextAppearance="@style/TabSelectTextAppearance"
+            app:tabSelectedTextColor="@color/green_100"
+            app:tabTextAppearance="@style/TabNotSelectTextAppearance"
+            app:tabTextColor="@color/grey_200"
+            app:tabGravity="fill"/>
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/shop_manage_tab_view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
 
 </LinearLayout>

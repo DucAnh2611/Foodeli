@@ -57,7 +57,7 @@ public class SignUp extends AppCompatActivity {
         passwordShow = new PasswordShow(password, showPassword, this);
         passwordShow.setUp();
 
-        DatePickerCustom datePickerCustom = new DatePickerCustom(day, month, year, this);
+        DatePickerCustom datePickerCustom = new DatePickerCustom(day, month, year, 50,this);
         datePickerCustom.setup();
 
         signup_btn.setOnClickListener(new View.OnClickListener() {
