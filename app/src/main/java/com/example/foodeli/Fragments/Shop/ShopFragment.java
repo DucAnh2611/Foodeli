@@ -153,16 +153,14 @@ public class ShopFragment extends Fragment {
 
                     listShopGV.setAdapter(adapter);
 
-                    if(shopWithDetails.isEmpty()) {
-                        listShopGV.setVisibility(View.GONE);
-                        emptyLayout.setVisibility(View.VISIBLE);
-                    }
-                    else {
-                        listShopGV.setVisibility(View.VISIBLE);
-                        emptyLayout.setVisibility(View.GONE);
-                    }
-                    listLoading.setVisibility(View.GONE);
+                    listShopGV.setVisibility(View.VISIBLE);
+                    emptyLayout.setVisibility(View.GONE);
+
+                }else {
+                    listShopGV.setVisibility(View.GONE);
+                    emptyLayout.setVisibility(View.VISIBLE);
                 }
+                listLoading.setVisibility(View.GONE);
             }
         });
 

@@ -249,7 +249,8 @@ public class ShopProduct extends Fragment {
                     newProduct.setName(body.getName());
                     newProduct.setPrice(body.getPrice());
                     newProduct.setUnit(body.getUnit());
-                    newProduct.setModified(supportDate.GetCurrentDateVN());
+                    newProduct.setShortDesc(body.getShortDesc());
+                    newProduct.setModified(supportDate.GetCurrentDateLA());
                     newProduct.setPimage(newImage);
 
                     shopProducts.set(position, newProduct);
@@ -289,6 +290,7 @@ public class ShopProduct extends Fragment {
                     newProduct.setName(product.getProduct().getName());
                     newProduct.setPrice(product.getProduct().getPrice());
                     newProduct.setPid(product.getProduct().getPid());
+                    newProduct.setShortDesc(product.getProduct().getShortDesc());
                     newProduct.setUnit(product.getProduct().getUnit());
                     newProduct.setStock(product.getProduct().getStock());
                     newProduct.setModified(product.getProduct().getModified());
