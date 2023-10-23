@@ -46,7 +46,7 @@ public class SupportDate {
 
             LocalDateTime gmtDateTime = LocalDateTime.parse(dateTimeString, formatter);
 
-            ZoneId gmtZoneId = ZoneId.ofOffset("GMT", ZoneOffset.ofHours(-7));
+            ZoneId gmtZoneId = ZoneId.ofOffset("GMT", ZoneOffset.ofHours(0));
 
             ZoneId systemZoneId = ZoneId.ofOffset("GMT", ZoneOffset.ofHours(7));
 

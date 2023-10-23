@@ -18,8 +18,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Pool {
 
+    private String WEBHOST = "https://dafoodeli.000webhostapp.com/api/v2/index.php/";
+    private String MYWINDOWHOSTING = "https://ducanh2611-001-site1.gtempurl.com/api/v2/index.php/";
+
     private final Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl("https://ducanh2611-001-site1.gtempurl.com/api/v2/index.php/")
+            .baseUrl(WEBHOST)
             .addConverterFactory(GsonConverterFactory.create())
             .build();
     private RetrofitAPICallUserProfile ApiCallUserProfile = retrofit.create(RetrofitAPICallUserProfile.class);
