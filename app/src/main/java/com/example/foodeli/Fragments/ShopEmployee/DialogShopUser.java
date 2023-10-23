@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import androidx.fragment.app.DialogFragment;
@@ -51,6 +52,8 @@ public class DialogShopUser extends DialogFragment {
     private Pool pool;
     private UserFoundAdapter adapter;
     private UserFoundAdapter.OnAddUserToShop onAddUserToShop;
+    private ScrollView employeeLoading;
+    private LinearLayout employeeEmpty;
 
     public DialogShopUser(Context context) {
         this.context = context;
@@ -66,6 +69,12 @@ public class DialogShopUser extends DialogFragment {
         keyUser = view.findViewById(R.id.shop_find_user_key);
         findBtn = view.findViewById(R.id.shop_find_user_icon);
         userFound = view.findViewById(R.id.shop_find_user_res);
+        employeeEmpty = view.findViewById(R.id.find_employee_empty);
+        employeeLoading = view.findViewById(R.id.find_employee_loading);
+
+        userFound.setVisibility(View.GONE);
+        employeeEmpty.setVisibility(View.GONE);
+        employeeLoading.setVisibility(View.VISIBLE);
 
         keyUser.addTextChangedListener(new TextWatcher() {
             @Override
@@ -129,15 +138,25 @@ public class DialogShopUser extends DialogFragment {
                     }
                 }
                 else {
+                    ArrayList<User> list = response.body().getUsers();
+                    if(list.isEmpty()) {
+                        userFound.setVisibility(View.GONE);
+                        employeeEmpty.setVisibility(View.VISIBLE);
+                    }
+                    else {
+                        adapter = new UserFoundAdapter(response.body().getUsers(), getContext());
+                        adapter.setOnAddUserToShop(new UserFoundAdapter.OnAddUserToShop() {
+                            @Override
+                            public void onAddUser(User user) {
+                                onAddUserToShop.onAddUser(user);
+                            }
+                        });
+                        userFound.setAdapter(adapter);
 
-                    adapter = new UserFoundAdapter(response.body().getUsers(), getContext());
-                    adapter.setOnAddUserToShop(new UserFoundAdapter.OnAddUserToShop() {
-                        @Override
-                        public void onAddUser(User user) {
-                            onAddUserToShop.onAddUser(user);
-                        }
-                    });
-                    userFound.setAdapter(adapter);
+                        userFound.setVisibility(View.VISIBLE);
+                        employeeEmpty.setVisibility(View.GONE);
+                    }
+                    employeeLoading.setVisibility(View.GONE);
                 }
             }
 
