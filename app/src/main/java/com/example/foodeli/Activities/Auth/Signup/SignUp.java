@@ -19,6 +19,7 @@ import com.example.foodeli.MySqlSetUp.ResponseApi;
 import com.example.foodeli.MySqlSetUp.Schemas.User.Body.CreateAccount;
 import com.example.foodeli.MySqlSetUp.Schemas.User.Response.CreateUserResponse;
 import com.example.foodeli.R;
+import com.example.foodeli.Supports.SupportDate;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -35,6 +36,7 @@ public class SignUp extends AppCompatActivity {
     private EditText email, fullname, phone, password;
     private ImageButton showPassword;
     PasswordShow passwordShow;
+    private SupportDate supportDate = new SupportDate();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,41 +73,45 @@ public class SignUp extends AppCompatActivity {
 
                 ValidationField valid = new ValidationField(emailData, phoneData, passwordData, fullnameData);
                 if(valid.isCorrectFormat()) {
-                    CreateAccount newAcc = new CreateAccount(
-                            fullnameData, emailData, passwordData, phoneData,
-                            String.valueOf(datePickerCustom.getSelectYear()) + "-" +
-                                    String.valueOf(datePickerCustom.getSelectMonth()) + "-" +
-                                    String.valueOf(datePickerCustom.getSelectDay()));
+                    if(supportDate.Is16(datePickerCustom.getSelectYear(), datePickerCustom.getSelectMonth(), datePickerCustom.getSelectDay())) {
+                        CreateAccount newAcc = new CreateAccount(
+                                fullnameData, emailData, passwordData, phoneData,
+                                String.valueOf(datePickerCustom.getSelectYear()) + "-" +
+                                        String.valueOf(datePickerCustom.getSelectMonth()) + "-" +
+                                        String.valueOf(datePickerCustom.getSelectDay()));
 
-                    Call<CreateUserResponse> createUser = pool.getApiCallUserProfile().signup(newAcc);
+                        Call<CreateUserResponse> createUser = pool.getApiCallUserProfile().signup(newAcc);
 
-                    createUser.enqueue(new Callback<CreateUserResponse>() {
-                        @Override
-                        public void onResponse(Call<CreateUserResponse> call, Response<CreateUserResponse> response) {
-                            if(response.isSuccessful()) {
-                                finish();
-                            }
-                            else {
-                                Gson gson = new GsonBuilder().create();
-                                ResponseApi res;
-                                try {
-                                    res = gson.fromJson(response.errorBody().string(), ResponseApi.class);
-                                    System.out.println(res.getMessage());
+                        createUser.enqueue(new Callback<CreateUserResponse>() {
+                            @Override
+                            public void onResponse(Call<CreateUserResponse> call, Response<CreateUserResponse> response) {
+                                if (response.isSuccessful()) {
+                                    finish();
+                                } else {
+                                    Gson gson = new GsonBuilder().create();
+                                    ResponseApi res;
+                                    try {
+                                        res = gson.fromJson(response.errorBody().string(), ResponseApi.class);
+                                        System.out.println(res.getMessage());
 
-                                    Toast toast = Toast.makeText(getApplicationContext(), res.getMessage(), Toast.LENGTH_LONG);
-                                    toast.show();
+                                        Toast toast = Toast.makeText(getApplicationContext(), res.getMessage(), Toast.LENGTH_LONG);
+                                        toast.show();
 
-                                } catch (IOException e) {
-                                    System.out.println("parse err false");
+                                    } catch (IOException e) {
+                                        System.out.println("parse err false");
+                                    }
                                 }
                             }
-                        }
 
-                        @Override
-                        public void onFailure(Call<CreateUserResponse> call, Throwable t) {
+                            @Override
+                            public void onFailure(Call<CreateUserResponse> call, Throwable t) {
 
-                        }
-                    });
+                            }
+                        });
+                    }
+                    else {
+                        Toast.makeText(SignUp.this, "User is under 16", Toast.LENGTH_SHORT).show();
+                    }
 
                 }
                 else

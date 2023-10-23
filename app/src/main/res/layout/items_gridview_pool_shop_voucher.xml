@@ -76,12 +76,12 @@
     <TextView
         android:id="@+id/item_pool_voucher_desc"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:textColor="@color/grey_100"
         android:gravity="start"
         android:textSize="15sp"
         android:text="Desc"
-        android:singleLine="true"
+        android:maxLines="10"
         android:ellipsize="end"
         />
 

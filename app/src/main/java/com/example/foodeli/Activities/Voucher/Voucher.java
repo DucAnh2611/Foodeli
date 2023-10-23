@@ -12,6 +12,7 @@ import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.example.foodeli.Activities.SelectVoucher.SelectVoucherActivity;
@@ -36,8 +37,9 @@ public class Voucher extends AppCompatActivity {
     private Pool pool;
     private AppCompatButton findVoucher;
     private ArrayList<GetAllVoucherRes.VoucherWithRemain> listVou;
-    private LinearLayout gridviewVoucherHolder;
+    private LinearLayout gridviewVoucherHolder, voucherEmpty;
     private UserVoucherGridviewAdapter adapter;
+    private ScrollView voucherLoading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +59,12 @@ public class Voucher extends AppCompatActivity {
 
         voucherGV = findViewById(R.id.user_voucher_gridview);
         findVoucher = findViewById(R.id.user_voucher_find_btn);
+        voucherEmpty = findViewById(R.id.user_voucher_empty);
+        voucherLoading = findViewById(R.id.user_voucher_loading);
+
+        voucherGV.setVisibility(View.GONE);
+        voucherLoading.setVisibility(View.VISIBLE);
+        voucherEmpty.setVisibility(View.GONE);
 
         getVoucherList(uid);
         findVoucher.setOnClickListener(new View.OnClickListener() {
@@ -90,34 +98,15 @@ public class Voucher extends AppCompatActivity {
                     if(!listVou.isEmpty()) {
                         adapter = new UserVoucherGridviewAdapter(listVou, Voucher.this);
                         voucherGV.setAdapter(adapter);
+
+                        voucherGV.setVisibility(View.VISIBLE);
+                        voucherLoading.setVisibility(View.GONE);
                     }
                     else {
-                        gridviewVoucherHolder = findViewById(R.id.user_voucher_gridview_layout);
-                        gridviewVoucherHolder.removeView(voucherGV);
-
-                        gridviewVoucherHolder.setGravity(Gravity.CENTER);
-
-                        TextView noItem = new TextView(Voucher.this);
-                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                                ViewGroup.LayoutParams.MATCH_PARENT,
-                                ViewGroup.LayoutParams.WRAP_CONTENT
-                        );
-
-                        noItem.setText("No voucher found");
-                        noItem.setTextColor(getColor(R.color.black));
-                        noItem.setTextSize(17);
-                        noItem.setGravity(Gravity.CENTER);
-
-                        ImageView noItemImage = new ImageView(Voucher.this);
-                        LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(
-                                ViewGroup.LayoutParams.MATCH_PARENT,
-                                ViewGroup.LayoutParams.WRAP_CONTENT
-                        );
-                        noItemImage.setImageResource(R.drawable.no_data);
-
-                        gridviewVoucherHolder.addView(noItem);
-                        gridviewVoucherHolder.addView(noItemImage);
+                        voucherGV.setVisibility(View.GONE);
+                        voucherLoading.setVisibility(View.GONE);
                     }
+                    voucherEmpty.setVisibility(View.GONE);
 
                 }
             }
@@ -136,6 +125,10 @@ public class Voucher extends AppCompatActivity {
             public void onSuccessSaveVoucher(GetAllVoucherRes.VoucherWithRemain voucher) {
                 listVou.add(voucher);
                 adapter.setListVou(listVou);
+
+                voucherGV.setVisibility(View.VISIBLE);
+                voucherLoading.setVisibility(View.GONE);
+                voucherEmpty.setVisibility(View.GONE);
             }
         });
         dialog.show(getSupportFragmentManager(), "dialog_find_voucher");

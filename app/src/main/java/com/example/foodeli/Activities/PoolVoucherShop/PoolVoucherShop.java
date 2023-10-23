@@ -13,6 +13,7 @@ import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,7 +36,8 @@ public class PoolVoucherShop extends AppCompatActivity {
 
     private Pool pool;
     private GridView poolVoucher;
-    private LinearLayout poolVoucherLayout;
+    private LinearLayout poolVoucherLayout, voucherEmpty;
+    private ScrollView voucherLoading;
     private int sid;
     private PoolVoucherGridviewAdapter adapter;
     private User user;
@@ -63,6 +65,12 @@ public class PoolVoucherShop extends AppCompatActivity {
 
         poolVoucher = findViewById(R.id.pool_voucher_gridview);
         poolVoucherLayout = findViewById(R.id.pool_voucher_gridview_layout);
+        voucherEmpty =findViewById(R.id.pool_voucher_empty);
+        voucherLoading = findViewById(R.id.pool_voucher_loading);
+
+        poolVoucher.setVisibility(View.GONE);
+        voucherEmpty.setVisibility(View.GONE);
+        voucherLoading.setVisibility(View.VISIBLE);
 
         getPoolVoucherShop(sid);
 
@@ -90,32 +98,15 @@ public class PoolVoucherShop extends AppCompatActivity {
                         adapter = new PoolVoucherGridviewAdapter(response.body().getItems(), PoolVoucherShop.this);
                         poolVoucher.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
                         poolVoucher.setAdapter(adapter);
+
+                        poolVoucher.setVisibility(View.VISIBLE);
+                        voucherEmpty.setVisibility(View.GONE);
                     }
                     else {
-                        poolVoucher.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
-                        poolVoucherLayout.setGravity(Gravity.CENTER);
-
-                        TextView noItem = new TextView(PoolVoucherShop.this);
-                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                                ViewGroup.LayoutParams.MATCH_PARENT,
-                                ViewGroup.LayoutParams.WRAP_CONTENT
-                        );
-
-                        noItem.setText("No voucher found");
-                        noItem.setTextColor(getColor(R.color.black));
-                        noItem.setTextSize(17);
-                        noItem.setGravity(Gravity.CENTER);
-
-                        ImageView noItemImage = new ImageView(PoolVoucherShop.this);
-                        LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(
-                                ViewGroup.LayoutParams.MATCH_PARENT,
-                                ViewGroup.LayoutParams.WRAP_CONTENT
-                        );
-                        noItemImage.setImageResource(R.drawable.no_data);
-
-                        poolVoucherLayout.addView(noItem);
-                        poolVoucherLayout.addView(noItemImage);
+                        poolVoucher.setVisibility(View.GONE);
+                        voucherEmpty.setVisibility(View.VISIBLE);
                     }
+                    voucherLoading.setVisibility(View.GONE);
                 }
             }
 

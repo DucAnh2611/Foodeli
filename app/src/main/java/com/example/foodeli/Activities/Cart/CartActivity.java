@@ -59,7 +59,7 @@ public class CartActivity extends AppCompatActivity implements CartRecyclerViewA
     private TextView addressText, voucherText, paymentText;
     RelativeLayout addressSelect, voucherSelect, paymentSelect;
     private ImageView addressIcon, voucherIcon, paymentIcon;
-    private TextView subtotal, shippingFee,  discount, tax, total;
+    private TextView subtotal, shippingFee,  discount, tax, total, empty;
     private CartRecyclerViewAdapter adapter;
     private Button placeOrder;
     private TotalValue totalCal;
@@ -83,6 +83,10 @@ public class CartActivity extends AppCompatActivity implements CartRecyclerViewA
 
         RecyclerView recyclerView = findViewById(R.id.cart_all_gv);
         placeOrder = findViewById(R.id.place_orer_btn);
+        empty = findViewById(R.id.cart_empty);
+
+        placeOrder.setVisibility(View.GONE);
+        empty.setVisibility(View.GONE);
 
         homeViewModel.getListProductInCart(uid).observe(this, new Observer<ArrayList<GetCartRes.ProductWithImage>>() {
             @Override
@@ -99,6 +103,15 @@ public class CartActivity extends AppCompatActivity implements CartRecyclerViewA
 
                     totalCal = new TotalValue();
                     totalCal.calculateFromList(list);
+
+                    if(productWithImages.isEmpty()) {
+                        empty.setVisibility(View.VISIBLE);
+                        placeOrder.setVisibility(View.GONE);
+                    }
+                    else {
+                        empty.setVisibility(View.GONE);
+                        placeOrder.setVisibility(View.VISIBLE);
+                    }
 
                 }
                 else {
@@ -119,6 +132,7 @@ public class CartActivity extends AppCompatActivity implements CartRecyclerViewA
 
         paymentText = findViewById(R.id.name_payment_cart);
         paymentIcon = findViewById(R.id.icon_payment_cart);
+
 
         defaultAdd();
         defaultVoucher();

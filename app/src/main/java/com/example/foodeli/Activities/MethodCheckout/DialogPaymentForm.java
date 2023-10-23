@@ -88,7 +88,12 @@ public class DialogPaymentForm extends DialogFragment {
             @Override
             public void onClick(View v) {
                 if(!num.equals("") && month!=0 && year!=0) {
-                    onSelectMethodUpdate.onCreatePayment(typeId, type, num, String.format("20%02d-%02d-01", year, month));
+                    if(num.length() >= 10) {
+                        onSelectMethodUpdate.onCreatePayment(typeId, type, num, String.format("20%02d-%02d-01", year, month));
+                    }
+                    else {
+                        Toast.makeText(context, "Card number is under 10 characters", Toast.LENGTH_SHORT).show();
+                    }
                 }
                 else {
                     Toast.makeText(context, "All field are required!", Toast.LENGTH_SHORT).show();
@@ -110,7 +115,9 @@ public class DialogPaymentForm extends DialogFragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(!s.toString().equals("")) num = s.toString();
+                if(!s.toString().equals("")) {
+                    num = s.toString();
+                }
             }
         });
         expiredMonth.addTextChangedListener(new TextWatcher() {
@@ -126,7 +133,13 @@ public class DialogPaymentForm extends DialogFragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(!s.toString().equals("")) month = Integer.parseInt(s.toString());
+                if(!s.toString().equals("")) {
+                    month = Integer.parseInt(s.toString());
+                    if(month > 12 || month <= 0) {
+                        month = 1;
+                        expiredMonth.setText(String.valueOf(month));
+                    }
+                }
             }
         });
         expiredYear.addTextChangedListener(new TextWatcher() {
@@ -142,7 +155,13 @@ public class DialogPaymentForm extends DialogFragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(!s.toString().equals("")) year = Integer.parseInt(s.toString());
+                if(!s.toString().equals("")) {
+                    year = Integer.parseInt(s.toString());
+                    if(year < 23) {
+                        year = 24;
+                        expiredYear.setText(String.valueOf(year));
+                    }
+                }
             }
         });
 

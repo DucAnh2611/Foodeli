@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -17,6 +18,875 @@
         android:clipToPadding="false"
         android:verticalSpacing="10dp"
         android:scrollbars="none"
+        android:visibility="gone"
         />
+
+    <LinearLayout
+        android:id="@+id/order_gridview_empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Empty"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="400dp"
+            android:src="@drawable/no_data"/>
+
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/order_gridview_loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="start"
+            android:visibility="visible"
+            android:padding="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="15dp"
+                android:background="@drawable/skeleton_loading"
+                android:layout_marginBottom="10dp"
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/skeleton_loading_sec"
+                        >
+
+                    </View>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="75dp"
+                        android:layout_marginStart="10dp"
+                        android:orientation="vertical"
+                        >
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="28dp"
+                            android:background="@drawable/skeleton_loading_sec"
+                            android:layout_marginBottom="2dp"
+                            />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="20dp"
+                                android:orientation="horizontal"
+                                android:gravity="start"
+                                android:layout_marginBottom="2dp"
+                                >
+
+                                <View
+                                    android:layout_width="50dp"
+                                    android:layout_height="20dp"
+                                    android:background="@drawable/skeleton_loading_sec"
+                                    android:layout_marginBottom="2dp"
+                                    />
+
+                                <ImageView
+                                    android:layout_marginStart="5dp"
+                                    android:layout_marginEnd="5dp"
+                                    android:layout_width="10dp"
+                                    android:layout_height="match_parent"
+                                    android:src="@drawable/seperate"
+                                    android:scaleType="fitXY"
+                                    app:tint="@color/grey_200" />
+
+                                <View
+                                    android:layout_width="50dp"
+                                    android:layout_height="20dp"
+                                    android:background="@drawable/skeleton_loading_sec"
+                                    android:layout_marginBottom="2dp"
+                                    />
+
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical"
+                                android:background="@drawable/skeleton_loading_sec"
+                                android:layout_marginBottom="2dp"
+                                >
+
+                            </View>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:orientation="horizontal"
+                    android:gravity="end|center_vertical"
+                    android:layout_marginTop="10dp"
+                    >
+
+                    <View
+                        android:layout_width="80dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/skeleton_loading_sec"
+                        android:padding="2dp"
+                        android:stateListAnimator="@null"
+                        android:layout_marginStart="10dp"
+                        />
+
+                    <View
+                        android:layout_width="80dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/skeleton_loading_sec"
+                        android:padding="2dp"
+                        android:stateListAnimator="@null"
+                        android:layout_marginStart="10dp"
+                        />
+
+                </LinearLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="15dp"
+                android:background="@drawable/skeleton_loading"
+                android:layout_marginBottom="10dp"
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/skeleton_loading_sec"
+                        >
+
+                    </View>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="75dp"
+                        android:layout_marginStart="10dp"
+                        android:orientation="vertical"
+                        >
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="28dp"
+                            android:background="@drawable/skeleton_loading_sec"
+                            android:layout_marginBottom="2dp"
+                            />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="20dp"
+                                android:orientation="horizontal"
+                                android:gravity="start"
+                                android:layout_marginBottom="2dp"
+                                >
+
+                                <View
+                                    android:layout_width="50dp"
+                                    android:layout_height="20dp"
+                                    android:background="@drawable/skeleton_loading_sec"
+                                    android:layout_marginBottom="2dp"
+                                    />
+
+                                <ImageView
+                                    android:layout_marginStart="5dp"
+                                    android:layout_marginEnd="5dp"
+                                    android:layout_width="10dp"
+                                    android:layout_height="match_parent"
+                                    android:src="@drawable/seperate"
+                                    android:scaleType="fitXY"
+                                    app:tint="@color/grey_200" />
+
+                                <View
+                                    android:layout_width="50dp"
+                                    android:layout_height="20dp"
+                                    android:background="@drawable/skeleton_loading_sec"
+                                    android:layout_marginBottom="2dp"
+                                    />
+
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical"
+                                android:background="@drawable/skeleton_loading_sec"
+                                android:layout_marginBottom="2dp"
+                                >
+
+                            </View>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:orientation="horizontal"
+                    android:gravity="end|center_vertical"
+                    android:layout_marginTop="10dp"
+                    >
+
+                    <View
+                        android:layout_width="80dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/skeleton_loading_sec"
+                        android:padding="2dp"
+                        android:stateListAnimator="@null"
+                        android:layout_marginStart="10dp"
+                        />
+
+                    <View
+                        android:layout_width="80dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/skeleton_loading_sec"
+                        android:padding="2dp"
+                        android:stateListAnimator="@null"
+                        android:layout_marginStart="10dp"
+                        />
+
+                </LinearLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="15dp"
+                android:background="@drawable/skeleton_loading"
+                android:layout_marginBottom="10dp"
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/skeleton_loading_sec"
+                        >
+
+                    </View>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="75dp"
+                        android:layout_marginStart="10dp"
+                        android:orientation="vertical"
+                        >
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="28dp"
+                            android:background="@drawable/skeleton_loading_sec"
+                            android:layout_marginBottom="2dp"
+                            />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="20dp"
+                                android:orientation="horizontal"
+                                android:gravity="start"
+                                android:layout_marginBottom="2dp"
+                                >
+
+                                <View
+                                    android:layout_width="50dp"
+                                    android:layout_height="20dp"
+                                    android:background="@drawable/skeleton_loading_sec"
+                                    android:layout_marginBottom="2dp"
+                                    />
+
+                                <ImageView
+                                    android:layout_marginStart="5dp"
+                                    android:layout_marginEnd="5dp"
+                                    android:layout_width="10dp"
+                                    android:layout_height="match_parent"
+                                    android:src="@drawable/seperate"
+                                    android:scaleType="fitXY"
+                                    app:tint="@color/grey_200" />
+
+                                <View
+                                    android:layout_width="50dp"
+                                    android:layout_height="20dp"
+                                    android:background="@drawable/skeleton_loading_sec"
+                                    android:layout_marginBottom="2dp"
+                                    />
+
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical"
+                                android:background="@drawable/skeleton_loading_sec"
+                                android:layout_marginBottom="2dp"
+                                >
+
+                            </View>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:orientation="horizontal"
+                    android:gravity="end|center_vertical"
+                    android:layout_marginTop="10dp"
+                    >
+
+                    <View
+                        android:layout_width="80dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/skeleton_loading_sec"
+                        android:padding="2dp"
+                        android:stateListAnimator="@null"
+                        android:layout_marginStart="10dp"
+                        />
+
+                    <View
+                        android:layout_width="80dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/skeleton_loading_sec"
+                        android:padding="2dp"
+                        android:stateListAnimator="@null"
+                        android:layout_marginStart="10dp"
+                        />
+
+                </LinearLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="15dp"
+                android:background="@drawable/skeleton_loading"
+                android:layout_marginBottom="10dp"
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/skeleton_loading_sec"
+                        >
+
+                    </View>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="75dp"
+                        android:layout_marginStart="10dp"
+                        android:orientation="vertical"
+                        >
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="28dp"
+                            android:background="@drawable/skeleton_loading_sec"
+                            android:layout_marginBottom="2dp"
+                            />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="20dp"
+                                android:orientation="horizontal"
+                                android:gravity="start"
+                                android:layout_marginBottom="2dp"
+                                >
+
+                                <View
+                                    android:layout_width="50dp"
+                                    android:layout_height="20dp"
+                                    android:background="@drawable/skeleton_loading_sec"
+                                    android:layout_marginBottom="2dp"
+                                    />
+
+                                <ImageView
+                                    android:layout_marginStart="5dp"
+                                    android:layout_marginEnd="5dp"
+                                    android:layout_width="10dp"
+                                    android:layout_height="match_parent"
+                                    android:src="@drawable/seperate"
+                                    android:scaleType="fitXY"
+                                    app:tint="@color/grey_200" />
+
+                                <View
+                                    android:layout_width="50dp"
+                                    android:layout_height="20dp"
+                                    android:background="@drawable/skeleton_loading_sec"
+                                    android:layout_marginBottom="2dp"
+                                    />
+
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical"
+                                android:background="@drawable/skeleton_loading_sec"
+                                android:layout_marginBottom="2dp"
+                                >
+
+                            </View>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:orientation="horizontal"
+                    android:gravity="end|center_vertical"
+                    android:layout_marginTop="10dp"
+                    >
+
+                    <View
+                        android:layout_width="80dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/skeleton_loading_sec"
+                        android:padding="2dp"
+                        android:stateListAnimator="@null"
+                        android:layout_marginStart="10dp"
+                        />
+
+                    <View
+                        android:layout_width="80dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/skeleton_loading_sec"
+                        android:padding="2dp"
+                        android:stateListAnimator="@null"
+                        android:layout_marginStart="10dp"
+                        />
+
+                </LinearLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="15dp"
+                android:background="@drawable/skeleton_loading"
+                android:layout_marginBottom="10dp"
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/skeleton_loading_sec"
+                        >
+
+                    </View>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="75dp"
+                        android:layout_marginStart="10dp"
+                        android:orientation="vertical"
+                        >
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="28dp"
+                            android:background="@drawable/skeleton_loading_sec"
+                            android:layout_marginBottom="2dp"
+                            />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="20dp"
+                                android:orientation="horizontal"
+                                android:gravity="start"
+                                android:layout_marginBottom="2dp"
+                                >
+
+                                <View
+                                    android:layout_width="50dp"
+                                    android:layout_height="20dp"
+                                    android:background="@drawable/skeleton_loading_sec"
+                                    android:layout_marginBottom="2dp"
+                                    />
+
+                                <ImageView
+                                    android:layout_marginStart="5dp"
+                                    android:layout_marginEnd="5dp"
+                                    android:layout_width="10dp"
+                                    android:layout_height="match_parent"
+                                    android:src="@drawable/seperate"
+                                    android:scaleType="fitXY"
+                                    app:tint="@color/grey_200" />
+
+                                <View
+                                    android:layout_width="50dp"
+                                    android:layout_height="20dp"
+                                    android:background="@drawable/skeleton_loading_sec"
+                                    android:layout_marginBottom="2dp"
+                                    />
+
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical"
+                                android:background="@drawable/skeleton_loading_sec"
+                                android:layout_marginBottom="2dp"
+                                >
+
+                            </View>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:orientation="horizontal"
+                    android:gravity="end|center_vertical"
+                    android:layout_marginTop="10dp"
+                    >
+
+                    <View
+                        android:layout_width="80dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/skeleton_loading_sec"
+                        android:padding="2dp"
+                        android:stateListAnimator="@null"
+                        android:layout_marginStart="10dp"
+                        />
+
+                    <View
+                        android:layout_width="80dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/skeleton_loading_sec"
+                        android:padding="2dp"
+                        android:stateListAnimator="@null"
+                        android:layout_marginStart="10dp"
+                        />
+
+                </LinearLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="15dp"
+                android:background="@drawable/skeleton_loading"
+                android:layout_marginBottom="10dp"
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/skeleton_loading_sec"
+                        >
+
+                    </View>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="75dp"
+                        android:layout_marginStart="10dp"
+                        android:orientation="vertical"
+                        >
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="28dp"
+                            android:background="@drawable/skeleton_loading_sec"
+                            android:layout_marginBottom="2dp"
+                            />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="20dp"
+                                android:orientation="horizontal"
+                                android:gravity="start"
+                                android:layout_marginBottom="2dp"
+                                >
+
+                                <View
+                                    android:layout_width="50dp"
+                                    android:layout_height="20dp"
+                                    android:background="@drawable/skeleton_loading_sec"
+                                    android:layout_marginBottom="2dp"
+                                    />
+
+                                <ImageView
+                                    android:layout_marginStart="5dp"
+                                    android:layout_marginEnd="5dp"
+                                    android:layout_width="10dp"
+                                    android:layout_height="match_parent"
+                                    android:src="@drawable/seperate"
+                                    android:scaleType="fitXY"
+                                    app:tint="@color/grey_200" />
+
+                                <View
+                                    android:layout_width="50dp"
+                                    android:layout_height="20dp"
+                                    android:background="@drawable/skeleton_loading_sec"
+                                    android:layout_marginBottom="2dp"
+                                    />
+
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical"
+                                android:background="@drawable/skeleton_loading_sec"
+                                android:layout_marginBottom="2dp"
+                                >
+
+                            </View>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:orientation="horizontal"
+                    android:gravity="end|center_vertical"
+                    android:layout_marginTop="10dp"
+                    >
+
+                    <View
+                        android:layout_width="80dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/skeleton_loading_sec"
+                        android:padding="2dp"
+                        android:stateListAnimator="@null"
+                        android:layout_marginStart="10dp"
+                        />
+
+                    <View
+                        android:layout_width="80dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/skeleton_loading_sec"
+                        android:padding="2dp"
+                        android:stateListAnimator="@null"
+                        android:layout_marginStart="10dp"
+                        />
+
+                </LinearLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="15dp"
+                android:background="@drawable/skeleton_loading"
+                android:layout_marginBottom="10dp"
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/skeleton_loading_sec"
+                        >
+
+                    </View>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="75dp"
+                        android:layout_marginStart="10dp"
+                        android:orientation="vertical"
+                        >
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="28dp"
+                            android:background="@drawable/skeleton_loading_sec"
+                            android:layout_marginBottom="2dp"
+                            />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="20dp"
+                                android:orientation="horizontal"
+                                android:gravity="start"
+                                android:layout_marginBottom="2dp"
+                                >
+
+                                <View
+                                    android:layout_width="50dp"
+                                    android:layout_height="20dp"
+                                    android:background="@drawable/skeleton_loading_sec"
+                                    android:layout_marginBottom="2dp"
+                                    />
+
+                                <ImageView
+                                    android:layout_marginStart="5dp"
+                                    android:layout_marginEnd="5dp"
+                                    android:layout_width="10dp"
+                                    android:layout_height="match_parent"
+                                    android:src="@drawable/seperate"
+                                    android:scaleType="fitXY"
+                                    app:tint="@color/grey_200" />
+
+                                <View
+                                    android:layout_width="50dp"
+                                    android:layout_height="20dp"
+                                    android:background="@drawable/skeleton_loading_sec"
+                                    android:layout_marginBottom="2dp"
+                                    />
+
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical"
+                                android:background="@drawable/skeleton_loading_sec"
+                                android:layout_marginBottom="2dp"
+                                >
+
+                            </View>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:orientation="horizontal"
+                    android:gravity="end|center_vertical"
+                    android:layout_marginTop="10dp"
+                    >
+
+                    <View
+                        android:layout_width="80dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/skeleton_loading_sec"
+                        android:padding="2dp"
+                        android:stateListAnimator="@null"
+                        android:layout_marginStart="10dp"
+                        />
+
+                    <View
+                        android:layout_width="80dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/skeleton_loading_sec"
+                        android:padding="2dp"
+                        android:stateListAnimator="@null"
+                        android:layout_marginStart="10dp"
+                        />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </FrameLayout>

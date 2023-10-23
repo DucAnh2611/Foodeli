@@ -27,6 +27,7 @@ public class DynamicHeightGridView extends GridView {
         int columns = getNumColumns();
         int rows = getCount() / columns;
         int extraRow = getCount() % columns > 0 ? 1 : 0;
+
         for (int i = 0; i < rows + extraRow; i++) {
             View listItem = getAdapter().getView(i, null, this);
             listItem.measure(widthMeasureSpec, MeasureSpec.UNSPECIFIED);

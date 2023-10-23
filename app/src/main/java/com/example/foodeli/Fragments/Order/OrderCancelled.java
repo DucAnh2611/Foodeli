@@ -12,6 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 
 import com.example.foodeli.Activities.Home.HomeViewModel;
 import com.example.foodeli.MySqlSetUp.Schemas.User.User;
@@ -40,6 +42,8 @@ public class OrderCancelled extends Fragment {
     private OrderCancelledGVAdapter adapter;
     private HomeViewModel homeViewModel;
     private GridView orderCancelledGV;
+    private LinearLayout emptyLayout;
+    private ScrollView loadingView;
     public OrderCancelled() {
         // Required empty public constructor
     }
@@ -85,12 +89,27 @@ public class OrderCancelled extends Fragment {
         // Inflate the layout for this fragment
         homeViewModel = new ViewModelProvider(getActivity()).get(HomeViewModel.class);
         orderCancelledGV = view.findViewById(R.id.ordercancelled_gridview);
+        emptyLayout = view.findViewById(R.id.order_gridview_empty);
+        loadingView = view.findViewById(R.id.order_gridview_loading);
+
+        orderCancelledGV.setVisibility(View.GONE);
+        emptyLayout.setVisibility(View.GONE);
+        loadingView.setVisibility(View.VISIBLE);
 
         homeViewModel.getListOrderCancelled(user.getId()).observe(getViewLifecycleOwner(), new Observer<ArrayList<OrderWithState>>() {
             @Override
             public void onChanged(ArrayList<OrderWithState> orderWithStates) {
                 adapter = new OrderCancelledGVAdapter(orderWithStates, view.getContext());
                 orderCancelledGV.setAdapter(adapter);
+
+                if(orderWithStates.isEmpty()) {
+                    orderCancelledGV.setVisibility(View.GONE);
+                    emptyLayout.setVisibility(View.VISIBLE);}
+                else {
+                    orderCancelledGV.setVisibility(View.VISIBLE);
+                    emptyLayout.setVisibility(View.GONE);
+                }
+                loadingView.setVisibility(View.GONE);
             }
         });
 

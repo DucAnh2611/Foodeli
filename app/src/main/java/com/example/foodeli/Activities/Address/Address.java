@@ -12,6 +12,7 @@ import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,10 +39,11 @@ public class Address extends AppCompatActivity {
     private int uid;
     private AppCompatButton newAddress;
     private GridView listAddress;
-    private LinearLayout gridviewLayout;
+    private LinearLayout gridviewLayout, addressEmpty;
     private UserAddressGridViewAdapter adapter;
     private DialogFormAddress dialogForm;
     private ArrayList<com.example.foodeli.MySqlSetUp.Schemas.Address.Address> listAdd;
+    private ScrollView addressLoading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +62,12 @@ public class Address extends AppCompatActivity {
 
         newAddress = findViewById(R.id.user_address_add_new_btn);
         listAddress = findViewById(R.id.user_address_gridview);
+        addressEmpty = findViewById(R.id.user_address_empty);
+        addressLoading = findViewById(R.id.user_address_loading);
+
+        listAddress.setVisibility(View.GONE);
+        addressEmpty.setVisibility(View.GONE);
+        addressLoading.setVisibility(View.VISIBLE);
 
         getAddressFromUser(uid);
 
@@ -105,34 +113,16 @@ public class Address extends AppCompatActivity {
                             }
                         });
                         listAddress.setAdapter(adapter);
+
+                        listAddress.setVisibility(View.VISIBLE);
+                        addressEmpty.setVisibility(View.GONE);
                     }
                     else {
-                        gridviewLayout.removeView(listAddress);
 
-                        gridviewLayout.setGravity(Gravity.CENTER);
-
-                        TextView noItem = new TextView(Address.this);
-                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                                ViewGroup.LayoutParams.MATCH_PARENT,
-                                ViewGroup.LayoutParams.WRAP_CONTENT
-                        );
-
-                        noItem.setText("No address found");
-                        noItem.setTextColor(getColor(R.color.black));
-                        noItem.setTextSize(17);
-                        noItem.setGravity(Gravity.CENTER);
-
-                        ImageView noItemImage = new ImageView(Address.this);
-                        LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(
-                                ViewGroup.LayoutParams.MATCH_PARENT,
-                                ViewGroup.LayoutParams.WRAP_CONTENT
-                        );
-                        noItemImage.setImageResource(R.drawable.no_data);
-
-                        gridviewLayout.addView(noItem);
-                        gridviewLayout.addView(noItemImage);
-
+                        listAddress.setVisibility(View.GONE);
+                        addressEmpty.setVisibility(View.VISIBLE);
                     }
+                    addressLoading.setVisibility(View.GONE);
                 }
             }
 
@@ -190,6 +180,12 @@ public class Address extends AppCompatActivity {
                 else {
                     listAdd.remove(position);
                     adapter.setListAdd(listAdd);
+
+                    if(listAdd.isEmpty()) {
+                        listAddress.setVisibility(View.GONE);
+                        addressEmpty.setVisibility(View.VISIBLE);
+                        addressLoading.setVisibility(View.GONE);
+                    }
                 }
             }
 
@@ -251,6 +247,10 @@ public class Address extends AppCompatActivity {
                 else {
                     listAdd.add(response.body().getAddress());
                     adapter.setListAdd(listAdd);
+
+                    listAddress.setVisibility(View.VISIBLE);
+                    addressEmpty.setVisibility(View.GONE);
+                    addressLoading.setVisibility(View.GONE);
                 }
             }
 

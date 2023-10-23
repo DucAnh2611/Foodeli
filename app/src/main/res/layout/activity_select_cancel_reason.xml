@@ -54,7 +54,8 @@
             android:layout_height="360dp"
             android:verticalSpacing="8dp"
             android:padding="5dp"
-            android:scrollbars="none"/>
+            android:scrollbars="none"
+            android:visibility="gone"/>
 
         <LinearLayout
             android:id="@+id/cancel_reason_other_layout"
@@ -62,6 +63,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:layout_marginTop="10dp"
+            android:visibility="gone"
             >
             <TextView
                 android:layout_width="match_parent"
@@ -88,6 +90,193 @@
                 android:maxLines="10"
                 android:background="@drawable/custom_input_style"/>
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/select_cancel_loading"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="20dp"
+                    android:background="@drawable/skeleton_loading"
+                    android:layout_marginBottom="10dp"
+                    >
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:background="@drawable/skeleton_loading_sec"
+                        app:shapeAppearanceOverlay="@style/Circular"/>
+
+                    <View
+                        android:layout_marginStart="10dp"
+                        android:layout_width="0dp"
+                        android:layout_height="20dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/skeleton_loading_sec"
+                        />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="20dp"
+                    android:background="@drawable/skeleton_loading"
+                    android:layout_marginBottom="10dp"
+                    >
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:background="@drawable/skeleton_loading_sec"
+                        app:shapeAppearanceOverlay="@style/Circular"/>
+
+                    <View
+                        android:layout_marginStart="10dp"
+                        android:layout_width="0dp"
+                        android:layout_height="20dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/skeleton_loading_sec"
+                        />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="20dp"
+                    android:background="@drawable/skeleton_loading"
+                    android:layout_marginBottom="10dp"
+                    >
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:background="@drawable/skeleton_loading_sec"
+                        app:shapeAppearanceOverlay="@style/Circular"/>
+
+                    <View
+                        android:layout_marginStart="10dp"
+                        android:layout_width="0dp"
+                        android:layout_height="20dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/skeleton_loading_sec"
+                        />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="20dp"
+                    android:background="@drawable/skeleton_loading"
+                    android:layout_marginBottom="10dp"
+                    >
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:background="@drawable/skeleton_loading_sec"
+                        app:shapeAppearanceOverlay="@style/Circular"/>
+
+                    <View
+                        android:layout_marginStart="10dp"
+                        android:layout_width="0dp"
+                        android:layout_height="20dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/skeleton_loading_sec"
+                        />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="20dp"
+                    android:background="@drawable/skeleton_loading"
+                    android:layout_marginBottom="10dp"
+                    >
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:background="@drawable/skeleton_loading_sec"
+                        app:shapeAppearanceOverlay="@style/Circular"/>
+
+                    <View
+                        android:layout_marginStart="10dp"
+                        android:layout_width="0dp"
+                        android:layout_height="20dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/skeleton_loading_sec"
+                        />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="20dp"
+                    android:background="@drawable/skeleton_loading"
+                    android:layout_marginBottom="10dp"
+                    >
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:background="@drawable/skeleton_loading_sec"
+                        app:shapeAppearanceOverlay="@style/Circular"/>
+
+                    <View
+                        android:layout_marginStart="10dp"
+                        android:layout_width="0dp"
+                        android:layout_height="20dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/skeleton_loading_sec"
+                        />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="vertical"
+                    >
+                    <View
+                        android:layout_width="100dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/skeleton_loading_sec"
+                        android:layout_marginBottom="5dp"
+                        />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/skeleton_loading"/>
+
+
+                </LinearLayout>
+
+            </LinearLayout>
         </LinearLayout>
 
     </LinearLayout>

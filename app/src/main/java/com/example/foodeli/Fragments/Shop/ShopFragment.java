@@ -24,6 +24,7 @@ import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -74,7 +75,8 @@ public class ShopFragment extends Fragment {
     private ListShopGridviewAdapter adapter;
     private DialogCreateShop dialog;
     private Pool pool;
-
+    private ScrollView listLoading;
+    private LinearLayout emptyLayout;
     private User user;
 
     public ShopFragment() {
@@ -123,6 +125,12 @@ public class ShopFragment extends Fragment {
         addNewShop = view.findViewById(R.id.shop_list_add);
         gridviewLayout = view.findViewById(R.id.shop_list_gridview_layout);
         listShopGV = view.findViewById(R.id.shop_list_gridview);
+        emptyLayout =view.findViewById(R.id.shop_list_empty);
+        listLoading = view.findViewById(R.id.shop_list_loading);
+
+        listShopGV.setVisibility(View.GONE);
+        emptyLayout.setVisibility(View.GONE);
+        listLoading.setVisibility(View.VISIBLE);
 
         homeViewModel = new ViewModelProvider(getActivity()).get(HomeViewModel.class);
 
@@ -143,35 +151,17 @@ public class ShopFragment extends Fragment {
                         }
                     });
 
-                    listShopGV.setLayoutParams(new LinearLayout.LayoutParams(
-                            ViewGroup.LayoutParams.MATCH_PARENT ,
-                            ViewGroup.LayoutParams.MATCH_PARENT ));
                     listShopGV.setAdapter(adapter);
-                }
-                else {
-                    listShopGV.setLayoutParams(new LinearLayout.LayoutParams(0 ,0 ));
-                    gridviewLayout.setGravity(Gravity.CENTER);
 
-                    TextView noItem = new TextView(getContext());
-                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                            ViewGroup.LayoutParams.MATCH_PARENT,
-                            ViewGroup.LayoutParams.WRAP_CONTENT
-                    );
-
-                    noItem.setText("No Shop found");
-                    noItem.setTextColor(getContext().getColor(R.color.black));
-                    noItem.setTextSize(17);
-                    noItem.setGravity(Gravity.CENTER);
-
-                    ImageView noItemImage = new ImageView(getContext());
-                    LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(
-                            ViewGroup.LayoutParams.MATCH_PARENT,
-                            ViewGroup.LayoutParams.WRAP_CONTENT
-                    );
-                    noItemImage.setImageResource(R.drawable.no_data);
-
-                    gridviewLayout.addView(noItem);
-                    gridviewLayout.addView(noItemImage);
+                    if(shopWithDetails.isEmpty()) {
+                        listShopGV.setVisibility(View.GONE);
+                        emptyLayout.setVisibility(View.VISIBLE);
+                    }
+                    else {
+                        listShopGV.setVisibility(View.VISIBLE);
+                        emptyLayout.setVisibility(View.GONE);
+                    }
+                    listLoading.setVisibility(View.GONE);
                 }
             }
         });

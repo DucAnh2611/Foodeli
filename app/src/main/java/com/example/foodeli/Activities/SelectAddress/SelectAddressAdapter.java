@@ -6,7 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.example.foodeli.MySqlSetUp.Pool;
@@ -60,9 +62,7 @@ public class SelectAddressAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        if(convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.items_select_address_gridview, parent, false);
-        }
+        convertView = LayoutInflater.from(context).inflate(R.layout.items_select_address_gridview, parent, false);
 
         Address item = listAdd.get(position);
 

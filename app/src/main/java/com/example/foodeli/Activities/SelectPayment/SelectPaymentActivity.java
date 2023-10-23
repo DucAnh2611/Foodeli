@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.example.foodeli.Activities.MethodCheckout.DialogPaymentForm;
@@ -47,6 +49,7 @@ public class SelectPaymentActivity extends AppCompatActivity {
     private SelectPaymentAdapter adapter;
     private DialogPaymentForm dialogPaymentForm;
     private ConvertIconMethodIcon iconMethod = new ConvertIconMethodIcon();
+    private ScrollView paymentLoading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +75,10 @@ public class SelectPaymentActivity extends AppCompatActivity {
         gridViewMethodSupport = findViewById(R.id.selectpayment_gridview);
         addMethodSupport = findViewById(R.id.selectpayment_add_new_btn);
         confirmMethod = findViewById(R.id.selectpayment_confirm_btn);
+        paymentLoading = findViewById(R.id.select_payment_loading);
+
+        gridViewMethodSupport.setVisibility(View.GONE);
+        paymentLoading.setVisibility(View.VISIBLE);
 
         Call<MethodSupportRes> getMethodSupport = pool.getApiCallGeneral().getSystemMethod();
 
@@ -221,6 +228,9 @@ public class SelectPaymentActivity extends AppCompatActivity {
 
                     adapter = new SelectPaymentAdapter(methods, uid, mid ,ckid, mapListMethod, cknum, mapIconSupportList, SelectPaymentActivity.this);
                     gridViewMethodSupport.setAdapter(adapter);
+
+                    gridViewMethodSupport.setVisibility(View.VISIBLE);
+                    paymentLoading.setVisibility(View.GONE);
                 }
             }
 

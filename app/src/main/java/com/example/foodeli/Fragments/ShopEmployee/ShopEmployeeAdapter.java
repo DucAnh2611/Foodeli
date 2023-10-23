@@ -14,6 +14,7 @@ import com.example.foodeli.Fragments.Shop.OnMethodShopManage;
 import com.example.foodeli.MySqlSetUp.Schemas.UserShop.Response.GetAllUserInShop;
 import com.example.foodeli.MySqlSetUp.Schemas.UserVoucher.Voucher;
 import com.example.foodeli.R;
+import com.example.foodeli.Supports.SupportDate;
 import com.example.foodeli.Supports.SupportImage;
 import com.google.android.material.imageview.ShapeableImageView;
 
@@ -28,6 +29,7 @@ public class ShopEmployeeAdapter extends BaseAdapter {
     private TextView eRole, eName, eUpdate;
     private LinearLayout eEdit, eDelete;
     private OnMethodShopManage onMethodShopManage;
+    private SupportDate supportDate = new SupportDate();
 
     public ShopEmployeeAdapter(Context context, ArrayList<GetAllUserInShop.UserInShop> list) {
         this.context = context;
@@ -76,7 +78,7 @@ public class ShopEmployeeAdapter extends BaseAdapter {
         }
         eRole.setText(item.getRole());
         eName.setText(item.getName());
-        eUpdate.setText("Update: " + item.getUpdate());
+        eUpdate.setText("Update: " + supportDate.ConvertLAtoVN(item.getUpdate()));
 
         eEdit.setOnClickListener(new View.OnClickListener() {
             @Override

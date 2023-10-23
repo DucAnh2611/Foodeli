@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.example.foodeli.MySqlSetUp.Schemas.General.Body.OrderState;
 import com.example.foodeli.MySqlSetUp.Schemas.UserOrder.Response.OrderTrackRes;
 import com.example.foodeli.R;
+import com.example.foodeli.Supports.SupportDate;
 
 import java.util.ArrayList;
 
@@ -24,6 +25,7 @@ public class OrderStatusStateAdapter extends BaseAdapter {
     private Context context;
     private int currentStateId;
     private ArrayList<OrderTrackRes.OrderTimeLine> timeLine;
+    private SupportDate supportDate =new SupportDate();
 
     public OrderStatusStateAdapter(ArrayList<OrderState> list, int currId, ArrayList<OrderTrackRes.OrderTimeLine> timeline, Context context) {
         this.listState = list;
@@ -72,7 +74,7 @@ public class OrderStatusStateAdapter extends BaseAdapter {
         state.setText(item.getContent());
 
         if(currentStateId >= item.getStId()) {
-            dateModify.setText(timeLine.get(position).getUpdateAt());
+            dateModify.setText(supportDate.ConvertLAtoVN(timeLine.get(position).getUpdateAt()));
             icon.setColorFilter(context.getColor(R.color.green_100));
             next.setColorFilter(context.getColor(R.color.green_100));
             state.setTextColor(context.getColor(R.color.green_100));

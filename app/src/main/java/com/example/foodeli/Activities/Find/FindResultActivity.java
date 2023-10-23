@@ -13,6 +13,7 @@ import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,7 +46,8 @@ public class FindResultActivity extends AppCompatActivity {
     private AppCompatButton searchButton;
     private GridView gridView;
     private TopProductGridViewAdapter adapter;
-    private LinearLayout gridviewHolder;
+    private LinearLayout gridviewHolder, findEmpty;
+    private ScrollView findLoading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,10 +64,16 @@ public class FindResultActivity extends AppCompatActivity {
 
         searchButton = findViewById(R.id.find_res_key_btn);
         gridviewHolder = findViewById(R.id.find_res_gridview_holder);
+        findEmpty = findViewById(R.id.find_gridview_empty);
+        findLoading = findViewById(R.id.find_loading);
 
         gridView = findViewById(R.id.find_res_gridview_product);
         adapter = new TopProductGridViewAdapter(new ArrayList<>(), this);
         gridView.setAdapter(adapter);
+
+        findEmpty.setVisibility(View.GONE);
+        findLoading.setVisibility(View.VISIBLE);
+        gridView.setVisibility(View.GONE);
 
         Intent FindIntent = getIntent();
         filter = new Filter();
@@ -148,41 +156,18 @@ public class FindResultActivity extends AppCompatActivity {
                         loadMore = true;
                         adapter.addItems(listRes);
                         adapter.notifyDataSetChanged();
+
+                        findEmpty.setVisibility(View.GONE);
+                        gridView.setVisibility(View.VISIBLE);
                     }
                     else {
                         loadMore = false;
+
+                        findEmpty.setVisibility(View.VISIBLE);
+                        gridView.setVisibility(View.GONE);
                     }
 
-                    if(adapter.getCount() == 0) {
-                        gridviewHolder.removeView(gridView);
-
-                        gridviewHolder.setGravity(Gravity.CENTER);
-
-                        TextView noItem = new TextView(FindResultActivity.this);
-                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                                ViewGroup.LayoutParams.MATCH_PARENT,
-                                ViewGroup.LayoutParams.WRAP_CONTENT
-                        );
-
-                        noItem.setText("No product found");
-                        noItem.setTextColor(getColor(R.color.black));
-                        noItem.setTextSize(17);
-                        noItem.setGravity(Gravity.CENTER);
-                        noItem.setLayoutParams(params);
-
-                        ImageView noItemImage = new ImageView(FindResultActivity.this);
-                        LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(
-                                ViewGroup.LayoutParams.MATCH_PARENT,
-                                ViewGroup.LayoutParams.WRAP_CONTENT
-                        );
-                        noItemImage.setImageResource(R.drawable.no_data);
-                        noItemImage.setLayoutParams(params2);
-
-
-                        gridviewHolder.addView(noItem);
-                        gridviewHolder.addView(noItemImage);
-
-                    }
+                    findLoading.setVisibility(View.GONE);
                 }
             }
 

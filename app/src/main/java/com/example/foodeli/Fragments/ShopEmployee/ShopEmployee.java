@@ -18,6 +18,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.example.foodeli.Activities.ShopManage.ShopManageViewModel;
@@ -75,6 +77,8 @@ public class ShopEmployee extends Fragment {
     private DialogShopUserForm formEdit;
     private ArrayList<ShopPermission> shopPermissions;
     private ShopOrder.OnAdjustOrder onAdjustOrder;
+    private ScrollView employeeLoading;
+    private LinearLayout employeeEmpty;
 
     public ShopEmployee() {
         // Required empty public constructor
@@ -120,6 +124,12 @@ public class ShopEmployee extends Fragment {
 
         addEmp = view.findViewById(R.id.item_shop_employee_create);
         empGridView = view.findViewById(R.id.item_shop_employee_gridview);
+        employeeEmpty = view.findViewById(R.id.shop_employee_empty);
+        employeeLoading = view.findViewById(R.id.shop_employee_loading);
+
+        empGridView.setVisibility(View.GONE);
+        employeeEmpty.setVisibility(View.GONE);
+        employeeLoading.setVisibility(View.VISIBLE);
 
         shopManageViewModel.getListPermissions().observe(getViewLifecycleOwner(), new Observer<ArrayList<ShopPermission>>() {
             @Override
@@ -135,20 +145,32 @@ public class ShopEmployee extends Fragment {
         shopManageViewModel.getListUserInShop(sid).observe(getViewLifecycleOwner(), new Observer<ArrayList<GetAllUserInShop.UserInShop>>() {
             @Override
             public void onChanged(ArrayList<GetAllUserInShop.UserInShop> userInShops) {
-                adapter = new ShopEmployeeAdapter(getContext(), userInShops);
-                empGridView.setAdapter(adapter);
+                if(userInShops.isEmpty()) {
+                    empGridView.setVisibility(View.GONE);
+                    employeeEmpty.setVisibility(View.VISIBLE);
 
-                adapter.setOnMethodShopManage(new OnMethodShopManage() {
-                    @Override
-                    public void onEdit(int position, Object obj) {
-                        showFormEdit(position, (GetAllUserInShop.UserInShop) obj);
-                    }
+                }
+                else {
+                    adapter = new ShopEmployeeAdapter(getContext(), userInShops);
+                    empGridView.setAdapter(adapter);
 
-                    @Override
-                    public void onDelete(int position, int id) {
-                        removeUserFromShop(id, position);
-                    }
-                });
+                    adapter.setOnMethodShopManage(new OnMethodShopManage() {
+                        @Override
+                        public void onEdit(int position, Object obj) {
+                            showFormEdit(position, (GetAllUserInShop.UserInShop) obj);
+                        }
+
+                        @Override
+                        public void onDelete(int position, int id) {
+                            removeUserFromShop(id, position);
+                        }
+                    });
+
+
+                    empGridView.setVisibility(View.VISIBLE);
+                    employeeEmpty.setVisibility(View.GONE);
+                }
+                employeeLoading.setVisibility(View.GONE);
             }
         });
 
@@ -300,6 +322,16 @@ public class ShopEmployee extends Fragment {
                     oldList.remove(position);
 
                     shopManageViewModel.setListUserInShop(oldList);
+                    if(oldList.isEmpty()) {
+                        empGridView.setVisibility(View.GONE);
+                        employeeEmpty.setVisibility(View.VISIBLE);
+                    }
+                    else {
+
+                        empGridView.setVisibility(View.VISIBLE);
+                        employeeEmpty.setVisibility(View.GONE);
+                    }
+                    employeeLoading.setVisibility(View.GONE);
                 }
             }
 

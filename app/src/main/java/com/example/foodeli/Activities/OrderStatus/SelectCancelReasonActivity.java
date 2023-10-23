@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 
 import com.example.foodeli.Activities.Home.HomeViewModel;
 import com.example.foodeli.MySqlSetUp.Pool;
@@ -47,6 +48,7 @@ public class SelectCancelReasonActivity extends AppCompatActivity implements Can
     private int rid = 0, position = 0, uid = 0;
     private OrderWithState order;
     private String desc = "";
+    private LinearLayout cancelLoading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,9 +64,13 @@ public class SelectCancelReasonActivity extends AppCompatActivity implements Can
 
         selectReasonGV = findViewById(R.id.cancel_reason_gridview);
         otherLayout = findViewById(R.id.cancel_reason_other_layout);
-        otherLayout.setVisibility(View.INVISIBLE);
         otherReason = findViewById(R.id.cancel_reason_other_context);
         confirmCancel = findViewById(R.id.cancel_order_btn);
+        cancelLoading = findViewById(R.id.select_cancel_loading);
+
+        selectReasonGV.setVisibility(View.GONE);
+        otherLayout.setVisibility(View.GONE);
+        cancelLoading.setVisibility(View.VISIBLE);
 
         homeViewModel.getListReason().observe(this, new Observer<ArrayList<CancelReason>>() {
             @Override
@@ -72,6 +78,9 @@ public class SelectCancelReasonActivity extends AppCompatActivity implements Can
                 adapter = new CancelReasonAdapter(reasons, rid, SelectCancelReasonActivity.this);
                 adapter.setOnItemClickReason(SelectCancelReasonActivity.this);
                 selectReasonGV.setAdapter(adapter);
+
+                selectReasonGV.setVisibility(View.VISIBLE);
+                cancelLoading.setVisibility(View.GONE);
             }
         });
 
@@ -149,7 +158,7 @@ public class SelectCancelReasonActivity extends AppCompatActivity implements Can
             otherReason.setText("");
         }
         if(rid != 6) {
-            otherLayout.setVisibility(View.INVISIBLE);
+            otherLayout.setVisibility(View.GONE);
         }
         else {
             otherLayout.setVisibility(View.VISIBLE);

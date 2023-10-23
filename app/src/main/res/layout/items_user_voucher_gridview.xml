@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="130dp"
+    android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:background="@drawable/custom_input_style"
     android:gravity="start"
@@ -20,9 +20,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Title"
-            android:textColor="@color/black"
+            android:textColor="@color/green_100"
             android:fontFamily="@font/poppins_medium_italic"
-            android:textSize="15sp"/>
+            android:textSize="13sp"/>
 
         <TextView
             android:id="@+id/user_voucher_title"
@@ -42,7 +42,7 @@
             android:gravity="start"
             android:textSize="13sp"
             android:text="Desc"
-            android:singleLine="true"
+            android:maxLines="10"
             android:ellipsize="end"
             />
 

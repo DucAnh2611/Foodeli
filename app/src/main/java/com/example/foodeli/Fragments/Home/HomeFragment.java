@@ -20,6 +20,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.example.foodeli.Activities.Cart.CartActivity;
@@ -53,6 +55,8 @@ public class HomeFragment extends Fragment {
     private String mParam2;
 
     private HomeViewModel homeViewModel;
+    private LinearLayout categoryLoading;
+    private ScrollView productLoading;
     private User user;
 
     public HomeFragment() {
@@ -114,17 +118,30 @@ public class HomeFragment extends Fragment {
 
         RecyclerView CategoryRV = view.findViewById(R.id.rv_category);
         GridView topProducts = view.findViewById(R.id.product_gv);
+        categoryLoading = view.findViewById(R.id.home_cate_loading);
+        productLoading = view.findViewById(R.id.home_product_loading);
+
+        CategoryRV.setVisibility(View.GONE);
+        topProducts.setVisibility(View.GONE);
+        categoryLoading.setVisibility(View.VISIBLE);
+        productLoading.setVisibility(View.VISIBLE);
 
         homeViewModel.getCategories().observe(getViewLifecycleOwner(), categories -> {
             CategoryRV.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false));
             CategoryRecyclerViewAdapter adapter = new CategoryRecyclerViewAdapter(categories, view.getContext());
             CategoryRV.setAdapter(adapter);
 
+            CategoryRV.setVisibility(View.VISIBLE);
+            categoryLoading.setVisibility(View.GONE);
+
         });
 
         homeViewModel.getTopProducts().observe(getViewLifecycleOwner(), products -> {
             TopProductGridViewAdapter adapter2 = new TopProductGridViewAdapter(products, view.getContext());
             topProducts.setAdapter(adapter2);
+
+            topProducts.setVisibility(View.VISIBLE);
+            productLoading.setVisibility(View.GONE);
 
         });
 

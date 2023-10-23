@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.GridView;
 import android.widget.ImageButton;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.example.foodeli.Activities.Home.HomeViewModel;
@@ -47,6 +48,7 @@ public class PaymentMethodActivity extends AppCompatActivity {
     private ArrayList<MethodSupport> methods;
     private DialogPaymentForm dialog;
     private int uid;
+    private ScrollView methodLoading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +71,10 @@ public class PaymentMethodActivity extends AppCompatActivity {
 
         addNewBtn = findViewById(R.id.user_method_add_new_btn);
         gridViewMethodSupport = findViewById(R.id.user_method_gridview);
+        methodLoading = findViewById(R.id.user_payment_loading);
+
+        gridViewMethodSupport.setVisibility(View.GONE);
+        methodLoading.setVisibility(View.VISIBLE);
 
         Call<MethodSupportRes> getMethodSupport = pool.getApiCallGeneral().getSystemMethod();
 
@@ -141,6 +147,9 @@ public class PaymentMethodActivity extends AppCompatActivity {
                     }
                     adapter = new SystemPaymentAdapter(methods, mapIconSupportList, mapListMethod,PaymentMethodActivity.this);
                     gridViewMethodSupport.setAdapter(adapter);
+
+                    gridViewMethodSupport.setVisibility(View.VISIBLE);
+                    methodLoading.setVisibility(View.GONE);
                 }
             }
 

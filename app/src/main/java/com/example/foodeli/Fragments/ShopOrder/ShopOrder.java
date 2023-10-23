@@ -13,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.GridView;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.example.foodeli.Activities.ShopManage.ShopManageViewModel;
@@ -26,6 +28,7 @@ import com.example.foodeli.MySqlSetUp.Schemas.UserOrder.OrderWithState;
 import com.example.foodeli.MySqlSetUp.Schemas.UserOrder.Response.OrderTrackRes;
 import com.example.foodeli.MySqlSetUp.Schemas.UserVoucher.Voucher;
 import com.example.foodeli.R;
+import com.example.foodeli.Supports.SupportDate;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -62,6 +65,9 @@ public class ShopOrder extends Fragment {
     private User user;
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private OnAdjustOrder onAdjustOrder;
+    private SupportDate supportDate = new SupportDate();
+    private ScrollView orderLoading;
+    private LinearLayout orderEmpty;
 
     public ShopOrder() {
         // Required empty public constructor
@@ -100,6 +106,13 @@ public class ShopOrder extends Fragment {
         sid = getArguments().getInt(ARG_SID);
 
         orderGridView = view.findViewById(R.id.item_shop_order_gridview);
+        orderEmpty = view.findViewById(R.id.shop_order_empty);
+        orderLoading = view.findViewById(R.id.shop_order_loading);
+
+        orderEmpty.setVisibility(View.GONE);
+        orderGridView.setVisibility(View.GONE);
+        orderLoading.setVisibility(View.VISIBLE);
+
         Gson gson = new Gson();
         SharedPreferences mPrefs = getContext().getSharedPreferences("UserInfo", Context.MODE_PRIVATE);
         String json = mPrefs.getString("user", "");
@@ -113,15 +126,25 @@ public class ShopOrder extends Fragment {
         shopManageViewModel.getListOrderShop(sid).observe(getViewLifecycleOwner(), new Observer<ArrayList<OrderWithState>>() {
             @Override
             public void onChanged(ArrayList<OrderWithState> orderWithValues) {
-                adapter = new ShopOrderAdapter(getContext(), orderWithValues);
-                orderGridView.setAdapter(adapter);
+                if(orderWithValues.isEmpty()){
+                    orderEmpty.setVisibility(View.VISIBLE);
+                    orderGridView.setVisibility(View.GONE);
+                }
+                else {
+                    adapter = new ShopOrderAdapter(getContext(), orderWithValues);
+                    orderGridView.setAdapter(adapter);
 
-                adapter.setOnMethodOrderShop(new ShopOrderAdapter.OnMethodOrderShop() {
-                    @Override
-                    public void onChangeStated(int position) {
-                        updateOrderAtIndex(position);
-                    }
-                });
+                    adapter.setOnMethodOrderShop(new ShopOrderAdapter.OnMethodOrderShop() {
+                        @Override
+                        public void onChangeStated(int position) {
+                            updateOrderAtIndex(position);
+                        }
+                    });
+
+                    orderEmpty.setVisibility(View.GONE);
+                    orderGridView.setVisibility(View.VISIBLE);
+                }
+                orderLoading.setVisibility(View.GONE);
 
             }
         });
@@ -173,10 +196,7 @@ public class ShopOrder extends Fragment {
                 else {
                     oldList.remove(position);
 
-                    Date currentTime = new Date();
-                    String formattedDateTime = dateFormat.format(currentTime);
-
-                    order.setModified(formattedDateTime);
+                    order.setModified(supportDate.GetCurrentDateLA());
                     order.setStateId(order.getStateId() + 1);
                     order.setState(convertIdToState(order.getStateId()));
 

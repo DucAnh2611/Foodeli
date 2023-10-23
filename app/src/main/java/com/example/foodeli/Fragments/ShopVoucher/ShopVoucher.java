@@ -13,6 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.example.foodeli.Activities.ShopManage.ShopManageViewModel;
@@ -61,6 +63,8 @@ public class ShopVoucher extends Fragment {
     private ShopVoucherAdapter adapter;
     private User user;
     private DialogCreateVoucher dialog;
+    private LinearLayout voucherEmpty;
+    private ScrollView voucherLoading;
 
     public ShopVoucher() {
         // Required empty public constructor
@@ -106,6 +110,12 @@ public class ShopVoucher extends Fragment {
 
         newVoucherBtn = view.findViewById(R.id.item_shop_voucher_create);
         voucherGV = view.findViewById(R.id.item_shop_voucher_gridview);
+        voucherEmpty = view.findViewById(R.id.shop_voucher_empty);
+        voucherLoading = view.findViewById(R.id.shop_voucher_loading);
+
+        voucherGV.setVisibility(View.GONE);
+        voucherEmpty.setVisibility(View.GONE);
+        voucherLoading.setVisibility(View.VISIBLE);
 
         adapter = new ShopVoucherAdapter(getContext(), new ArrayList<>());
         voucherGV.setAdapter(adapter);
@@ -113,20 +123,30 @@ public class ShopVoucher extends Fragment {
         shopManageViewModel.getListVoucherShop(sid).observe(getViewLifecycleOwner(), new Observer<ArrayList<Voucher>>() {
             @Override
             public void onChanged(ArrayList<Voucher> vouchers) {
-                adapter = new ShopVoucherAdapter(getContext(), vouchers);
-                voucherGV.setAdapter(adapter);
+                if(vouchers.isEmpty()) {
+                    voucherGV.setVisibility(View.GONE);
+                    voucherEmpty.setVisibility(View.VISIBLE);
+                }
+                else {
+                    adapter = new ShopVoucherAdapter(getContext(), vouchers);
+                    voucherGV.setAdapter(adapter);
 
-                adapter.setOnMethodShopManage(new OnMethodShopManage() {
-                    @Override
-                    public void onEdit(int position, Object obj) {
-                        // Not use
-                    }
+                    adapter.setOnMethodShopManage(new OnMethodShopManage() {
+                        @Override
+                        public void onEdit(int position, Object obj) {
+                            // Not use
+                        }
 
-                    @Override
-                    public void onDelete(int position, int id) {
-                        deleteVoucher(id, user.getId(), position);
-                    }
-                });
+                        @Override
+                        public void onDelete(int position, int id) {
+                            deleteVoucher(id, user.getId(), position);
+                        }
+                    });
+
+                    voucherGV.setVisibility(View.VISIBLE);
+                    voucherEmpty.setVisibility(View.GONE);
+                }
+                voucherLoading.setVisibility(View.GONE);
             }
         });
 
@@ -199,6 +219,15 @@ public class ShopVoucher extends Fragment {
                     oldList.remove(position);
 
                     shopManageViewModel.setListVoucherShop(oldList);
+                    if(oldList.isEmpty()){
+                        voucherGV.setVisibility(View.GONE);
+                        voucherEmpty.setVisibility(View.VISIBLE);
+                    }
+                    else {
+                        voucherGV.setVisibility(View.VISIBLE);
+                        voucherEmpty.setVisibility(View.GONE);
+                    }
+                    voucherLoading.setVisibility(View.GONE);
                 }
             }
 
@@ -233,6 +262,10 @@ public class ShopVoucher extends Fragment {
                     oldList.add(response.body().getVoucher());
                     dialog.dismiss();
                     shopManageViewModel.setListVoucherShop(oldList);
+
+                    voucherGV.setVisibility(View.VISIBLE);
+                    voucherEmpty.setVisibility(View.GONE);
+                    voucherLoading.setVisibility(View.GONE);
                 }
             }
 

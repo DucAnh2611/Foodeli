@@ -90,7 +90,297 @@
             android:layout_width="match_parent"
             android:layout_height="400dp"
             android:scrollbars="none"
-            android:verticalSpacing="10dp"/>
+            android:verticalSpacing="10dp"
+            android:visibility="gone"/>
+
+        <LinearLayout
+            android:id="@+id/find_voucher_gridview_empty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Can not find Voucher"
+                android:textSize="17sp"
+                android:textColor="@color/black"
+                />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="300dp"
+                android:src="@drawable/no_data"/>
+
+        </LinearLayout>
+
+        <ScrollView
+            android:id="@+id/find_voucher_gridview_loading"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="start"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="130dp"
+                    android:orientation="horizontal"
+                    android:background="@drawable/skeleton_loading"
+                    android:gravity="start"
+                    android:padding="20dp"
+                    android:layout_marginBottom="10dp"
+                    >
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="25dp"
+                            android:background="@drawable/skeleton_loading_sec"
+                            android:layout_marginBottom="5dp"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="25dp"
+                            android:background="@drawable/skeleton_loading_sec"
+                            android:layout_marginBottom="5dp"
+                            />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/skeleton_loading_sec"
+                            />
+
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_marginStart="15dp"
+                        android:layout_width="80dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        >
+
+                        <View
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_width="50dp"
+                            android:layout_height="20dp"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:background="@drawable/skeleton_loading_sec"/>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:layout_centerInParent="true"
+                            android:background="@drawable/skeleton_loading_sec"/>
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="130dp"
+                    android:orientation="horizontal"
+                    android:background="@drawable/skeleton_loading"
+                    android:gravity="start"
+                    android:padding="20dp"
+                    android:layout_marginBottom="10dp"
+                    >
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="25dp"
+                            android:background="@drawable/skeleton_loading_sec"
+                            android:layout_marginBottom="5dp"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="25dp"
+                            android:background="@drawable/skeleton_loading_sec"
+                            android:layout_marginBottom="5dp"
+                            />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/skeleton_loading_sec"
+                            />
+
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_marginStart="15dp"
+                        android:layout_width="80dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        >
+
+                        <View
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_width="50dp"
+                            android:layout_height="20dp"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:background="@drawable/skeleton_loading_sec"/>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:layout_centerInParent="true"
+                            android:background="@drawable/skeleton_loading_sec"/>
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="130dp"
+                    android:orientation="horizontal"
+                    android:background="@drawable/skeleton_loading"
+                    android:gravity="start"
+                    android:padding="20dp"
+                    android:layout_marginBottom="10dp"
+                    >
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="25dp"
+                            android:background="@drawable/skeleton_loading_sec"
+                            android:layout_marginBottom="5dp"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="25dp"
+                            android:background="@drawable/skeleton_loading_sec"
+                            android:layout_marginBottom="5dp"
+                            />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/skeleton_loading_sec"
+                            />
+
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_marginStart="15dp"
+                        android:layout_width="80dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        >
+
+                        <View
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_width="50dp"
+                            android:layout_height="20dp"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:background="@drawable/skeleton_loading_sec"/>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:layout_centerInParent="true"
+                            android:background="@drawable/skeleton_loading_sec"/>
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="130dp"
+                    android:orientation="horizontal"
+                    android:background="@drawable/skeleton_loading"
+                    android:gravity="start"
+                    android:padding="20dp"
+                    android:layout_marginBottom="10dp"
+                    >
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="25dp"
+                            android:background="@drawable/skeleton_loading_sec"
+                            android:layout_marginBottom="5dp"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="25dp"
+                            android:background="@drawable/skeleton_loading_sec"
+                            android:layout_marginBottom="5dp"
+                            />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/skeleton_loading_sec"
+                            />
+
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_marginStart="15dp"
+                        android:layout_width="80dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        >
+
+                        <View
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_width="50dp"
+                            android:layout_height="20dp"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:background="@drawable/skeleton_loading_sec"/>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:layout_centerInParent="true"
+                            android:background="@drawable/skeleton_loading_sec"/>
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
 
     </LinearLayout>
 

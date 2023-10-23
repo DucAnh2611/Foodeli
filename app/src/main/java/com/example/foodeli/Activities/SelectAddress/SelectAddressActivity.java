@@ -13,6 +13,7 @@ import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +44,8 @@ public class SelectAddressActivity extends AppCompatActivity {
     private LinearLayout gridviewLayout;
     private SelectAddressAdapter adapter;
     private AppCompatButton addNewAddress;
+    private LinearLayout addressEmpty;
+    private ScrollView addressLoading;
     private Button applyAddBtn;
     private Pool pool;
     private DialogFormAddress dialogForm;
@@ -70,6 +73,12 @@ public class SelectAddressActivity extends AppCompatActivity {
         addNewAddress = findViewById(R.id.selectaddress_add_new_btn);
         gridview = findViewById(R.id.selectaddress_gridview);
         applyAddBtn = findViewById(R.id.selectaddress_confirm_btn);
+        addressEmpty = findViewById(R.id.select_address_empty);
+        addressLoading = findViewById(R.id.select_address_loading);
+
+        gridview.setVisibility(View.GONE);
+        addressEmpty.setVisibility(View.GONE);
+        addressLoading.setVisibility(View.VISIBLE);
 
         Call<GetAllAddressRes> getAllAddress = pool.getApiCallUserAddress().getAll(uid);
 
@@ -105,33 +114,15 @@ public class SelectAddressActivity extends AppCompatActivity {
                             }
                         });
                         gridview.setAdapter(adapter);
+
+                        gridview.setVisibility(View.VISIBLE);
+                        addressEmpty.setVisibility(View.GONE);
+                        addressLoading.setVisibility(View.GONE);
                     }
                     else {
-                        gridviewLayout.removeView(gridview);
-
-                        gridviewLayout.setGravity(Gravity.CENTER);
-
-                        TextView noItem = new TextView(SelectAddressActivity.this);
-                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                                ViewGroup.LayoutParams.MATCH_PARENT,
-                                ViewGroup.LayoutParams.WRAP_CONTENT
-                        );
-
-                        noItem.setText("No address found");
-                        noItem.setTextColor(getColor(R.color.black));
-                        noItem.setTextSize(17);
-                        noItem.setGravity(Gravity.CENTER);
-
-                        ImageView noItemImage = new ImageView(SelectAddressActivity.this);
-                        LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(
-                                ViewGroup.LayoutParams.MATCH_PARENT,
-                                ViewGroup.LayoutParams.WRAP_CONTENT
-                        );
-                        noItemImage.setImageResource(R.drawable.no_data);
-
-                        gridviewLayout.addView(noItem);
-                        gridviewLayout.addView(noItemImage);
-
+                        gridview.setVisibility(View.GONE);
+                        addressEmpty.setVisibility(View.VISIBLE);
+                        addressLoading.setVisibility(View.GONE);
                     }
                 }
             }
@@ -205,6 +196,10 @@ public class SelectAddressActivity extends AppCompatActivity {
                 else {
                     listAdd.add(response.body().getAddress());
                     adapter.setListAdd(listAdd);
+
+                    gridview.setVisibility(View.VISIBLE);
+                    addressEmpty.setVisibility(View.GONE);
+                    addressLoading.setVisibility(View.GONE);
                 }
             }
 

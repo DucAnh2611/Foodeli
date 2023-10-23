@@ -13,6 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.example.foodeli.Activities.ShopManage.ShopManageViewModel;
@@ -70,6 +72,8 @@ public class ShopProduct extends Fragment {
     private ArrayList<GetTopProduct.ProductWithAvg> shopProducts;
     private SupportDate supportDate = new SupportDate();
     private OnCreateNewProduct onCreateNewProduct;
+    private ScrollView productLoading;
+    private LinearLayout productEmpty;
 
     public ShopProduct() {
         // Required empty public constructor
@@ -115,6 +119,12 @@ public class ShopProduct extends Fragment {
 
         addNewProduct = view.findViewById(R.id.item_shop_product_create);
         gridviewProduct = view.findViewById(R.id.item_shop_product_gridview);
+        productEmpty = view.findViewById(R.id.shop_product_empty);
+        productLoading = view.findViewById(R.id.shop_product_loading);
+
+        gridviewProduct.setVisibility(View.GONE);
+        productEmpty.setVisibility(View.GONE);
+        productLoading.setVisibility(View.VISIBLE);
 
         adapter = new ShopProductAdapter(getContext(), new ArrayList<>());
         gridviewProduct.setAdapter(adapter);
@@ -127,27 +137,38 @@ public class ShopProduct extends Fragment {
                 shopManageViewModel.getListCategory().observe(getViewLifecycleOwner(), new Observer<ArrayList<Category>>() {
                     @Override
                     public void onChanged(ArrayList<Category> list) {
-                        adapter = new ShopProductAdapter(getContext(), productWithAvgs);
-                        gridviewProduct.setAdapter(adapter);
-                        adapter.setOnMethodShopManage(new OnMethodShopManage() {
-                            @Override
-                            public void onEdit(int position, Object obj) {
-                                ShowDialogEditProduct( ((GetTopProduct.ProductWithAvg) obj).getPid(), position);
-                            }
+                        if(list.isEmpty()) {
+                            gridviewProduct.setVisibility(View.GONE);
+                            productEmpty.setVisibility(View.VISIBLE);
+                        }
+                        else {
+                            adapter = new ShopProductAdapter(getContext(), productWithAvgs);
+                            gridviewProduct.setAdapter(adapter);
+                            adapter.setOnMethodShopManage(new OnMethodShopManage() {
+                                @Override
+                                public void onEdit(int position, Object obj) {
+                                    ShowDialogEditProduct(((GetTopProduct.ProductWithAvg) obj).getPid(), position);
+                                }
 
-                            @Override
-                            public void onDelete(int position, int id) {
-                                DeleteProduct(position, id);
-                            }
-                        });
+                                @Override
+                                public void onDelete(int position, int id) {
+                                    DeleteProduct(position, id);
+                                }
+                            });
 
-                        categories = list;
-                        addNewProduct.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                ShowDialogEditProduct();
-                            }
-                        });
+                            categories = list;
+                            addNewProduct.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    ShowDialogEditProduct();
+                                }
+                            });
+
+
+                            gridviewProduct.setVisibility(View.VISIBLE);
+                            productEmpty.setVisibility(View.GONE);
+                        }
+                        productLoading.setVisibility(View.GONE);
 
                     }
                 });
@@ -277,6 +298,10 @@ public class ShopProduct extends Fragment {
                     adapter.setList(shopProducts);
                     dialog.dismiss();
                     onCreateNewProduct.onCreate();
+
+                    gridviewProduct.setVisibility(View.VISIBLE);
+                    productEmpty.setVisibility(View.GONE);
+                    productLoading.setVisibility(View.GONE);
                 }
             }
 
@@ -307,6 +332,17 @@ public class ShopProduct extends Fragment {
                 else {
                     shopProducts.remove(position);
                     adapter.setList(shopProducts);
+                    if(shopProducts.isEmpty()) {
+                        gridviewProduct.setVisibility(View.GONE);
+                        productEmpty.setVisibility(View.VISIBLE);
+                    }
+                    else {
+
+                        gridviewProduct.setVisibility(View.VISIBLE);
+                        productEmpty.setVisibility(View.GONE);
+                    }
+                    productLoading.setVisibility(View.GONE);
+
                     onCreateNewProduct.onDelete();
                 }
             }

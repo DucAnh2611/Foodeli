@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import androidx.fragment.app.DialogFragment;
@@ -48,6 +49,8 @@ public class DialogFindVoucher extends DialogFragment {
     private FindVoucherAdapter adapter;
     private int uid;
     private OnSuccessSaveVoucher onSuccessSaveVoucher;
+    private LinearLayout voucherEmpty;
+    private ScrollView voucherLoading;
     public DialogFindVoucher(Context context, int uid) {
         this.context = context;
         this.uid = uid;
@@ -64,6 +67,12 @@ public class DialogFindVoucher extends DialogFragment {
         voucherFound = view.findViewById(R.id.find_voucher_gridview);
         voucherLayout = view.findViewById(R.id.find_voucher_gridview_holder);
         findBtn = view.findViewById(R.id.find_voucher_icon);
+        voucherEmpty = view.findViewById(R.id.find_voucher_gridview_empty);
+        voucherLoading = view.findViewById(R.id.find_voucher_gridview_loading);
+
+        voucherFound.setVisibility(View.GONE);
+        voucherEmpty.setVisibility(View.GONE);
+        voucherLoading.setVisibility(View.VISIBLE);
 
         codeVou.addTextChangedListener(new TextWatcher() {
             @Override
@@ -108,6 +117,11 @@ public class DialogFindVoucher extends DialogFragment {
     }
 
     private void findVoucher() {
+
+        voucherFound.setVisibility(View.GONE);
+        voucherEmpty.setVisibility(View.GONE);
+        voucherLoading.setVisibility(View.VISIBLE);
+
         pool = new Pool();
 
         Call<FindVoucherRes> findVoucher = pool.getApiCallUserVoucher().findVoucher(code);
@@ -126,14 +140,25 @@ public class DialogFindVoucher extends DialogFragment {
                 }
                 else {
                     listVou = response.body().getList();
-                    adapter = new FindVoucherAdapter(listVou, context);
-                    adapter.setOnSaveVoucher(new FindVoucherAdapter.OnSaveVoucher() {
-                        @Override
-                        public void onSaveVoucher(int vid) {
-                            saveVoucherForUser(uid, vid, "id");
-                        }
-                    });
-                    voucherFound.setAdapter(adapter);
+                    if(listVou.isEmpty()) {
+                        voucherFound.setVisibility(View.GONE);
+                        voucherEmpty.setVisibility(View.VISIBLE);
+                    }
+                    else {
+                        adapter = new FindVoucherAdapter(listVou, context);
+                        adapter.setOnSaveVoucher(new FindVoucherAdapter.OnSaveVoucher() {
+                            @Override
+                            public void onSaveVoucher(int vid) {
+                                saveVoucherForUser(uid, vid, "id");
+                            }
+                        });
+                        voucherFound.setAdapter(adapter);
+
+                        voucherFound.setVisibility(View.VISIBLE);
+                        voucherEmpty.setVisibility(View.GONE);
+                    }
+                    voucherLoading.setVisibility(View.GONE);
+
                 }
             }
 

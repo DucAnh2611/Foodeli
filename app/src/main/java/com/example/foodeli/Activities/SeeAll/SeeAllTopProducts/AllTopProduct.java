@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.GridView;
 import android.widget.ImageButton;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.example.foodeli.Activities.SeeAll.SeeAllCategory.AllCategory;
@@ -28,9 +29,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class AllTopProduct extends AppCompatActivity {
-    ArrayList<GetTopProduct.ProductWithAvg> list = new ArrayList<>();
-    GridView allProGv = null;
-    ImageButton backBtn = null;
+    private ArrayList<GetTopProduct.ProductWithAvg> list = new ArrayList<>();
+    private GridView allProGv = null;
+    private ImageButton backBtn = null;
+    private ScrollView listLoading;
     int page = 1;
     boolean canScroll = true;
 
@@ -41,6 +43,10 @@ public class AllTopProduct extends AppCompatActivity {
 
         allProGv = findViewById(R.id.pro_all_gv);
         backBtn = findViewById(R.id.back_btn);
+        listLoading = findViewById(R.id.top_product_loading);
+
+        allProGv.setVisibility(View.GONE);
+        listLoading.setVisibility(View.VISIBLE);
 
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,6 +83,9 @@ public class AllTopProduct extends AppCompatActivity {
                     if(response.body().getList().size() !=0) {
                         TopProductGridViewAdapter adapter = new TopProductGridViewAdapter(list, AllTopProduct.this);
                         allProGv.setAdapter(adapter);
+
+                        allProGv.setVisibility(View.VISIBLE);
+                        listLoading.setVisibility(View.GONE);
                     }
                     else{
                         canScroll= false;

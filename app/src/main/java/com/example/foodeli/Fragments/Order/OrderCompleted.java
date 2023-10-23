@@ -12,6 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 
 import com.example.foodeli.Activities.Home.HomeViewModel;
 import com.example.foodeli.MySqlSetUp.Schemas.User.User;
@@ -39,6 +41,8 @@ public class OrderCompleted extends Fragment {
     private HomeViewModel homeViewModel;
     private GridView orderCompletedGV;
     private OrderCompletedGVAdapter adapter;
+    private LinearLayout emptyLayout;
+    private ScrollView loadingView;
 
     public OrderCompleted() {
         // Required empty public constructor
@@ -85,12 +89,27 @@ public class OrderCompleted extends Fragment {
         // Inflate the layout for this fragment
         homeViewModel = new ViewModelProvider(getActivity()).get(HomeViewModel.class);
         orderCompletedGV = view.findViewById(R.id.ordercompleted_gridview);
+        emptyLayout = view.findViewById(R.id.order_gridview_empty);
+        loadingView = view.findViewById(R.id.order_gridview_loading);
+
+        orderCompletedGV.setVisibility(View.GONE);
+        emptyLayout.setVisibility(View.GONE);
+        loadingView.setVisibility(View.VISIBLE);
 
         homeViewModel.getListOrderCompleted(user.getId()).observe(getViewLifecycleOwner(), new Observer<ArrayList<OrderWithState>>() {
             @Override
             public void onChanged(ArrayList<OrderWithState> orderWithStates) {
                 adapter = new OrderCompletedGVAdapter(orderWithStates, view.getContext());
                 orderCompletedGV.setAdapter(adapter);
+
+                if(orderWithStates.isEmpty()) {
+                    orderCompletedGV.setVisibility(View.GONE);
+                    emptyLayout.setVisibility(View.VISIBLE);}
+                else {
+                    orderCompletedGV.setVisibility(View.VISIBLE);
+                    emptyLayout.setVisibility(View.GONE);
+                }
+                loadingView.setVisibility(View.GONE);
             }
         });
         return view;

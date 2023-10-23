@@ -15,6 +15,7 @@ import androidx.appcompat.widget.AppCompatButton;
 import com.example.foodeli.Fragments.Shop.OnMethodShopManage;
 import com.example.foodeli.MySqlSetUp.Schemas.General.Response.GetTopProduct;
 import com.example.foodeli.R;
+import com.example.foodeli.Supports.SupportDate;
 import com.example.foodeli.Supports.SupportImage;
 import com.google.android.material.imageview.ShapeableImageView;
 
@@ -29,6 +30,7 @@ public class ShopProductAdapter extends BaseAdapter {
     private TextView pRate, pName, pDesc, pPrice, pUnit, pUpdate;
     private LinearLayout pEdit, pDelete;
     private OnMethodShopManage onMethodShopManage;
+    private SupportDate supportDate = new SupportDate();
 
     public ShopProductAdapter(Context context, ArrayList<GetTopProduct.ProductWithAvg> list) {
         this.context = context;
@@ -82,7 +84,7 @@ public class ShopProductAdapter extends BaseAdapter {
         pDesc.setText(item.getShortDesc());
         pPrice.setText(String.valueOf(item.getPrice()));
         pUnit.setText(item.getUnit());
-        pUpdate.setText("Update: " + item.getModified());
+        pUpdate.setText("Update: " + supportDate.ConvertLAtoVN(item.getModified()));
 
         pEdit.setOnClickListener(new View.OnClickListener() {
             @Override

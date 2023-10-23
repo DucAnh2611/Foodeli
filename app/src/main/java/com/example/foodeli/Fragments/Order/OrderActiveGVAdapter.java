@@ -22,6 +22,7 @@ import com.example.foodeli.MySqlSetUp.Schemas.User.User;
 import com.example.foodeli.MySqlSetUp.Schemas.UserOrder.OrderWithState;
 import com.example.foodeli.MySqlSetUp.Schemas.UserOrder.Response.ConfirmRes;
 import com.example.foodeli.R;
+import com.example.foodeli.Supports.SupportDate;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -43,6 +44,7 @@ public class OrderActiveGVAdapter extends BaseAdapter {
     private LinearLayout buttonLayout;
     private IdToSerialString idToSerialString = new IdToSerialString();
     private OnSelectMethodOrder onSelectMethodOrder;
+    private SupportDate supportDate = new SupportDate();
 
     public OrderActiveGVAdapter(ArrayList<OrderWithState> listOrder, Context context) {
         this.listOrderActive = listOrder;
@@ -89,7 +91,7 @@ public class OrderActiveGVAdapter extends BaseAdapter {
         confirmButton = convertView.findViewById(R.id.order_active_comfirm);
 
         orderIcon.setImageResource(convertIdStateToIcon(item.getStateId()));
-        orderModify.setText("Modify: " + item.getModified());
+        orderModify.setText("Create: " + supportDate.ConvertLAtoVN(item.getCreate()));
         idAndState.setText(idToSerialString.convertIdToSerialString(item.getOid()) + ": " + item.getState());
         itemCount.setText(item.getItemCount() + (item.getItemCount() > 1 ? " Items" : " Item"));
         orderPayed.setText(item.getPayed() == 1 ? "Paid" : "Unpaid");

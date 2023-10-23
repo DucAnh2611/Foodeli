@@ -5,11 +5,13 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.Period;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.TimeZone;
 
 public class SupportDate {
 
@@ -20,6 +22,21 @@ public class SupportDate {
         Date currentTime = new Date();
         return dateFormat.format(currentTime);
     }
+    public String GetCurrentDateLA() {
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+            TimeZone timeZone = TimeZone.getTimeZone("GMT-7");
+            dateFormat.setTimeZone(timeZone);
+
+            Date currentDate = new Date();
+
+            return dateFormat.format(currentDate);
+        }
+        return "";
+    }
+
 
     public String ConvertLAtoVN(String dateTimeString) {
         DateTimeFormatter formatter = null;
@@ -79,5 +96,22 @@ public class SupportDate {
         }
 
         return "";
+    }
+
+    public boolean Is16(int year, int month, int day) {
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            LocalDate userBirthDate = LocalDate.of(year, month, day);
+            LocalDate currentDate = null;
+
+            currentDate = LocalDate.now();
+
+            // Calculate the age difference between current date and user's birth date
+            Period ageDifference = Period.between(userBirthDate, currentDate);
+
+            return ageDifference.getYears() >= 16;
+        }
+
+        return false;
     }
 }

@@ -13,6 +13,7 @@ import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +46,8 @@ public class SelectVoucherActivity extends AppCompatActivity {
     private LinearLayout gridviewVoucherHolder;
     private SelectVoucherAdapter adapter;
     private DialogFindVoucher dialogFindVoucher;
+    private LinearLayout voucherEmpty;
+    private ScrollView voucherLoading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +64,14 @@ public class SelectVoucherActivity extends AppCompatActivity {
         ImageButton backBtn = findViewById(R.id.back_btn);
         applyVoucher = findViewById(R.id.selectvoucher_confirm_btn);
         findVoucher = findViewById(R.id.selectvoucher_find_btn);
+        voucherEmpty = findViewById(R.id.select_voucher_empty);
+        voucherLoading = findViewById(R.id.select_voucher_loading);
+        gridviewVoucher = findViewById(R.id.selectvoucher_gridview);
+
+        voucherEmpty.setVisibility(View.GONE);
+        voucherLoading.setVisibility(View.VISIBLE);
+        gridviewVoucher.setVisibility(View.GONE);
+
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,39 +99,20 @@ public class SelectVoucherActivity extends AppCompatActivity {
                 }
                 else {
                     ArrayList<GetAllVoucherRes.VoucherWithRemain> vouchers = response.body().getVouchers();
-                    gridviewVoucher = findViewById(R.id.selectvoucher_gridview);
                     if(!vouchers.isEmpty()) {
 
                         adapter = new SelectVoucherAdapter(vouchers, vid, vcode, SelectVoucherActivity.this);
                         gridviewVoucher.setAdapter(adapter);
 
+                        voucherEmpty.setVisibility(View.GONE);
+                        voucherLoading.setVisibility(View.GONE);
+                        gridviewVoucher.setVisibility(View.VISIBLE);
+
                     }
                     else {
-                        gridviewVoucherHolder = findViewById(R.id.selectvoucher_gridview_layout);
-                        gridviewVoucherHolder.removeView(gridviewVoucher);
-
-                        gridviewVoucherHolder.setGravity(Gravity.CENTER);
-
-                        TextView noItem = new TextView(SelectVoucherActivity.this);
-                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                                ViewGroup.LayoutParams.MATCH_PARENT,
-                                ViewGroup.LayoutParams.WRAP_CONTENT
-                        );
-
-                        noItem.setText("No voucher found");
-                        noItem.setTextColor(getColor(R.color.black));
-                        noItem.setTextSize(17);
-                        noItem.setGravity(Gravity.CENTER);
-
-                        ImageView noItemImage = new ImageView(SelectVoucherActivity.this);
-                        LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(
-                                ViewGroup.LayoutParams.MATCH_PARENT,
-                                ViewGroup.LayoutParams.WRAP_CONTENT
-                        );
-                        noItemImage.setImageResource(R.drawable.no_data);
-
-                        gridviewVoucherHolder.addView(noItem);
-                        gridviewVoucherHolder.addView(noItemImage);
+                        voucherEmpty.setVisibility(View.VISIBLE);
+                        voucherLoading.setVisibility(View.GONE);
+                        gridviewVoucher.setVisibility(View.GONE);
                     }
 
                 }
@@ -167,6 +159,10 @@ public class SelectVoucherActivity extends AppCompatActivity {
             public void onSuccessSaveVoucher(GetAllVoucherRes.VoucherWithRemain voucher) {
                 adapter.AddToDataset(voucher);
                 dialogFindVoucher.dismiss();
+
+                voucherEmpty.setVisibility(View.GONE);
+                voucherLoading.setVisibility(View.GONE);
+                gridviewVoucher.setVisibility(View.VISIBLE);
             }
         });
         dialogFindVoucher.show(getSupportFragmentManager(), "find voucher_dialog_form" );

@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.example.foodeli.Activities.PoolVoucherShop.PoolVoucherShop;
 import com.example.foodeli.Activities.ProductDetail.DialogDeleteCart;
 import com.example.foodeli.Activities.ProductDetail.ProductDetail;
+import com.example.foodeli.Fragments.ShopProduct.DynamicHeightGridView;
 import com.example.foodeli.MySqlSetUp.Pool;
 import com.example.foodeli.MySqlSetUp.ResponseApi;
 import com.example.foodeli.MySqlSetUp.Schemas.Cart.Body.AddToCartBody;
@@ -49,7 +50,7 @@ public class ShopDetailActivity extends AppCompatActivity {
     private GridView listProductsGv;
     private ImageView shopImage;
     private TextView sName, sDesc, sRate, sSold, sProducts, sAddress;
-    private LinearLayout poolVoucherShop;
+    private LinearLayout poolVoucherShop, productLoading, productEmpty;
     private ItemProductShopAdapter adapter;
     private SupportImage supportImage = new SupportImage();
     private User user;
@@ -86,6 +87,12 @@ public class ShopDetailActivity extends AppCompatActivity {
         sProducts = findViewById(R.id.shop_detail_product);
         poolVoucherShop = findViewById(R.id.shop_detail_pool_voucher);
         listProductsGv = findViewById(R.id.shop_detail_gridview_list_product);
+        productLoading = findViewById(R.id.shop_detail_product_loading);
+        productEmpty = findViewById(R.id.shop_detail_empty);
+
+        listProductsGv.setVisibility(View.GONE);
+        productLoading.setVisibility(View.VISIBLE);
+        productEmpty.setVisibility(View.GONE);
 
         getShopInformation(sid);
         getShopProducts(sid);
@@ -158,21 +165,32 @@ public class ShopDetailActivity extends AppCompatActivity {
                 }
                 else {
                     products = response.body().getProducts();
+                    if(products.isEmpty()) {
 
-                    adapter = new ItemProductShopAdapter(products, ShopDetailActivity.this);
-                    adapter.setOnAddToCart(new ItemProductShopAdapter.OnAddToCart() {
-                        @Override
-                        public void onAddToCart(int pid) {
-                            addToCart(user.getId(), pid, 1);
-                        }
-                    });
-                    listProductsGv.setAdapter(adapter);
+                        listProductsGv.setVisibility(View.GONE);
+                        productEmpty.setVisibility(View.VISIBLE);
+                    }
+                    else {
+                        adapter = new ItemProductShopAdapter(products, ShopDetailActivity.this);
+                        adapter.setOnAddToCart(new ItemProductShopAdapter.OnAddToCart() {
+                            @Override
+                            public void onAddToCart(int pid) {
+                                addToCart(user.getId(), pid, 1);
+                            }
+                        });
+                        listProductsGv.setAdapter(adapter);
 
-                    int desiredHeight = (int) (products.size() * (getResources().getDimension(R.dimen.item_in_shop) + getResources().getDimension(R.dimen.item_gap_in_shop)) + listProductsGv.getPaddingTop() + listProductsGv.getPaddingBottom());
-                    listProductsGv.setLayoutParams(new LinearLayout.LayoutParams(
-                            ViewGroup.LayoutParams.MATCH_PARENT,
-                            desiredHeight
-                    ));
+                        int desiredHeight = (int) (products.size() * (getResources().getDimension(R.dimen.item_in_shop) + getResources().getDimension(R.dimen.item_gap_in_shop)) + listProductsGv.getPaddingTop() + listProductsGv.getPaddingBottom());
+                        listProductsGv.setLayoutParams(new LinearLayout.LayoutParams(
+                                ViewGroup.LayoutParams.MATCH_PARENT,
+                                desiredHeight
+                        ));
+
+                        listProductsGv.setVisibility(View.VISIBLE);
+                        productEmpty.setVisibility(View.GONE);
+                        productLoading.setVisibility(View.GONE);
+                    }
+                    productLoading.setVisibility(View.GONE);
                 }
             }
 

@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.example.foodeli.Activities.OrderDetail.OrderDetailActivity;
 import com.example.foodeli.MySqlSetUp.Schemas.UserOrder.OrderWithState;
 import com.example.foodeli.R;
+import com.example.foodeli.Supports.SupportDate;
 
 import java.util.ArrayList;
 
@@ -20,6 +21,7 @@ public class OrderCancelledGVAdapter extends BaseAdapter {
     private ArrayList<OrderWithState> list;
     private TextView idAndState, itemCount, cancelledAt, total;
     private IdToSerialString idToSerialString = new IdToSerialString();
+    private SupportDate supportDate = new SupportDate();
 
     public OrderCancelledGVAdapter(ArrayList<OrderWithState> list, Context context) {
         this.context = context;
@@ -59,7 +61,7 @@ public class OrderCancelledGVAdapter extends BaseAdapter {
 
         idAndState.setText(idToSerialString.convertIdToSerialString(item.getOid()) + ": Cancelled");
         itemCount.setText(item.getItemCount() + (item.getItemCount() > 1 ?" Items" :" Item"));
-        cancelledAt.setText(item.getModified());
+        cancelledAt.setText("Create: " + supportDate.ConvertLAtoVN(item.getCreate()));
         total.setText(String.valueOf(item.getTotal()));
 
         convertView.setOnClickListener(new View.OnClickListener() {

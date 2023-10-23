@@ -17,6 +17,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +32,7 @@ import com.example.foodeli.MySqlSetUp.Schemas.UserOrder.Order;
 import com.example.foodeli.MySqlSetUp.Schemas.UserOrder.OrderWithState;
 import com.example.foodeli.MySqlSetUp.Schemas.UserOrder.Response.ConfirmRes;
 import com.example.foodeli.R;
+import com.example.foodeli.Supports.SupportDate;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -64,6 +67,9 @@ public class OrderActive extends Fragment {
     private Pool pool;
     private ArrayList<OrderWithState> orderStateActive;
     private User user;
+    private LinearLayout emptyLayout;
+    private ScrollView loadingView;
+    private SupportDate supportDate = new SupportDate();
 
     public OrderActive() {
         // Required empty public constructor
@@ -109,10 +115,18 @@ public class OrderActive extends Fragment {
         // Inflate the layout for this fragment
         homeViewModel = new ViewModelProvider(getActivity()).get(HomeViewModel.class);
         gridviewOrderActive = view.findViewById(R.id.orderactive_gridview);
+        emptyLayout = view.findViewById(R.id.order_gridview_empty);
+        loadingView = view.findViewById(R.id.order_gridview_loading);
+
+        gridviewOrderActive.setVisibility(View.GONE);
+        emptyLayout.setVisibility(View.GONE);
+        loadingView.setVisibility(View.VISIBLE);
+
         homeViewModel.getListOrderActive(user.getId()).observe(getViewLifecycleOwner(), new Observer<ArrayList<OrderWithState>>() {
             @Override
             public void onChanged(ArrayList<OrderWithState> orderWithStates) {
                 orderStateActive = orderWithStates;
+
                 adapter= new OrderActiveGVAdapter(orderWithStates, view.getContext());
                 adapter.setOnSelectMethodOrder(new OrderActiveGVAdapter.OnSelectMethodOrder() {
                     @Override
@@ -127,6 +141,15 @@ public class OrderActive extends Fragment {
                     }
                 });
                 gridviewOrderActive.setAdapter(adapter);
+
+                if(orderWithStates.isEmpty()) {
+                    gridviewOrderActive.setVisibility(View.GONE);
+                    emptyLayout.setVisibility(View.VISIBLE);}
+                else {
+                    gridviewOrderActive.setVisibility(View.VISIBLE);
+                    emptyLayout.setVisibility(View.GONE);
+                }
+                loadingView.setVisibility(View.GONE);
             }
         });
 
@@ -224,15 +247,12 @@ public class OrderActive extends Fragment {
                 orderStateActive =  homeViewModel.getListOrderActive(uid).getValue();
                 ArrayList<OrderWithState> listCancel = homeViewModel.getListOrderCancelled(uid).getValue();
 
-                Date currentTime = new Date();
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                String formattedDateTime = dateFormat.format(currentTime);
 
                 orderStateActive.remove(position);
-                order.setModified(formattedDateTime);
+                order.setModified(supportDate.GetCurrentDateLA());
 
                 if(listCancel != null) {
-                    listCancel.add(order);
+                    listCancel.add(0, order);
                     homeViewModel.setListOrderCancelled(listCancel);
                 }
 

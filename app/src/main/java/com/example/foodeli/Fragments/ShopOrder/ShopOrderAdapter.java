@@ -20,6 +20,7 @@ import com.example.foodeli.MySqlSetUp.Schemas.UserOrder.OrderWithState;
 import com.example.foodeli.MySqlSetUp.Schemas.UserOrder.Response.OrderTrackRes;
 import com.example.foodeli.MySqlSetUp.Schemas.UserVoucher.Voucher;
 import com.example.foodeli.R;
+import com.example.foodeli.Supports.SupportDate;
 import com.example.foodeli.Supports.SupportImage;
 import com.example.foodeli.Supports.SupportState;
 
@@ -37,6 +38,7 @@ public class ShopOrderAdapter extends BaseAdapter {
     private IdToSerialString idToSerialString;
     private SupportState supportState = new SupportState();
     private OnMethodOrderShop onMethodOrderShop;
+    private SupportDate supportDate = new SupportDate();
 
     public ShopOrderAdapter(Context context, ArrayList<OrderWithState> list) {
         this.context = context;
@@ -90,7 +92,7 @@ public class ShopOrderAdapter extends BaseAdapter {
         oIcon.setImageResource(supportState.convertIdStateToIcon(item.getStateId()));
         oPaid.setText(item.getPayed() == 0 ? "Unpaid" : "Paid");
         oTotal.setText(String.valueOf(item.getTotal()));
-        oUpdate.setText("Update: " + item.getModified());
+        oUpdate.setText("Update: " + supportDate.ConvertLAtoVN(item.getModified()));
 
         if(item.getStateId()!=6) {
             oId.setTextColor(context.getColor(R.color.green_100));

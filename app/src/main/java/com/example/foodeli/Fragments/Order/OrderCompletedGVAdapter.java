@@ -15,6 +15,7 @@ import com.example.foodeli.Activities.OrderDetail.OrderDetailActivity;
 import com.example.foodeli.Activities.Review.Review;
 import com.example.foodeli.MySqlSetUp.Schemas.UserOrder.OrderWithState;
 import com.example.foodeli.R;
+import com.example.foodeli.Supports.SupportDate;
 
 import java.util.ArrayList;
 
@@ -26,6 +27,7 @@ public class OrderCompletedGVAdapter extends BaseAdapter {
     private Context context;
 
     private IdToSerialString idToSerialString = new IdToSerialString();
+    private SupportDate supportDate = new SupportDate();
     public OrderCompletedGVAdapter(ArrayList<OrderWithState> list, Context context) {
         this.list = list;
         this.context = context;
@@ -65,7 +67,7 @@ public class OrderCompletedGVAdapter extends BaseAdapter {
 
         idAndState.setText(idToSerialString.convertIdToSerialString(item.getOid()) + ": Completed");
         itemCount.setText(item.getItemCount() + (item.getItemCount() > 1 ?" Items" : " Item"));
-        dateFinish.setText("Completed: " + item.getModified());
+        dateFinish.setText("Create: " + supportDate.ConvertLAtoVN(item.getCreate()));
         total.setText(String.valueOf(item.getTotal()));
 
         leaveReview = convertView.findViewById(R.id.order_completed_leave_review);

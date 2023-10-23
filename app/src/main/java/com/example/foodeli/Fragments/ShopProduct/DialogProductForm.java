@@ -306,7 +306,7 @@ public class DialogProductForm extends DialogFragment {
                 }
                 else {
                     for (int i = 0; i < newImageList.size(); i++) {
-                        if(newImageList.get(i).getState() != -1) {
+                        if(newImageList.get(i).getState() != -1 && !newImageList.get(i).getBase64().equals("")) {
                             int tId= newImageList.get(i).getIid();
 
                             if(tId == 0) {

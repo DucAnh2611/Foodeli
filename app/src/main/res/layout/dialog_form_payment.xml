@@ -83,6 +83,7 @@
         android:inputType="number"
         android:textColor="@color/black"
         android:textSize="12sp"
+        android:maxLength="15"
         tools:textColorHint="@color/grey_100"/>
 
     <TextView
