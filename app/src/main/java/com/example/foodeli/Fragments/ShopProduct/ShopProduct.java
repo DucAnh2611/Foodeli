@@ -238,6 +238,7 @@ public class ShopProduct extends Fragment {
                     ResponseApi res;
                     try {
                         res = gson.fromJson(response.errorBody().string(), ResponseApi.class);
+                        Toast.makeText(getContext(), res.getMessage(), Toast.LENGTH_SHORT).show();
                         System.out.println(res.getMessage());
                     } catch (IOException e) {
                         System.out.println("parse err false");
