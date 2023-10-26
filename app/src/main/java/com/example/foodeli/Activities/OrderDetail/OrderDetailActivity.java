@@ -26,6 +26,7 @@ import com.example.foodeli.MySqlSetUp.Schemas.User.User;
 import com.example.foodeli.MySqlSetUp.Schemas.UserOrder.Response.OrderItemsRes;
 import com.example.foodeli.MySqlSetUp.Schemas.UserOrder.Response.OrderTrackRes;
 import com.example.foodeli.R;
+import com.example.foodeli.Supports.SupportDate;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -50,6 +51,7 @@ public class OrderDetailActivity extends AppCompatActivity {
     private TextView orderId, address, timeFinish, subtotal, shipping, discount, tax, total, methodNum;
     private IdToSerialString idToSerialString = new IdToSerialString();
     private ConvertIconMethodIcon methodIcon = new ConvertIconMethodIcon();
+    private SupportDate supportDate = new SupportDate();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,7 +107,7 @@ public class OrderDetailActivity extends AppCompatActivity {
 
             orderId.setText(idToSerialString.convertIdToSerialString(oid));
             address.setText(order.getAddress());
-            timeFinish.setText(orderTimeLines.get(orderTimeLines.size()-1).getUpdateAt());
+            timeFinish.setText(supportDate.ConvertLAtoVN(orderTimeLines.get(orderTimeLines.size()-1).getUpdateAt() ));
             subtotal.setText("$" + order.getSubtotal());
             shipping.setText("$" + order.getShipFee());
             discount.setText("$" + order.getDiscount());

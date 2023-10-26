@@ -12,7 +12,7 @@ public class ValidationField {
     private String phone;
     private String password;
     private String fullname;
-    private static final String EMAIL_REGEX = "^\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}\\b$";
+    private static final String EMAIL_REGEX = "^\\b[A-Za-z0-9]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}\\b$";
     private static final String PHONE_REGEX = "^\\d{10}$";
     private static final String PASSWORD_REGEX = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,20}$";
 

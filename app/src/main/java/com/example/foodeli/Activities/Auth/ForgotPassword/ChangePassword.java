@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -63,9 +65,41 @@ public class ChangePassword extends AppCompatActivity {
 
         passwordShow = new PasswordShow(pass, iconPass, this);
         passwordShow.setUp();
+        pass.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                passData = s.toString();
+            }
+        });
 
         cfPasswordShow = new PasswordShow(cfPass, iconCfPass, this);
         cfPasswordShow.setUp();
+        cfPass.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                cfPassData = s.toString();
+            }
+        });
 
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override

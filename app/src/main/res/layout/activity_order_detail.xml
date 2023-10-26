@@ -110,11 +110,12 @@
                 <GridView
                     android:id="@+id/order_detail_gridview_product"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="280dp"
                     android:padding="15dp"
                     android:scrollbars="none"
                     android:clickable="false"
                     android:clipToPadding="false"
+                    android:verticalSpacing="5dp"
                     />
 
             </LinearLayout>
@@ -272,7 +273,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:text="Received Time"
+                            android:text="Last Update Time"
                             android:textColor="@color/grey_100"
                             android:textSize="10sp"
                             android:fontFamily="@font/poppins_italic"
