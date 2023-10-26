@@ -31,7 +31,7 @@ public interface RetrofitAPICallUserProfile {
     @POST("user/profile/login")
     Call<LoginRes> login(@Body LoginForm user);
 
-    @PUT("user/profile/change")
+    @POST("user/profile/change")
     Call<CreateUserResponse> update(@Query("id") int id, @Body ArrayList<ChangeForm> changeForm);
 
     @POST("user/profile/send-otp")
