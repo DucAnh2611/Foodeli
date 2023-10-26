@@ -81,6 +81,19 @@ public class SelectAddressActivity extends AppCompatActivity {
         addressLoading.setVisibility(View.VISIBLE);
 
         adapter = new SelectAddressAdapter(new ArrayList<>(), aid, aname, SelectAddressActivity.this);
+        adapter.setOnSelectAddress(new SelectAddressAdapter.OnSelectAddress() {
+            @Override
+            public void onSelectAddress(int position) {
+                if(t_aid != listAdd.get(position).getAid()) {
+                    t_aid = listAdd.get(position).getAid();
+                    t_aname = listAdd.get(position).getAddress();
+                }
+                else {
+                    t_aid = 0;
+                    t_aname = "Select Address";
+                }
+            }
+        });
         gridview.setAdapter(adapter);
 
         Call<GetAllAddressRes> getAllAddress = pool.getApiCallUserAddress().getAll(uid);
@@ -100,23 +113,8 @@ public class SelectAddressActivity extends AppCompatActivity {
                 }
                 else {
                     listAdd = response.body().getList();
-                    gridviewLayout = findViewById(R.id.selectaddress_gridview_layout);
                     if(!listAdd.isEmpty()) {
-                        adapter = new SelectAddressAdapter(listAdd, aid, aname, SelectAddressActivity.this);
-                        adapter.setOnSelectAddress(new SelectAddressAdapter.OnSelectAddress() {
-                            @Override
-                            public void onSelectAddress(int position) {
-                                if(t_aid != listAdd.get(position).getAid()) {
-                                    t_aid = listAdd.get(position).getAid();
-                                    t_aname = listAdd.get(position).getAddress();
-                                }
-                                else {
-                                    t_aid = 0;
-                                    t_aname = "Select Address";
-                                }
-                            }
-                        });
-                        gridview.setAdapter(adapter);
+                        adapter.setListAdd(listAdd);
 
                         gridview.setVisibility(View.VISIBLE);
                         addressEmpty.setVisibility(View.GONE);
@@ -197,8 +195,23 @@ public class SelectAddressActivity extends AppCompatActivity {
                     }
                 }
                 else {
+
                     listAdd.add(response.body().getAddress());
                     adapter.setListAdd(listAdd);
+
+                    adapter.setOnSelectAddress(new SelectAddressAdapter.OnSelectAddress() {
+                        @Override
+                        public void onSelectAddress(int position) {
+                            if(t_aid != listAdd.get(position).getAid()) {
+                                t_aid = listAdd.get(position).getAid();
+                                t_aname = listAdd.get(position).getAddress();
+                            }
+                            else {
+                                t_aid = 0;
+                                t_aname = "Select Address";
+                            }
+                        }
+                    });
 
                     gridview.setVisibility(View.VISIBLE);
                     addressEmpty.setVisibility(View.GONE);

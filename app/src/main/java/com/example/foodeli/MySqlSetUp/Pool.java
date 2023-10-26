@@ -22,7 +22,7 @@ public class Pool {
     private String MYWINDOWHOSTING = "https://ducanh2611-001-site1.gtempurl.com/api/v2/index.php/";
 
     private final Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl(WEBHOST)
+            .baseUrl(MYWINDOWHOSTING)
             .addConverterFactory(GsonConverterFactory.create())
             .build();
     private RetrofitAPICallUserProfile ApiCallUserProfile = retrofit.create(RetrofitAPICallUserProfile.class);
